@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Me | [Your Name]</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #FEF9E7; color: #154360; }
+        h2 { font-family: 'Playfair Display', serif; }
+        .input-field { background: white; border: 2px solid #154360; border-radius: 8px; padding: 12px; width: 100%; outline: none; }
+        .input-field:focus { border-color: #21618C; box-shadow: 0 0 10px rgba(33, 97, 140, 0.2); }
+        .submit-btn { background-color: #154360; color: white; transition: 0.3s; }
+        .submit-btn:hover { background-color: #21618C; transform: translateY(-2px); }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <nav class="p-6 flex justify-center space-x-8 font-bold">
+        <a href="index.html">Home</a>
+        <a href="resume.html">Resume</a>
+        <a href="projects.html">Projects</a>
+        <a href="labs.html">Labs</a>
+        <a href="contact.html" class="text-blue-800 border-b-2 border-blue-800">Contact</a>
+    </nav>
+
+    <main class="flex-grow container mx-auto py-12 px-6">
+        <div class="max-w-2xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-xl border-t-8 border-blue-900">
+            <h2 class="text-4xl text-center mb-4">Get In Touch</h2>
+            <p class="text-center text-gray-600 mb-8">Have a question or want to work together? Drop me a message below.</p>
+
+            <form action="https://formspree.io/f/YOUR_UNIQUE_ID" method="POST" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-bold uppercase mb-2">Your Name</label>
+                    <input type="text" name="name" class="input-field" placeholder="John Doe" required>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-bold uppercase mb-2">Email Address</label>
+                    <input type="email" name="email" class="input-field" placeholder="john@example.com" required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold uppercase mb-2">Message</label>
+                    <textarea name="message" rows="5" class="input-field" placeholder="How can I help you?" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn w-full py-4 rounded-lg font-bold uppercase tracking-widest">
+                    Send Message
+                </button>
+            </form>
+            </div>
+    </main>
+
+    <footer class="bg-white py-10 mt-12">
+        <div class="container mx-auto text-center">
+            <div class="flex justify-center space-x-6 text-2xl mb-4">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:test@test.com"><i class="fas fa-envelope"></i></a>
+            </div>
+            <p class="text-xs opacity-50">© 2026 Professional Portfolio</p>
+        </div>
+    </footer>
+</body>
+</html>
