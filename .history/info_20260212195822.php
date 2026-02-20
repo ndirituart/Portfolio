@@ -1,0 +1,1 @@
+skrnchstudio.com/info.php<?php // 1. Database Connection Details $servername = "localhost

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLASSYEVU | Jewelry & Silks</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            /* Primary Background & UI */
+            --cream: #F2E3C2;      
+            --sand: #E5DED2;        
+            
+            /* Brand & Accent Colors */
+            --bronze: #A67C52;     
+            --gold-leaf: #C5B081;   
+            --deep-cocoa: #967969;  
+
+            /* Layout & Typography */
+            --max-width: 1200px;
+            --heading-font: 'Playfair Display', serif; 
+            --body-font: 'Montserrat', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--sand);
+            font-family: var(--body-font);
+            color: var(--deep-cocoa);
+            line-height: 1.6;
+        }
+
+        /* --- HEADER / BANNER --- */
+        header {
+            background-color: var(--cream);
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--gold-leaf);
+            box-shadow: 0 2px 10px rgba(92, 75, 67, 0.05);
+        }
+
+        .logo-container h1 {
+            font-family: var(--heading-font);
+            font-size: 2.5rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--deep-cocoa);
+            margin: 0;
+        }
+
+        .logo-container p {
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin-top: 10px;
+            color: var(--bronze);
+        }
+
+        /* --- MAIN CONTENT AREA --- */
+        main {
+            max-width: var(--max-width);
+            margin: 80px auto;
+            padding: 0 20px;
+            min-height: 40vh; /* Keeps footer down if content is short */
+            text-align: center;
+        }
+
+        .placeholder-box {
+            border: 1px dashed var(--gold-leaf);
+            padding: 50px;
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--deep-cocoa);
+            color: var(--cream);
+            padding: 60px 20px 30px;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-family: var(--heading-font);
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--gold-leaf);
+        }
+
+        .social-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .social-btn {
+            color: var(--cream);
+            text-decoration: none;
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .social-btn span {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        .social-btn:hover {
+            color: var(--gold-leaf);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            font-size: 0.75rem;
+            border-top: 1px solid rgba(197, 176, 129, 0.2);
+            padding-top: 30px;
+            opacity: 0.6;
+            letter-spacing: 1px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .social-container {
+                gap: 20px;
+            }
+            .social-btn {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <h1>CLASSYEVU</h1>
+            <p>JEWELRY FOR EVERYONE</p>
+        </div>
+    </header>
+
+    <main>
+        <div class="placeholder-box">
+            <h2 style="font-family: var(--heading-font);">New Collection Coming Soon</h2>
+            <p>Elevating your daily style with timeless pieces.</p>
+        </div>
+    </main>
+
+    <footer>
+        <h2 class="footer-title">Get in Touch</h2>
+        
+        <div class="social-container">
+            <a href="#" class="social-btn" title="Instagram">
+                <i class="fab fa-instagram"></i>
+                <span>IG</span>
+            </a>
+            <a href="#" class="social-btn" title="Facebook">
+                <i class="fab fa-facebook-f"></i>
+                <span>FB</span>
+            </a>
+            <a href="#" class="social-btn" title="Twitter/X">
+                <i class="fa-brands fa-x-twitter"></i>
+                <span>X</span>
+            </a>
+            <a href="#" class="social-btn" title="TikTok">
+                <i class="fab fa-tiktok"></i>
+                <span>TikTok</span>
+            </a>
+            <a href="https://wa.me/YOURNUMBER" class="social-btn" title="WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+                <span>Chat</span>
+            </a>
+            <a href="tel:+123456789" class="social-btn" title="Call Us">
+                <i class="fas fa-phone-alt"></i>
+                <span>Call</span>
+            </a>
+        </div>
+
+        <div class="copyright">
+            &copy; 2026 CLASSYEVU. All Rights Reserved.
+        </div>
+    </footer>
+
+</body>
+</html>

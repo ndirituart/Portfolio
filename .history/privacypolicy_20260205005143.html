@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKRNCH | Privacy Policy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">SKRNCH</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html" class="btn-small">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="privacy-hero">
+            <h1>Privacy Policy</h1>
+            <p class="subtitle">Luxury hair deserves luxury protection. Here is how we handle your data according
+                to the Data Protection Act, 2019
+            </p>
+        </section>
+
+        <section class="circle-summary">
+            <div class="circle-container">
+                <div class="privacy-circle">
+                    <div class="circle-inner">
+                        <i class="fa-solid fa-user-check"></i>
+                        <h3>Identity</h3>
+                        <div class="circle-popup"><p>First name, Last name, Email, and Phone number for orders.</p></div>
+                    </div>
+                </div>
+                <div class="privacy-circle">
+                    <div class="circle-inner">
+                        <i class="fa-solid fa-map-pin"></i>
+                        <h3>Location</h3>
+                        <div class="circle-popup"><p>Address, State, ZIP, and City for seamless delivery.</p></div>
+                    </div>
+                </div>
+                <div class="privacy-circle">
+                    <div class="circle-inner">
+                        <i class="fa-solid fa-laptop-code"></i>
+                        <h3>Usage</h3>
+                        <div class="circle-popup"><p>IP Address, Browser type, and Mobile network diagnostic data.</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="policy-accordion-section">
+            <div class="policy-item">
+                <button class="policy-trigger">We Value Your Privacy <i class="fa-solid fa-plus"></i></button>
+                <div class="policy-panel">
+                    <p>This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information. We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy.</p>
+                </div>
+            </div>
+
+            <div class="policy-item">
+                <button class="policy-trigger">Collecting Your Data <i class="fa-solid fa-plus"></i></button>
+                <div class="policy-panel">
+                    <h4>Personal Data</h4>
+                    <p>While using Our Service, We may ask You to provide Us with certain personally identifiable information including Email, Name, Phone number, and Address details.</p>
+                    <h4>Usage Data</h4>
+                    <p>Collected automatically. Includes Your Device's IP address, browser version, time spent on pages, and mobile device identifiers like time zone and operating system.</p>
+                </div>
+            </div>
+
+            <div class="policy-item">
+                <button class="policy-trigger">How We Use Your Data <i class="fa-solid fa-plus"></i></button>
+                <div class="policy-panel">
+                    <p>The Company may use Personal Data for:</p>
+                    <ul>
+                        <li>Maintaining our Service and monitoring usage.</li>
+                        <li>Managing Your Account and registration.</li>
+                        <li>Fulfilling purchase contracts for products.</li>
+                        <li>Contacting You via email or SMS for security/updates.</li>
+                        <li>Providing news and special offers (The Baddie List).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="policy-item">
+                <button class="policy-trigger">Sharing & Retention <i class="fa-solid fa-plus"></i></button>
+                <div class="policy-panel">
+                    <p>We may share info with Service Providers to analyze usage or during business transfers (mergers). We retain data only as long as necessary for legal obligations, dispute resolution, and enforcing agreements.</p>
+                </div>
+            </div>
+
+            <div class="policy-item">
+                <button class="policy-trigger">Your Rights & Deletion <i class="fa-solid fa-plus"></i></button>
+                <div class="policy-panel">
+                    <p>You have the right to delete or request assistance in deleting collected data. You can update or delete info anytime in your Account settings or by contacting us. Note: We may retain info when legally required.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="logo" style="color: white;">SKRNCH</div>
+                <p>Authentic hair imported directly from India.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 SKRNCH. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.policy-trigger').forEach(button => {
+            button.addEventListener('click', () => {
+                const item = button.parentElement;
+                item.classList.toggle('active');
+                const icon = button.querySelector('i');
+                icon.classList.toggle('fa-plus');
+                icon.classList.toggle('fa-minus');
+            });
+        });
+    </script>
+</body>
+</html>

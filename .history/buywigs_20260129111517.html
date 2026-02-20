@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wigs | SKRNCH </title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+
+<div id="app" v-cloak>
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">SKRNCH </div>
+            <nav>
+                <ul>
+                    <li><a href="Homepage.html">Home</a></li>
+                    <li><a href="buywigs.html" style="color: var(--rose)">Wigs</a></li>
+                    <li><a href="ordernow.html" class="btn-small-nav">Order Now</a></li>
+                    <li><a href="UserCart.html">Bag ({{ cartCount }})</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero-small">
+            <h1>All Available Wigs</h1>
+            <p class="subtitle">100% authentic Indian human hair for baddies.</p>
+        </section>
+
+        <div class="header-controls">
+            <button class="filter-toggle-btn" @click="isSearchOpen = !isSearchOpen">
+                <span v-if="!isSearchOpen">🔍 Filter & Search</span>
+                <span v-else>✖ Close</span>
+            </button>
+
+            <div v-if="isSearchOpen" class="filter-dropdown-menu">
+                <input type="text" v-model="searchQuery" class="search-input" placeholder="Search by name...">
+                
+                <div class="filter-section">
+                    <label>Price Range</label>
+                    <div class="btn-group">
+                        <button v-for="range in priceRanges" 
+                            :class="{active: activePrice === range}" 
+                            @click="activePrice = (activePrice === range ? null : range)">
+                            {{ range.label }}
+                        </button>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <label>Wig Type</label>
+                    <div class="btn-group">
+                        <button v-for="type in wigTypes" 
+                            :class="{active: activeType === type}" 
+                            @click="activeType = type">
+                            {{ type }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="media-card" v-for="wig in filteredWigs" :key="wig.id">
+                <div class="image-wrapper">
+                    <img :src="wig.image" :alt="wig.name">
+                </div>
+                <div class="card-content">
+                    <h3>{{ wig.name }}</h3>
+                    <p style="font-size: 0.8rem; color: #777; margin: 10px 0;">{{ wig.description }}</p>
+                    <div class="price">Ksh. {{ wig.price.toLocaleString() }}</div>
+                    <!--Adding each wig to cart-->
+                    <button class="btn-cart" onclick="addToCart(wig)"> Add to Cart </button>
+                </div>
+            </div>
+        </div>
+        <div v-if="filteredWigs.length === 0" style="text-align:center; padding: 50px;">
+            No wigs match your filters.
+        </div>
+    </main>
+</div>
+
+<script>
+    const { createApp } = Vue;
+
+    createApp({
+        data() {
+            return {
+                isSearchOpen: false,
+                searchQuery: '',
+                activePrice: null,
+                activeType: 'All',
+                cart: JSON.parse(localStorage.getItem('eemani_cart')) || [],
+                priceRanges: [
+                    { label: '< 5k', min: 0, max: 5000 },
+                    { label: '5k-10k', min: 5001, max: 10000 },
+                    { label: '> 10k', min: 10001, max: 50000 }
+                ],
+                wigTypes: ['All', 'Glueless', 'Frontal', 'Full Lace'],
+                wigs: [
+                    { id: 1, name: 'Black Straight 40"', price: 15500, type: 'Frontal', color: 'black', description: 'Thick black straight hair.', image: 'assets/Black Straight Human Hair 40-Inch Wig.jpeg', availableStock: 10, totalStock: 20 },
+                    { id: 2, name: 'Bone-straight Bob', price: 12300, type: 'Glueless', color: 'black', description: 'Corporate look.', image: 'assets/Bone-straight Black Bob Glueless Wig.jpeg', availableStock: 5, totalStock: 15 },
+                    { id: 3, name: 'Brown Pixie Cut', price: 3300, type: 'Frontal', color: 'colored', description: 'Chic short look.', image: 'assets/Brown Pixie Cut Human Hair Frontal Lace.jpeg', availableStock: 10, totalStock: 20 },
+                    { id: 4, name: 'Black Watercurl 40"', price: 4500, type: 'Full Lace', color: 'black', description: 'Low maintenance curls.', image: 'assets/Black Watercurl 40-Inch Wig.jpeg', availableStock: 8, totalStock: 25 },
+                    { id: 5, name:'Black Wavy Human Hair 40', price: 17500, type: 'Frontal', color: 'black', description: 'Long wavy wig, easy to install. Volume remains after blowout.', image: 'assets/Black Wavy Human Hair 40-Inch Wig.jpeg', availableStock: 7, totalStock: 25 },
+                    { id:6, name: 'Burgundy Straight Human Hair 40', price: 12500, type: 'Full Lace', color: 'colored', description: 'Bold color.Easy to install, low maintenance, amazing colour and 100% Human hair', image:'assets/Burgundy Straight Human Hair 40-Inch Wig.jpeg' , availableStock :12 , totalStock :25},
+                    { id :7 , name :'Brazilian 30" Pre-Plucked' , price :17800 , type :'Frontal' , color :'black' , description :'100% Human hair, pre-plucked lace for a natural hairline.' , image :'assets/Brazilian 30-Pre-Plucked Frontal Lace Wig.webp', availableStock :12 , totalStock :30},
+                    { id :8 , name :'Brown Pixie Cut' , price :3300 , type :'Frontal' , color :'colored' , description :'Low maintenance, chic look. 100% premium human hair.' , image :'assets/Brown Pixie Cut Human Hair Frontal Lace.jpeg' , availableStock :10 , totalStock :20},
+                    { id :9 , name :'Black Watercurl 40"' , price :4500 , type :'Full Lace' , color :'black' , description :'Low maintenance curls.' , image :'assets/Black Watercurl 40-Inch Wig.jpeg' , availableStock :8 , totalStock :25},
+                    { id :10, name :'Black Wavy Human Hair 40', price :17500, type :'Frontal', color :'black', description :'Long wavy wig, easy to install. Volume remains after blowout.', image :'assets/Black Wavy Human Hair 40-Inch Wig.jpeg', availableStock :7, totalStock :25},
+                    { id: 11, name: 'Curly Bob Wig', price: 8000, type: 'Glueless', color: 'black', description: 'Short curly bob style.', image: 'assets/Curly Bob Wig.jpeg', availableStock: 6, totalStock: 18},
+                    { id: 12, name: 'Blonde Straight Wig', price: 12000, type: 'Full Lace', color: 'colored', description: 'Sleek blonde straight hair.', image: 'assets/Blonde Straight Wig.jpeg', availableStock: 9, totalStock: 22},
+                    { id: 13, name: 'Red Wavy Wig', price: 14000, type: 'Frontal', color: 'colored', description: 'Vibrant red wavy hair.', image: 'assets/Red Wavy Wig.jpeg', availableStock: 4, totalStock: 12  },
+                    { id: 14, name: 'Black Kinky Curly Wig', price: 16000, type: 'Full Lace', color: 'black', description: 'Natural kinky curly texture.', image: 'assets/Black Kinky Curly Wig.jpeg', availableStock: 11, totalStock: 30  },
+                    { id: 15, name: 'Ombre Straight Wig', price: 13000, type: 'Glueless', color: 'colored', description: 'Beautiful ombre straight hair.', image: 'assets/Ombre Straight Wig.jpeg', availableStock: 5, totalStock: 15  },
+                    { id: 16, name: ''}
+                ]
+            }
+        },
+        computed: {
+            filteredWigs() {
+                return this.wigs.filter(wig => {
+                    const matchesSearch = wig.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+                    const matchesPrice = !this.activePrice || (wig.price >= this.activePrice.min && wig.price <= this.activePrice.max);
+                    const matchesType = this.activeType === 'All' || wig.type === this.activeType;
+                    return matchesSearch && matchesPrice && matchesType;
+                });
+            },
+            cartCount() { return this.cart.length; }
+        },
+        methods: {
+            addToCart(wig) {
+                this.cart.push(wig);
+                localStorage.setItem('eemani_cart', JSON.stringify(this.cart));
+                alert(`${wig.name} added to bag!`);
+            }
+        }
+    }).mount('#app');
+</script>
+</body>
+</html>>
+
+<script>
+    export default{
+data() {
+  return {
+    searchQuery: '',
+    activePrice: null,
+    activeType: 'All',
+    activeColor: 'All',
+    priceRanges: [
+      { label: '< 2,000', min: 0, max: 2000 },
+      { label: '2,001-5,000', min: 2001, max: 5000 },
+      { label: '5,001-10,000', min: 5001, max: 10000 },
+      { label: '> 10,000', min: 10001, max: 1000000 }
+    ],
+    wigTypes: ['All', 'Glue Lace', 'Frontal Lace', 'Full Lace', 'Extension'],
+    wigs: [] // Your main array of wig objects
+  }
+},
+computed: {
+  filteredWigs() {
+    return this.wigs.filter(wig => {
+      // 1. Filter by Search Name
+      const matchesSearch = wig.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+      
+      // 2. Filter by Price
+      const matchesPrice = this.activePrice 
+        ? (wig.price >= this.activePrice.min && wig.price <= this.activePrice.max)
+        : true;
+      
+      // 3. Filter by Type
+      const matchesType = (this.activeType === 'All' || wig.type === this.activeType);
+      
+      // 4. Filter by Color
+      const matchesColor = (this.activeColor === 'All' || wig.color === this.activeColor);
+
+      return matchesSearch && matchesPrice && matchesType && matchesColor;
+    });
+  }
+},
+methods: {
+  setPriceFilter(range) {
+    // Toggle filter off if clicked again
+    this.activePrice = this.activePrice === range ? null : range;
+  },
+  toggleSearch() {
+    // Your existing toggle logic
+  }
+}
+    }
+</script>
+
+<style>
+         :root {
+    /* Primary Background & UI */
+    --cream: #F2E3C2;      
+    --sand: #E5DED2;       
+    
+    /* Brand & Accent Colors */
+    --bronze: #A67C52;     
+    --gold-leaf: #C5B081;   
+    --deep-cocoa: #967969; 
+
+    /* Layout & Typography */
+    --max-width: 1200px;
+    --heading-font: 'Playfair Display', serif; 
+    --body-font: 'Montserrat', sans-serif;
+}
+   
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--cream); color: var(--burgundy); font-family: var(--body-font); line-height: 1.6; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; position: relative; }
+
+        /* --- HEADER & NAV --- */
+        .main-header { background: white; padding: 15px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--pink); }
+        .main-header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: var(--heading-font); font-size: 1.8rem; font-weight: 700; }
+        nav ul { display: flex; list-style: none; align-items: center; gap: 25px; }
+        nav ul li a { text-decoration: none; color: var(--burgundy); font-weight: 600; font-size: 0.85rem; }
+        .btn-small-nav { background: var(--burgundy); color: white !important; padding: 10px 22px; border-radius: 50px; }
+
+        /* --- IMPROVED SEARCH & FILTER --- */
+        .header-controls { position: relative; margin: 20px 0; display: flex; justify-content: flex-end; }
+        .filter-toggle-btn {
+            background: var(--burgundy); color: white; border: none; padding: 12px 25px;
+            border-radius: 50px; cursor: pointer; display: flex; align-items: center; gap: 10px;
+            font-weight: 600; transition: 0.3s;
+        }
+        .filter-dropdown-menu {
+            position: absolute; top: 55px; right: 0; background: white; width: 320px;
+            padding: 25px; border-radius: 15px; border: 1px solid var(--pink);
+            box-shadow: 0 10px 30px rgba(133, 14, 53, 0.15); z-index: 100;
+        }
+        .filter-section { margin-bottom: 15px; }
+        .filter-section label { display: block; font-size: 0.75rem; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; color: var(--rose); }
+        .btn-group { display: flex; flex-wrap: wrap; gap: 5px; }
+        .btn-group button { 
+            background: white; border: 1px solid var(--pink); padding: 5px 12px; 
+            border-radius: 15px; cursor: pointer; font-size: 0.75rem; transition: 0.2s;
+        }
+        .btn-group button.active { background: var(--burgundy); color: white; border-color: var(--burgundy); }
+        .search-input { width: 100%; padding: 10px; border: 1px solid var(--pink); border-radius: 8px; margin-bottom: 15px; }
+
+        /* --- HERO & GRID --- */
+        .hero-small { padding: 40px 0; text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; padding-bottom: 60px; }
+        .media-card { background: white; border-radius: 20px; overflow: hidden; border: 1px solid var(--pink); transition: 0.3s; }
+        .media-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .image-wrapper { height: 320px; width: 100%; }
+        .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .card-content { padding: 20px; }
+        .price { font-weight: 700; font-size: 1.2rem; color: var(--burgundy); }
+        .btn-cart { width: 100%; background: var(--burgundy); color: white; border: none; padding: 12px; border-radius: 50px; cursor: pointer; margin-top: 15px; font-weight: 600; }
+        
+        [v-cloak] { display: none; }
+    </style>

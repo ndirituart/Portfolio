@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wigs | SKRNCH </title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">SKRNCH </div>
+            <nav>
+                <ul>
+                    <li><a href="Homepage.html">Home</a></li>
+                    <li><a href="#">Wigs</a></li>
+                    <li><a href="ordernow.html" class="btn-small-nav">Order Now</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-small">
+            <div class="container">
+                <h1>All Available Wigs</h1>
+                <p class="subtitle">Experience 100% authentic Indian human hair. Durable, luxurious, and made for baddies.</p>
+            </div>
+        </section>
+
+        <section class="media-grid">
+            <div class="container">
+                <div class="grid">
+
+                    <!--Search to search wig by name or color or price range-->
+                   <div class="filter-container p-3">
+                       <div class="input-group mb-3">
+                           <input type="text" v-model="searchQuery" class="form-control" placeholder="Search wigs by name...">
+                           <button class="btn btn-outline-secondary" @click="applyFilters">🔍</button>
+                       </div>
+
+                       <div class="filters">
+                           <label class="fw-bold">Price (Ksh):</label>
+                           <div class="btn-group d-flex flex-wrap mb-2" role="group">
+                               <button v-for="range in priceRanges" :key="range.label" 
+                                       :class="['btn btn-sm', activePrice === range ? 'btn-dark' : 'btn-outline-dark']"
+                                       @click="setPriceFilter(range)">
+                                   {{ range.label }}
+                               </button>
+                           </div>
+
+                           <label class="fw-bold">Wig Type:</label>
+                           <div class="btn-group d-flex flex-wrap mb-2">
+                              <button v-for="type in wigTypes" :key="type"
+                                      :class="['btn btn-sm', activeType === type ? 'btn-primary' : 'btn-outline-primary']"
+                    @click="activeType = type">
+                {{ type }}
+            </button>
+        </div>
+
+        <label class="fw-bold">Color:</label>
+        <div class="btn-group mb-2">
+            <button @click="activeColor = 'black'" :class="['btn btn-sm', activeColor === 'black' ? 'btn-dark' : 'btn-outline-dark']">Black</button>
+            <button @click="activeColor = 'colored'" :class="['btn btn-sm', activeColor === 'colored' ? 'btn-dark' : 'btn-outline-dark']">Colored</button>
+        </div>
+    </div>
+</div>
+                    <div class="media-card">
+                        <div class="image-wrapper">
+                            <img src="assets/Black Straight Human Hair 40-Inch Wig.jpeg" alt='40-Inch Black Straight'>
+                        </div>
+                        <div class="card-content">
+                            <h3>Black Straight 40"</h3>
+                            <p>Thick black straight hair, lace front cap, ready for wearing.</p>
+                            <div class="price-stock">
+                                <span class="price">Ksh. 15,500</span>
+                                <span class="stock">In Stock 5/10</span>
+                            </div>
+                            <button class="btn-cart">Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="media-card">
+                        <div class="image-wrapper">
+                            <img src="assets/Black Watercurl 40-Inch Wig.jpeg" alt='40-Inch Watercurl'>
+                        </div>
+                        <div class="card-content">
+                            <h3>Black Watercurl 40"</h3>
+                            <p>Low maintenance, just spray water to activate curls. 100% human hair.</p>
+                            <div class="price-stock">
+                                <span class="price">Ksh. 4,500</span>
+                                <span class="stock">In Stock 6/10</span>
+                            </div>
+                            <button class="btn-cart">Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="media-card">
+                        <div class="image-wrapper">
+                            <img src="assets/Black Wavy Human Hair 40-Inch Wig.jpeg" alt='40-Inch Wavy'>
+                        </div>
+                        <div class="card-content">
+                            <h3>Black Wavy 40"</h3>
+                            <p>Long wavy wig, easy to install. Volume remains after blowout.</p>
+                            <div class="price-stock">
+                                <span class="price">Ksh. 17,500</span>
+                                <span class="stock">In Stock 2/10</span>
+                            </div>
+                            <button class="btn-cart">Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="media-card">
+                        <div class="image-wrapper">
+                            <img src="assets/Bone-straight Black Bob Glueless Wig.jpeg" alt='Glueless Bob'>
+                        </div>
+                        <div class="card-content">
+                            <h3>Bone-straight Bob</h3>
+                            <p>Glueless, corporate look, and amazing volume for daily wear.</p>
+                            <div class="price-stock">
+                                <span class="price">Ksh. 12,300</span>
+                                <span class="stock">In Stock 5/15</span>
+                            </div>
+                            <button class="btn-cart">Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="media-card">
+                        <div class="image-wrapper">
+                            <img src="assets/Brazilian 30-Pre-Plucked Frontal Lace Wig.webp" alt='Brazilian 30"'>
+                        </div>
+                        <div class="card-content">
+                            <h3>Brazilian 30" Pre-Plucked</h3>
+                            <p>100% Human hair, pre-plucked lace for a natural hairline.</p>
+                            <div class="price-stock">
+                                <span class="price">Ksh. 17,800</span>
+                                <span class="stock">In Stock 7/25</span>
+                            </div>
+                            <button class="btn-cart">Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="media-card">
+                        <div class="image-wrapper">
+                            <img src="assets/Brown Pixie Cut Human Hair Frontal Lace.jpeg" alt='Brown Pixie'>
+                        </div>
+                        <div class="card-content">
+                            <h3>Brown Pixie Cut</h3>
+                            <p>Low maintenance, chic look. 100% premium human hair.</p>
+                            <div class="price-stock">
+                                <span class="price">Ksh. 3,300</span>
+                                <span class="stock">In Stock 1/10</span>
+                            </div>
+                            <!--Adding each item to cart page once clicked-->
+                            <button class="btn-cart" @click="addToCart(item)">Add to Cart</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="logo" style="color: white;">SKRNCH <span>.</span></div>
+                <p>Authentic hair imported directly from India. Quality you can feel.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Join the Baddie List</h4>
+                <div class="input-group">
+                    <input type="email" placeholder="Email address">
+                    <button>Join</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SKRNCH . All rights reserved.</p>
+        </div>
+    </footer>
+   </body>
+</html>
+
+<script>
+
+function addToCart(productName, productPrice) {
+    console.log(productName + ', ' + productPrice);
+ 
+    var cartTableBody = document.querySelector('.shopping-cart');
+    console.log(cartTableBody)
+
+    // Create a new row for the cart item
+    var newRow = cartTableBody.insertRow();
+    console.log(newRow)
+    
+    // Create cells for product name and price
+    var productNameCell = newRow.insertCell(0);
+    var productPriceCell = newRow.insertCell(1);
+    
+    // Set the content of the cells
+    productNameCell.textContent = productName;
+    productPriceCell.textContent = '$' + productPrice.toFixed(2);
+}
+
+</script>
+
+<style>
+:root {
+    --cream: #FCF5EE;
+    --pink: #FFC4C4;
+    --rose: #EE6983;
+    --burgundy: #850E35;
+    --max-width: 1200px;
+    --heading-font: 'Playfair Display', serif;
+    --body-font: 'Montserrat', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--cream);
+    color: var(--burgundy);
+    line-height: 1.6;
+    font-family: var(--body-font);
+}
+
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- HEADER --- */
+.main-header {
+    background: white;
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid var(--pink);
+}
+
+.main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: var(--heading-font);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--burgundy);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    align-items: center;
+}
+
+nav ul li { margin-left: 25px; }
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--burgundy);
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.btn-small-nav {
+    background: var(--burgundy);
+    color: white !important;
+    padding: 10px 22px;
+    border-radius: 50px;
+}
+
+/* --- HERO --- */
+.hero-small {
+    padding: 60px 0;
+    text-align: center;
+    background: white;
+}
+
+h1 {
+    font-family: var(--heading-font);
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1rem;
+    color: var(--rose);
+}
+
+/* --- GRID & CARDS --- */
+.media-grid { padding: 60px 0; }
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 40px;
+}
+
+.media-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--pink);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.media-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(133, 14, 53, 0.1);
+}
+
+.image-wrapper {
+    height: 350px;
+    overflow: hidden;
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.card-content h3 {
+    font-family: var(--heading-font);
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+}
+
+.card-content p {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.price-stock {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.price {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--burgundy);
+}
+
+.stock {
+    font-size: 0.75rem;
+    color: var(--rose);
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.btn-cart {
+    background: var(--burgundy);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 50px;
+    font-family: var(--body-font);
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-cart:hover {
+    background: var(--rose);
+}
+
+/* --- FOOTER --- */
+.main-footer {
+    background: var(--burgundy);
+    color: white;
+    padding: 60px 0 20px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr;
+    gap: 40px;
+}
+
+.footer-links h4, .footer-contact h4 { 
+    font-family: var(--heading-font); 
+    margin-bottom: 20px; 
+}
+
+.footer-links ul { list-style: none; }
+.footer-links ul li a { color: var(--pink); text-decoration: none; font-size: 0.8rem; line-height: 2.5; }
+
+.input-group { display: flex; margin-top: 15px; }
+.input-group input { padding: 12px; border-radius: 4px 0 0 4px; border: none; flex: 1; }
+.input-group button { padding: 12px 20px; background: var(--rose); border: none; color: white; border-radius: 0 4px 4px 0; cursor: pointer; }
+
+.footer-bottom { text-align: center; margin-top: 40px; font-size: 0.7rem; color: var(--pink); border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;}
+
+@media (max-width: 768px) {
+    .footer-grid { grid-template-columns: 1fr; }
+    h1 { font-size: 2.2rem; }
+}
+</style>

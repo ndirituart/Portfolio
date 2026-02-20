@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>accessorys | SKRNCH </title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+
+<div id="app" v-cloak>
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">SKRNCH </div>
+            <nav>
+                <ul>
+                    <li><a href="Homepage.html">Home</a></li>
+                    <li><a href="buywigs.html" style="color: var(--rose)">Wigs</a></li>
+                    <li><a href="ordernow.html" class="btn-small-nav">Order Now</a></li>
+                    <li><a href="UserCart.html">Bag ({{ cartCount }})</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero-small">
+            <h1>All Hair Accessories</h1>
+            <p class="subtitle">Hair ties, bands, and scrunchies for women include versatile options ranging from 
+                gentle satin/silk scrunchies that prevent hair breakage to high-elastic,
+                 damage-free, and seamless rubber bands for secure, all-day holds on thick or thin hair.</p>
+        </section>
+
+        <div class="header-controls">
+            <button class="filter-toggle-btn" @click="isSearchOpen = !isSearchOpen">
+                <span v-if="!isSearchOpen">🔍 Filter & Search</span>
+                <span v-else>✖ Close</span>
+            </button>
+
+            <div v-if="isSearchOpen" class="filter-dropdown-menu">
+                <input type="text" v-model="searchQuery" class="search-input" placeholder="Search by name...">
+                
+                <div class="filter-section">
+                    <label>Price Range</label>
+                    <div class="btn-group">
+                        <button v-for="range in priceRanges" 
+                            :class="{active: activePrice === range}" 
+                            @click="activePrice = (activePrice === range ? null : range)">
+                            {{ range.label }}
+                        </button>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <label>Hair Accessory</label>
+                    <div class="btn-group">
+                        <button v-for="type in hairAccessories" 
+                            :class="{active: activeType === type}" 
+                            @click="activeType = type">
+                            {{ type }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="media-card" v-for="accessory in filteredAccessories" :key="accessory.id">
+                <div class="image-wrapper">
+                    <img :src="accessory.image" :alt="accessory.name">
+                </div>
+                <div class="card-content">
+                    <h3>{{ accessory.name }}</h3>
+                    <p style="font-size: 0.8rem; color: #777; margin: 10px 0;">{{ accessory.description }}</p>
+                    <div class="price">Ksh. {{ accessory.price.toLocaleString() }}</div>
+                    <!--Adding each accessory to cart-->
+                    <button class="btn-cart" onclick="addToCart(accessory)"> Add to Cart </button>
+                </div>
+            </div>
+        </div>
+        <div v-if="filteredAccessories.length === 0" style="text-align:center; padding: 50px;">
+            No accessories match your filters.
+        </div>
+    </main>
+</div>
+
+<script>
+    const { createApp } = Vue;
+
+    createApp({
+        data() {
+            return {
+                isSearchOpen: false,
+                searchQuery: '',
+                activePrice: null,
+                activeType: 'All',
+                cart: JSON.parse(localStorage.getItem('eemani_cart')) || [],
+                priceRanges: [
+                    { label: '<250', min: 0, max: 250 },
+                    { label: '251-500', min: 251, max: 500 },
+                    { label: '501-1k', min: 501, max: 1000 },
+                    { label: '> 1k', min: 1001, max: 5000 }
+                ],
+                hairAccessories: ['All', 'Hair Ties', 'Hair Covers', 'Hair Decorations'],
+                accessories: [
+                    { id: 1, name: 'Acrylic Animal Print Barette', price: 1500, type: 'Hair Decorations', color: 'multi-color', description: 'Simple and stylish barette with animal print design.', image: '../assets/accessories/Acrylic Animal Print Barette.jpg', availableStock: 12, totalStock: 15 },
+                    { id: 2, name: 'Black Hair Bonnet', price: 650, type: 'Hair Covers', color: 'black', description: 'Simple satin black bonnet to sleep with', image: '../assets/accessories/Black Hair Bonnet.jpg', availableStock: 5, totalStock: 15 },
+                    { id: 3, name: 'Black or Leopard Print Strechy Headband', price: 500, type: 'Hair Decorations', color: 'black-mixed', description: 'Chic short look headbands for your wigs', image: '../assets/accessories/Black or Leopard Print Strechy Headband.jpg', availableStock: 8, totalStock: 20 },
+                    { id: 4, name: 'Black Simple Ponytail Tie', price: 100, type: 'Hair Ties', color: 'black', description: 'Simple hairbands to hold your hair.', image: '../assets/accessories/Black Simple Ponytail Tie.jpg', availableStock: 80, totalStock: 250 },
+                    { id: 5, name: 'Blue Hair Bonnet', price: 650, type: 'Hair Covers', color: 'colored', description: 'Simple  satin bonnet to sleep with.', image: '../assets/accessories/Blue Hair Bonnet.jpg', availableStock: 7, totalStock: 25 },
+                    { id: 6, name: 'Crystal Hair Bow', price: 700, type: 'Hair Decorations', color: 'colored', description: 'Pretty cry', image:'assets/Burgundy Straight Human Hair 40-Inch accessory.jpeg' , availableStock :12 , totalStock :25},
+                    { id: 7, name :'Brazilian 30" Pre-Plucked' , price :17800 , type :'Hair Covers' , color :'black' , description :'100% Human hair, pre-plucked lace for a natural hairline.' , image :'assets/Brazilian 30-Pre-Plucked Hair Covers Lace accessory.webp', availableStock :12 , totalStock :30},
+                    { id: 8, name :'Curly Black 40"' , price : 12500, type :'Hair Decorations' , color :'black' , description :'Easy to install, easy to detangle and 100% Human hair.' , image :'assets/Curly Black 40-Inch Human Hair Full-lace accessory.jpeg' , availableStock :5 , totalStock :10},
+                    { id: 9, name :'Headband Curly accessory 30"' , price : 4500 , type :'Hair Ties' , color :'black' , description :'Low maintenance curls.Wear-and-go' , image :'assets/Headband Curly accessory 30-Inches.jpeg' , availableStock :1 , totalStock :10},
+                    { id: 10, name: 'Headband Kinky accessory 20"', price: 3600, type: 'Hair Ties', color: 'black', description: 'Low maintenance curls.Wear-and-go', image: 'assets/Headband Kinky accessory 20-Inches.jpeg', availableStock: 3, totalStock: 10},
+                    { id: 11, name :'Curly Blonde 20"', price :7500, type :'Hair Decorations', color :'colored', description :'Long wavy accessory, easy to install. Volume remains after blowout.', image :'assets/Curly Blonde 20-Inch Human Hair Full-lace accessory.jpeg', availableStock :7, totalStock :25},
+                    { id: 12, name: 'Black Hair Ties accessory With Pre-cut Bangs 20"', price: 8900, type: 'Hair Ties', color: 'black', description: 'Wear and go accessory, sleek look, low maintenance 100% Human hair', image: 'assets/Human Hair 20-Inch Hair Ties accessory With Pre-cut Bangs.webp', availableStock: 7, totalStock: 15},
+                    { id: 13, name: 'Black Straight accessory 20"', price: 9000, type: 'Hair Covers', color: 'black', description: 'Easy to install.sleek look, low maintenance 100% Human hair.', image: 'assets/Human Hair 20-Inch Hair Ties accessory.webp', availableStock: 12, totalStock: 20 },
+                    { id: 14, name: 'Black Straight accessory 40"', price: 8500, type: 'Hair Ties', color: 'black', description: 'Amazing waves and volume.Wear and go accessory, sleek look, low maintenance 100% Human hair.', image: 'assets/Human Hair 40-Inch Hair Ties accessory.webp', availableStock: 15, totalStock: 20  },
+                    { id: 15, name: 'Black Bone-straight accessory 45"', price: 25000, type: 'Hair Decorations', color: 'black', description: 'Perfect shine, amazing length, easy to install and style. Serves multiple wears and long lasting.', image: 'assets/Human Hair Bonestraight 40-Inch-Hair Covers.webp', availableStock: 1, totalStock: 5 },
+                    { id: 16, name: 'Black Wavy accessory 25"', price: 19200, type: 'Hair Decorations', color: 'black', description: 'Amazing volume, easy to install and maintain, 100% Human hair', image: 'assets/Human Hair Curvy Volume accessory.webp', availableStock: 8, totalStock: 15  },
+                    { id: 17, name: 'Black Long Curly accessory 25"', price: 13500, type: 'Hair Covers', color: 'black', description: 'Voluminous curls, easy to install and maintain, 100% Human hair', image: 'assets/Human Hair Kinky accessory 40-Inch.webp', availableStock: 10, totalStock: 20  },
+                    { id: 18, name: 'Orange Pixie Cut 5"', price: 4200, type: 'Hair Ties', color: 'colored', description: 'Vibrant color, chic short look.', image: 'assets/Orange Pixie Cut Semi-Human Hair.jpeg', availableStock: 4, totalStock: 10  },
+                    { id: 19, name:' Black Pixie Cut accessory 3" ', price: 3800, type: 'Hair Covers', color: 'black', description: 'Chic short look.', image: 'assets/Pixie Cut Human Hair Hair Covers Lace.jpeg', availableStock: 6, totalStock: 15  },
+                    { id: 20, name: 'Red Bone-Straight accessory 40" ', price: 12500, type: 'Hair Decorations', color: 'colored', description: 'Vibrant color, amazing length, easy to install and no tangles', image: 'assets/Red Straight Human Hair 40-Inch accessory.jpeg', availableStock: 3, totalStock: 10  },
+                    { id: 21, name: 'Black Curly accessory 30" ', price: 14500, type: 'Hair Decorations', color: 'black', description: 'Easy to install, easy to detangle and 100% Human hair.', image: 'assets/accessory 001.jpeg', availableStock: 1, totalStock: 20  },
+                    { id: 22, name: 'Brown Curly accessory 30" ', price: 15000, type: 'Hair Decorations', color: 'colored', description: 'Easy to install, maintains curls after blowout and 100% Human hair.', image: 'assets/accessory 002.jpeg', availableStock: 3, totalStock: 30  },
+                    { id: 23, name: 'Dirty Blond Straight accessory 25" ', price: 12500, type: 'Hair Covers', color: 'colored', description: 'Easy to install, light-colored. Long straight with curled ends. and 100% Human hair.', image: 'assets/accessory 003.jpeg', availableStock: 3, totalStock: 15  },
+                    { id: 24, name: 'Black Watercurl Curly accessory 40" ', price: 22000, type: 'Hair Covers', color: 'black', description: 'Easy to install, water to activate curls and 100% Human hair.', image: 'assets/accessory 004.jpeg', availableStock: 2, totalStock: 20  },
+                    { id: 25, name: 'Black Layered Curls accessory 20" ', price: 16500, type: 'Hair Decorations', color: 'black', description: 'Corporate look, easy to install, volumous, wavy and 100% Human hair.', image: 'assets/accessory 005.jpeg', availableStock: 4, totalStock: 25 },
+                    { id: 26, name: 'Black Short Curly accessory 15" ', price: 11500, type: 'Hair Covers', color: 'black', description: 'Easy to install, amazing curls and volume.100% Human hair.', image: 'assets/accessory 006.jpeg', availableStock: 1, totalStock: 12  },
+                    { id: 27, name: 'Brown Long Wavy accessory 30" ', price: 21500, type: 'Hair Decorations', color: 'colored', description: 'Amazing brown color, easy to install, amazing curls and volume.100% Human hair..', image: 'assets/accessory 007.jpeg', availableStock: 1, totalStock: 25  },
+                    ]
+            }
+        },
+        computed: {
+            filteredAccessories() {
+                return this.accessories.filter(accessory => {
+                    const matchesSearch = accessory.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+                    const matchesPrice = !this.activePrice || (accessory.price >= this.activePrice.min && accessory.price <= this.activePrice.max);
+                    const matchesType = this.activeType === 'All' || accessory.type === this.activeType;
+                    return matchesSearch && matchesPrice && matchesType;
+                });
+            },
+            cartCount() { return this.cart.length; }
+        },
+        methods: {
+            addToCart(accessory) {
+                this.cart.push(accessory);
+                localStorage.setItem('eemani_cart', JSON.stringify(this.cart));
+                alert(`${accessory.name} added to bag!`);
+            }
+        }
+    }).mount('#app');
+</script>
+</body>
+</html>>
+
+<script>
+    export default{
+data() {
+  return {
+    searchQuery: '',
+    activePrice: null,
+    activeType: 'All',
+    activeColor: 'All',
+    priceRanges: [
+      { label: '< 2,000', min: 0, max: 2000 },
+      { label: '2,001-5,000', min: 2001, max: 5000 },
+      { label: '5,001-10,000', min: 5001, max: 10000 },
+      { label: '> 10,000', min: 10001, max: 1000000 }
+    ],
+    hairAccessories: ['All', 'Hair Ties', 'Hair Covers', 'Hair Decorations'],
+    accessories: [] // Your main array of accessory objects
+  }
+},
+computed: {
+  filteredAccessories() {
+    return this.accessories.filter(accessory => {
+      // 1. Filter by Search Name
+      const matchesSearch = accessory.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+      
+      // 2. Filter by Price
+      const matchesPrice = this.activePrice 
+        ? (accessory.price >= this.activePrice.min && accessory.price <= this.activePrice.max)
+        : true;
+      
+      // 3. Filter by Type
+      const matchesType = (this.activeType === 'All' || accessory.type === this.activeType);
+      
+      // 4. Filter by Color
+      const matchesColor = (this.activeColor === 'All' || accessory.color === this.activeColor);
+
+      return matchesSearch && matchesPrice && matchesType && matchesColor;
+    });
+  }
+},
+methods: {
+  setPriceFilter(range) {
+    // Toggle filter off if clicked again
+    this.activePrice = this.activePrice === range ? null : range;
+  },
+  toggleSearch() {
+    // Your existing toggle logic
+  }
+}
+    }
+</script>
+
+<style>
+         :root {
+    /* Primary Background & UI */
+    --cream: #F2E3C2;      
+    --sand: #E5DED2;       
+    
+    /* Brand & Accent Colors */
+    --bronze: #A67C52;     
+    --gold-leaf: #C5B081;   
+    --deep-cocoa: #967969; 
+
+    /* Layout & Typography */
+    --max-width: 1200px;
+    --heading-font: 'Playfair Display', serif; 
+    --body-font: 'Montserrat', sans-serif;
+}
+   
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--cream); color: var(--burgundy); font-family: var(--body-font); line-height: 1.6; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; position: relative; }
+
+        /* --- HEADER & NAV --- */
+        .main-header { background: white; padding: 15px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--pink); }
+        .main-header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: var(--heading-font); font-size: 1.8rem; font-weight: 700; }
+        nav ul { display: flex; list-style: none; align-items: center; gap: 25px; }
+        nav ul li a { text-decoration: none; color: var(--burgundy); font-weight: 600; font-size: 0.85rem; }
+        .btn-small-nav { background: var(--burgundy); color: white !important; padding: 10px 22px; border-radius: 50px; }
+
+        /* --- IMPROVED SEARCH & FILTER --- */
+        .header-controls { position: relative; margin: 20px 0; display: flex; justify-content: flex-end; }
+        .filter-toggle-btn {
+            background: var(--burgundy); color: white; border: none; padding: 12px 25px;
+            border-radius: 50px; cursor: pointer; display: flex; align-items: center; gap: 10px;
+            font-weight: 600; transition: 0.3s;
+        }
+        .filter-dropdown-menu {
+            position: absolute; top: 55px; right: 0; background: white; width: 320px;
+            padding: 25px; border-radius: 15px; border: 1px solid var(--pink);
+            box-shadow: 0 10px 30px rgba(133, 14, 53, 0.15); z-index: 100;
+        }
+        .filter-section { margin-bottom: 15px; }
+        .filter-section label { display: block; font-size: 0.75rem; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; color: var(--rose); }
+        .btn-group { display: flex; flex-wrap: wrap; gap: 5px; }
+        .btn-group button { 
+            background: white; border: 1px solid var(--pink); padding: 5px 12px; 
+            border-radius: 15px; cursor: pointer; font-size: 0.75rem; transition: 0.2s;
+        }
+        .btn-group button.active { background: var(--burgundy); color: white; border-color: var(--burgundy); }
+        .search-input { width: 100%; padding: 10px; border: 1px solid var(--pink); border-radius: 8px; margin-bottom: 15px; }
+
+        /* --- HERO & GRID --- */
+        .hero-small { padding: 40px 0; text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; padding-bottom: 60px; }
+        .media-card { background: white; border-radius: 20px; overflow: hidden; border: 1px solid var(--pink); transition: 0.3s; }
+        .media-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .image-wrapper { height: 320px; width: 100%; }
+        .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .card-content { padding: 20px; }
+        .price { font-weight: 700; font-size: 1.2rem; color: var(--burgundy); }
+        .btn-cart { width: 100%; background: var(--burgundy); color: white; border: none; padding: 12px; border-radius: 50px; cursor: pointer; margin-top: 15px; font-weight: 600; }
+        
+        [v-cloak] { display: none; }
+    </style>

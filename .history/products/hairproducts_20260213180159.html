@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKRNCH | Hair Products</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+   
+</head>
+<body>
+
+<div id="app" v-cloak>
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">SKRNCH</div>
+            <nav>
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="shop.html">Shop From Us</a>
+                        <div class="dropdown-content">
+                            <a href="wigs.html">Wigs & Extensions</a>
+                            <a href="accessories.html">Accessories</a>
+                            <a href="essentials.html">Essentials</a>
+                            <a href="products.html">Hair Products</a>
+                        </div>
+                    </li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li>
+                        <a href="cart.html" class="cart-link">
+                            🛒<span v-if="cartCount > 0" class="cart-badge">{{ cartCount }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section style="padding: 60px 0; text-align: center;">
+            <h1>HAIR PRODUCTS</h1>
+            <p> Hair oils, shampoos, conditioners, sprays and hair gel to help with styling your wig, cleaning it,
+
+                    maintaining it as well as your natural hair.</p>
+        </section>
+
+        <div class="grid">
+            <div class="product-card" v-for="item in products" :key="item.id">
+                <div class="img-box">
+                    <img :src="item.image" :alt="item.name">
+                </div>
+                <div class="product-info">
+                    <h3>{{ item.name }}</h3>
+                    <span class="price">Ksh. {{ item.price.toLocaleString() }}</span>
+
+                    <span class="volume-label">Select Volume:</span>
+                    <div class="volume-options">
+                        <button v-for="size in item.volumes" 
+                                :key="size" 
+                                :class="['vol-btn', { active: item.userChoice === size }]"
+                                @click="item.userChoice = size">
+                            {{ size }}
+                        </button>
+                    </div>
+
+                    <button class="btn-cart" @click="addToCart(item)">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div>
+                <div class="logo" style="color: white; margin-bottom: 15px;">SKRNCH</div>
+                <p>Authentic quality you can feel, style you can see.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="shop.html">Shop All</a></li>
+                    <li><a href="tips.html">Care Tips</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container" style="text-align: center; margin-top: 40px; font-size: 0.8rem; color: var(--pink);">
+            &copy; 2026 SKRNCH. All rights reserved.
+        </div>
+    </footer>
+</div>
+
+
+</body>
+</html>
+
+<script>
+    const { createApp } = Vue;
+
+    createApp({
+        data() {
+            return {
+                cart: JSON.parse(localStorage.getItem('eemani_cart')) || [],
+                products: [
+                    { id: 201, name: 'ECO Hairgel', price: 850, image: '../assets/products/ECO Hairgel.jpg', volumes: ['300ml', '500ml'], userChoice: '300ml' },
+                    { id: 202, name: 'Immette Wig Shampoo', price: 1200, image: '../assets/products/Immette Wig Shampoo.jpg', volumes: ['150ml', '300ml'], userChoice: '150ml' },
+                    { id: 203, name: 'KMS Moisture Repair Spray', price: 1800, image: '../assets/products/KMS Moisture Repair Spray.jpg', volumes: ['100ml', '300ml'], userChoice: '100ml' },
+                    { id: 204, name: 'Moroccanoil Argan Oil Serum', price: 2500, image: '../assets/products/Moroccanoil Argan Oil Serum.jpg', volumes: ['100ml', '150ml'], userChoice: '100ml' },
+                    { id: 205, name: 'Moroccanoil Curl Enhancing Shampoo', price: 3200, image: '../assets/products/Moroccanoil Curl Enhancing Shampoo.jpg', volumes: ['300ml', '500ml'], userChoice: '300ml' },
+                    { id: 206, name: 'Movit Curl Activating Gel', price: 450, image: '../assets/products/Movit Curl Activating Gel.jpg', volumes: ['450ml', '800ml'], userChoice: '450ml' },
+                    { id: 207, name: 'Nishman Black Gel', price: 950, image: '../assets/products/Nishman Black Gel.jpg', volumes: ['300ml', '500ml'], userChoice: '300ml' },
+                    { id: 208, name: 'ORS Hair Mousse', price: 1100, image: '../assets/products/ORS Hair Mousse.jpg', volumes: ['150ml', '300ml'], userChoice: '150ml' },
+                    { id: 209, name: 'ORS Sheen Spray', price: 850, image: '../assets/products/ORS Sheen Spray.jpg', volumes: ['300ml', '450ml'], userChoice: '300ml' },
+                    { id: 210, name: 'Seamless Extension Conditioner', price: 2800, image: '../assets/products/Seamless Extension Conditioner.jpg', volumes: ['300ml', '1000ml'], userChoice: '300ml' },
+                    { id: 211, name: 'Seamless Extension Shampoo', price: 2800, image: '../assets/products/Seamless Extension Shampoo.jpg', volumes: ['300ml', '1000ml'], userChoice: '300ml' },
+                    { id: 212, name: 'Shine Enhancing Shampoo', price: 1500, image: '../assets/products/Shine Enhancing Shampoo.jpg', volumes: ['500ml', '800ml'], userChoice: '500ml' },
+                    { id: 213, name: 'Shine Wig Conditioner', price: 1400, image: '../assets/products/Shine Wig Conditioner.jpg', volumes: ['300ml', '500ml'], userChoice: '300ml' },
+                    { id: 214, name: 'Soft N Free Styling Gel', price: 400, image: '../assets/products/Soft N Free Styling Gel.jpg', volumes: ['450ml', '500ml'], userChoice: '450ml' },
+                    { id: 215, name: 'TCB Sheen Spray', price: 750, image: '../assets/products/TCB Sheen Spray.jpg', volumes: ['300ml', '450ml'], userChoice: '300ml' },
+                    { id: 216, name: 'Volumizing Powder', price: 1250, image: '../assets/products/Volumizing Powder.jpg', volumes: ['100ml', '150ml'], userChoice: '100ml' }
+                ]
+            }
+        },
+        computed: {
+            cartCount() {
+                return this.cart.reduce((total, item) => total + item.quantity, 0);
+            }
+        },
+        methods: {
+            addToCart(product) {
+                const cartId = `${product.id}-${product.userChoice}`;
+                const existing = this.cart.find(i => i.cartId === cartId);
+
+                if (existing) {
+                    existing.quantity++;
+                } else {
+                    this.cart.push({
+                        cartId: cartId,
+                        name: product.name,
+                        price: product.price,
+                        choice: product.userChoice,
+                        image: product.image,
+                        quantity: 1
+                    });
+                }
+                localStorage.setItem('eemani_cart', JSON.stringify(this.cart));
+                alert(`${product.name} (${product.userChoice}) added to cart!`);
+            }
+        }
+    }).mount('#app');
+</script>
+
+
+ <style>
+        :root {
+            --cream: #F2E3C2; --sand: #E5DED2; --bronze: #A67C52;
+            --gold-leaf: #C5B081; --deep-cocoa: #967969; --white: #ffffff;
+            --pink: #D4A5A5; --max-width: 1100px;
+            --heading-font: 'Playfair Display', serif;
+            --body-font: 'Montserrat', sans-serif;
+        }
+
+        [v-cloak] { display: none; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--cream); color: var(--deep-cocoa); font-family: var(--body-font); line-height: 1.6; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+
+        /* --- HEADER --- */
+        .main-header { background: white; padding: 15px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--pink); }
+        .main-header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: var(--heading-font); font-size: 1.8rem; font-weight: 700; color: var(--deep-cocoa); }
+        
+        nav ul { display: flex; list-style: none; align-items: center; }
+        nav ul li { margin-left: 25px; }
+        nav ul li a { text-decoration: none; color: var(--deep-cocoa); font-weight: 600; font-size: 0.85rem; }
+
+        /* --- CART ICON --- */
+        .cart-link { position: relative; font-size: 1.4rem; text-decoration: none; display: flex; align-items: center; }
+        .cart-badge { 
+            position: absolute; top: -5px; right: -12px; background: var(--bronze); 
+            color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; font-weight: bold;
+        }
+
+        /* --- DROPDOWN --- */
+        .dropdown { position: relative; }
+        .dropdown-content { display: none; position: absolute; background: white; min-width: 200px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 8px; top: 100%; border: 1px solid var(--pink); padding: 10px 0; }
+        .dropdown:hover .dropdown-content { display: block; }
+        .dropdown-content a { color: var(--deep-cocoa); padding: 12px 16px; text-decoration: none; display: block; font-size: 0.85rem; }
+
+        /* --- PRODUCT GRID --- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; padding: 40px 0; }
+        .product-card { background: white; border-radius: 15px; overflow: hidden; border: 1px solid var(--sand); transition: 0.3s; text-align: center; }
+        .product-card:hover { transform: translateY(-5px); }
+        .img-box { height: 250px; background: #f9f9f9; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .product-info { padding: 20px; }
+        .product-info h3 { font-size: 1rem; margin-bottom: 10px; height: 40px; overflow: hidden; }
+        .price { font-weight: 700; color: var(--bronze); margin-bottom: 15px; display: block; }
+
+        /* --- VOLUME SELECTOR --- */
+        .volume-label { font-size: 0.7rem; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; display: block; }
+        .volume-options { display: flex; justify-content: center; gap: 5px; margin-bottom: 20px; flex-wrap: wrap; }
+        .vol-btn { 
+            padding: 4px 10px; border: 1px solid var(--sand); background: white; 
+            border-radius: 4px; cursor: pointer; font-size: 0.75rem; 
+        }
+        .vol-btn.active { background: var(--deep-cocoa); color: white; border-color: var(--deep-cocoa); }
+
+        .btn-cart { width: 100%; background: var(--deep-cocoa); color: white; border: none; padding: 12px; border-radius: 50px; cursor: pointer; font-weight: 600; }
+        
+        /* --- FOOTER --- */
+        .main-footer { background: var(--deep-cocoa); color: white; padding: 60px 0 20px; margin-top: 50px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
+        .footer-links ul { list-style: none; }
+        .footer-links a { color: var(--pink); text-decoration: none; font-size: 0.9rem; line-height: 2; }
+    </style>

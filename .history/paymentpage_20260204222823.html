@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | SKRNCH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">SKRNCH</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container checkout-section">
+        <div class="checkout-grid">
+            
+            <div class="checkout-form-container">
+                <form action="#">
+                    <div class="card">
+                        <h3>Delivery Details</h3>
+                        <div class="form-row">
+                            <div>
+                                <label for="fname">Full Name</label>
+                                <input type="text" id="fname" placeholder="Jane Doe" required>
+                            </div>
+                            <div>
+                                <label for="email">Email</label>
+                                <input type="email" id="email" placeholder="jane@example.com" required>
+                            </div>
+                        </div>
+
+                        <label for="county">County</label>
+                        <select id="county" name="county" required>
+                            <option value="" disabled selected>Select County</option>
+                            <option value="nairobi">Nairobi</option>
+                            <option value="mombasa">Mombasa</option>
+                            <option value="kiambu">Kiambu</option>
+                            <option value="nakuru">Nakuru</option>
+                            <option value="kisumu">Kisumu</option>
+                        </select>
+
+                        <label for="adr">Specific Pickup Point / Apartment</label>
+                        <input type="text" id="adr" placeholder="e.g. Imenti House, Room 4 / Green Estate Hse 12">
+                    </div>
+
+                    <div class="card">
+                        <h3>M-Pesa Payment</h3>
+                        <div class="payment-icons">
+                            <i class="fa-solid fa-mobile-screen-button" style="color: #4CAF50;"></i>
+                            <small>Lipa na M-Pesa Available</small>
+                        </div>
+                        
+                        <label for="phnum">M-Pesa Phone Number</label>
+                        <input type="text" id="phnum" placeholder="0712 345 678" required>
+                        
+                        <label for="cname">Account Name (For Confirmation)</label>
+                        <input type="text" id="cname" placeholder="Name as it appears on M-Pesa">
+
+                        <button type="submit" class="btn-checkout">Pay Ksh. 27,800</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="cart-summary">
+                <h4>Your Order <span>2</span></h4>
+                <div class="cart-item">
+                    <p>Black Straight 40"</p>
+                    <span>Ksh. 15,500</span>
+                </div>
+                <div class="cart-item">
+                    <p>Bone-straight Bob</p>
+                    <span>Ksh. 12,300</span>
+                </div>
+                <div class="cart-total">
+                    <p>Total</p>
+                    <span>Ksh. 27,800</span>
+                </div>
+                <p style="font-size: 0.7rem; margin-top: 15px; opacity: 0.7; text-align: center;">
+                    <i class="fa fa-lock"></i> Secure encrypted checkout
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="logo">SKRNCH</div>
+                <p>Authentic hair imported directly from India.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="shop.html">Shop All</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 SKRNCH. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

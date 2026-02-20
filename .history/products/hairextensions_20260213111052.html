@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hair | SKRNCH </title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+
+<div id="app" v-cloak>
+   <header class="main-header">
+        <div class="container">
+            <div class="logo">SKRNCH</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="/shop.html" class="dropbtn">Shop From Us</a>
+                        <div class="dropdown-content">
+                            <a href="buywigs.html">Wigs & Hair Extensions</a>
+                            <a href="hairaccessories.html">Hair Accessories</a>
+                            <a href="hairessentials.html">Hair Essentials</a>
+                            <a href="hairproducts.html">Hair Products</a>
+                        </div>
+                    </li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li>
+                        <a href="cart.html" class="cart-link">
+                            Bag ({{ cartCount }})
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero-small">
+            <h1>All Available Hair Bundles, Wigs and Extensions</h1>
+            <p class="subtitle">100% authentic Indian human hair for baddies</p>
+        </section>
+
+        <div class="header-controls">
+            <button class="filter-toggle-btn" @click="isSearchOpen = !isSearchOpen">
+                <span v-if="!isSearchOpen">🔍 Filter & Search</span>
+                <span v-else>✖ Close</span>
+            </button>
+
+            <div v-if="isSearchOpen" class="filter-dropdown-menu">
+                <input type="text" v-model="searchQuery" class="search-input" placeholder="Search by name...">
+                
+                <div class="filter-section">
+                    <label>Price Range</label>
+                    <div class="btn-group">
+                        <button v-for="range in priceRanges" 
+                            :class="{active: activePrice === range}" 
+                            @click="activePrice = (activePrice === range ? null : range)">
+                            {{ range.label }}
+                        </button>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <label>Wig Type</label>
+                    <div class="btn-group">
+                        <button v-for="type in hairTypes" 
+                            :class="{active: activeType === type}" 
+                            @click="activeType = type">
+                            {{ type }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="media-card" v-for="hair in filteredHairs" :key="hair.id">
+                <div class="image-wrapper">
+                    <img :src="hair.image" :alt="hair.name">
+                </div>
+                <div class="card-content">
+                    <h3>{{ hair.name }}</h3>
+                    <p>{{ hair.description }}</p>
+
+                    <label class="label">SELECT LENGTH:</label>
+                    <div class="btn-group">
+                        <button :class="{ active: hair.selectedLength === 'Shoulder' }" @click="hair.selectedLength = 'Shoulder'">Shoulder</button>
+                        <button :class="{ active: hair.selectedLength === 'Mid Back' }" @click="hair.selectedLength = 'Mid Back'">Mid Back</button>
+                        <button :class="{ active: hair.selectedLength === 'Full Back' }" @click="hair.selectedLength = 'Full Back'">Full Back</button>
+                    </div>
+
+                    <div class="price">Ksh. {{ calculatePrice(hair).toLocaleString() }}</div>
+                    
+                    <button class="btn-cart" @click="addToCart(hair)"> Add to Cart </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="filtered-hairs" v-if="filteredHairs.length === 0">
+            No Hairs match your filters.
+        </div>
+    </main>
+</div>
+
+<script>
+    const { createApp } = Vue;
+
+    createApp({
+        data() {
+            return {
+                isSearchOpen: false,
+                searchQuery: '',
+                activePrice: null,
+                activeType: 'All',
+                // Load from localStorage so items from other pages appear immediately
+                cart: JSON.parse(localStorage.getItem('eemani_cart')) || [],
+                priceRanges: [
+                    { label: '< 500', min: 0, max: 500 },
+                    { label: '500-1000', min: 501, max: 1000 },
+                    { label: '> 1000', min: 1001, max: 2000 },
+                    { label: '> 2000', min: 2001, max: 100000 }
+                ],
+                hairTypes: ['All', 'Braid Bundles', 'Wig Bundles', 'Ready Extensions'],
+                hairs: [
+                    { id: 1, name: 'Black Brazillian Curly Human Hair Bundles 15"', bundlePrice: 835, type: 'Wig Bundles', color: 'black', description: 'Thick black straight hair.', image: '../assets/bundles/Black Brazillian Curly Human Hair Bundles 15-Inch.webp', availableStock: 10, totalStock: 20, selectedLength: 'Shoulder' },
+                    { id: 2, name: 'Black Indian  Curly Human Hair Bundles 15"', bundlePrice: 4000, type: 'Wig Bundles', color: 'black', description: 'Corporate look.', image: '../assets/bundles/Black Indian  Curly Human Hair Bundles 15-Inch.webp', availableStock: 5, totalStock: 15, selectedLength: 'Shoulder' },
+                    { id: 3, name: 'Black Ready to Pin Human Hair Bundles 15"', bundlePrice: 800, type: 'Ready Extensions', color: 'black', description: 'Chic short look.', image: '../assets/bundles/Brown Pixie Cut Human Hair Ready Extensions Lace.jpeg', availableStock: 10, totalStock: 20, selectedLength: 'Shoulder' },
+                    { id: 4, name: 'Black Vietnames Straight Human Hair Bundles 15"', bundlePrice: 6000, type: 'Wig Bundles', color: 'black', description: 'Low maintenance curls.', image: '../assets/bundles/Black Watercurl 40-Inch Wig.jpeg', availableStock: 8, totalStock: 25, selectedLength: 'Shoulder' },
+                    { id: 5, name: 'Blonde and Brown Virgin Human Hair Braid Bundles 25"', bundlePrice: 1600, type: 'Braid Bundles', color: 'colored', description: 'Long wavy wig, easy to install. Volume remains after blowout.', image: '../assets/bundles/Black Wavy Human Hair 40-Inch Wig.jpeg', availableStock: 7, totalStock: 25, selectedLength: 'Shoulder' },
+                    { id: 6, name: 'Brown Tight Curl Human Hair Bundles 20"', bundlePrice: 5400, type: 'Wig Bundles', color: 'colored', description: 'Bold color.Easy to install, low maintenance, amazing colour and 100% Human hair', image:'../assets/bundles/Burgundy Straight Human Hair 40-Inch Wig.jpeg' , availableStock :12 , totalStock :25, selectedLength: 'Shoulder'},
+                    { id: 7, name :'Maroon Ponytail Human Hair Extension 20"' , bundlePrice :800 , type :'Braid Bundles' , color :'black' , description :'100% Human hair, pre-plucked lace for a natural hairline.' , image :'../assets/bundles/Brazilian 30-Pre-Plucked Ready Extensions Lace Wig.webp', availableStock :12 , totalStock :30, selectedLength: 'Shoulder'},
+                    { id: 8, name :'Multicolor Human Hair Braid Bundles 25-Inch"' , bundlePrice : 12500, type :'Braid Bundles' , color :'colored' , description :'Vibrant color, low maintenance curls and amazing sleek look braids and 100% Human hair.' , image :'../assets/bundles/Multicolor Human Hair Braid Bundles 25-Inch.webp' , availableStock :5 , totalStock :10, selectedLength: 'Shoulder'},
+                    { id: 9, name :'Black French Curl Braids 35"' , bundlePrice : 800 , type :'Braid Bundles' , color :'black' , description :'Black low maintenance curls and amazing sleek look braids' , image :'../assets/bundles/Black French Curl Braids 35-Inch.webp' , availableStock :1 , totalStock :10, selectedLength: 'Shoulder'},
+                    { id: 10, name: 'Black To Maroon Ombre French Curl Braids 35"', bundlePrice: 900, type: 'Braid Bundles', color: 'black-mixed', description: 'Corporate colored, low maintenance curls and amazing sleek look braids and 100% Human hair.', image: '../assets/bundles/Black To Maroon Ombre French Curl Braids.webp', availableStock: 3, totalStock: 10, selectedLength: 'Shoulder'},
+                    { id: 11, name: 'Ginger and Tan-Mix French Curl Braids 35"', bundlePrice: 1000, type: 'Braid Bundles', color: 'colored-mixed', description: 'Vibrant color, low maintenance curls and amazing sleek look braids and 100% Human hair', image: '../assets/bundles/Ginger and Tan-Mix French Curl Braids.webp', availableStock: 7, totalStock: 15, selectedLength: 'Shoulder' },
+                    { id: 12, name: 'Maroon French Curl Braids 35"', bundlePrice: 900, type: 'Braid Bundles', color: 'colored', description: 'Vibrant color, low maintenance curls and amazing sleek look braids and 100% Human hair', image: '../assets/bundles/Maroon French Curl Braids.webp', availableStock: 7, totalStock: 15, selectedLength: 'Shoulder'},
+                    { id: 13, name: 'White French Curl Braids 35-Inch"', bundlePrice: 1100, type: 'Braid Bundles', color: 'colored', description: 'Vibrant color, low maintenance curls and amazing sleek look braids and 100% Human hair', image: '../assets/bundles/White French Curl Braids.webp', availableStock: 7, totalStock: 15, selectedLength: 'Shoulder'},
+                    { id: 14, name: 'Black To Brown To Blonde Ombre French Curl Braids 35"', bundlePrice: 1200, type: 'Braid Bundles', color: 'black-mixed', description: 'Corporate colored, low maintenance curls and amazing sleek look braids and 100% Human hair.', image:'../assets/bundles/Black To Brown To Blonde Ombre French Curl Braids.webp' , availableStock :7 , totalStock :15, selectedLength: 'Shoulder'},
+                    { id: 15, name: 'Black To Brown To White Ombre French Curl Braids 35"', bundlePrice: 1200, type: 'Braid Bundles', color: 'black-mixed', description: 'Corporate colored, low maintenance curls and amazing sleek look braids and 100% Human hair.', image: '../assets/bundles/Black To Brown To White Ombre French Curl Braids.webp', availableStock: 7, totalStock: 15, selectedLength: 'Shoulder'},
+                    { id: 16, name: 'Brown To Dark Brown Ombre French Curl Braids 35"', bundlePrice: 1200, type: 'Braid Bundles', color: 'colored-mixed', description: 'Corporate colored, low maintenance curls and amazing sleek look braids and 100% Human hair.', image: '../assets/bundles/Brown To Dark Brown Ombre French Curl Braids.webp', availableStock: 7, totalStock: 15, selectedLength: 'Shoulder'}
+                ]
+            }
+        },
+        computed: {
+            filteredHairs() {
+                return this.hairs.filter(hair => {
+                    const matchesSearch = hair.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+                    const matchesPrice = !this.activePrice || (hair.bundlePrice >= this.activePrice.min && hair.bundlePrice <= this.activePrice.max);
+                    const matchesType = this.activeType === 'All' || hair.type === this.activeType;
+                    return matchesSearch && matchesPrice && matchesType;
+                });
+            },
+            cartCount() { 
+                // Counts total items in cart across all pages
+                return this.cart.reduce((total, item) => total + item.quantity, 0); 
+            }
+        },
+        methods: {
+            calculatePrice(hair) {
+                if (hair.selectedLength === 'Shoulder') return hair.bundlePrice + 300;
+                if (hair.selectedLength === 'Mid Back' || hair.selectedLength === 'Full Back') return hair.bundlePrice + 600;
+                return hair.bundlePrice;
+            },
+            addToCart(hair) {
+                const finalPrice = this.calculatePrice(hair);
+                const cartId = `${hair.id}-${hair.selectedLength}`;
+                
+                const existingItem = this.cart.find(item => item.cartId === cartId);
+                
+                if (existingItem) {
+                    existingItem.quantity++;
+                } else {
+                    this.cart.push({
+                        cartId: cartId,
+                        name: hair.name,
+                        price: finalPrice,
+                        image: hair.image,
+                        size: hair.selectedLength,
+                        quantity: 1
+                    });
+                }
+                
+                localStorage.setItem('eemani_cart', JSON.stringify(this.cart));
+                alert(`${hair.name} (${hair.selectedLength}) added to bag!`);
+            }
+        }
+    }).mount('#app');
+</script>
+
+<style>
+    :root {
+        --cream: #F2E3C2;      
+        --sand: #E5DED2;       
+        --bronze: #A67C52;     
+        --gold-leaf: #C5B081;   
+        --deep-cocoa: #967969; 
+        --pink: #f8d7da;
+        --max-width: 1200px;
+        --heading-font: 'Playfair Display', serif; 
+        --body-font: 'Montserrat', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background-color: var(--cream); color: var(--deep-cocoa); font-family: var(--body-font); line-height: 1.6; }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+
+    /* Header & Cart Badge */
+    .main-header { background: var(--cream); padding: 15px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--pink); }
+    .main-header .container { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-family: var(--heading-font); font-size: 1.8rem; font-weight: 700; }
+    nav ul { display: flex; list-style: none; align-items: center; gap: 25px; }
+    nav ul li a { text-decoration: none; color: var(--deep-cocoa); font-weight: 600; font-size: 0.85rem; }
+    
+    .cart-link { 
+        background: var(--deep-cocoa); 
+        color: white !important; 
+        padding: 8px 15px; 
+        border-radius: 20px; 
+        transition: 0.3s;
+    }
+
+    /* Dropdown */
+    .dropdown { position: relative; display: inline-block; }
+    .dropdown-content {
+        display: none; position: absolute; background-color: var(--cream);
+        min-width: 200px; box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+        z-index: 1001; border-radius: 8px; top: 100%; left: 0; padding: 10px 0;
+        border: 1px solid var(--pink);
+    }
+    .dropdown:hover .dropdown-content { display: block; }
+    .dropdown-content a { color: var(--deep-cocoa); padding: 12px 16px; text-decoration: none; display: block; font-size: 0.85rem; }
+    .dropdown-content a:hover { background-color: var(--sand); }
+
+    /* Search & Grid */
+    .header-controls { position: relative; margin: 20px 0; display: flex; justify-content: flex-end; }
+    .filter-toggle-btn {
+        background: var(--deep-cocoa); color: white; border: none; padding: 12px 25px;
+        border-radius: 50px; cursor: pointer; font-weight: 600;
+    }
+    .filter-dropdown-menu {
+        position: absolute; top: 55px; right: 0; background: white; width: 320px;
+        padding: 25px; border-radius: 15px; border: 1px solid var(--pink);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1); z-index: 100;
+    }
+    .search-input { width: 100%; padding: 10px; border: 1px solid var(--pink); border-radius: 8px; margin-bottom: 15px; }
+    .btn-group { display: flex; flex-wrap: wrap; gap: 5px; margin: 10px 0; }
+    .btn-group button { 
+        background: white; border: 1px solid var(--pink); padding: 5px 12px; 
+        border-radius: 15px; cursor: pointer; font-size: 0.75rem;
+    }
+    .btn-group button.active { background: var(--deep-cocoa); color: white; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; padding: 40px 0; }
+    .media-card { background: white; border-radius: 20px; overflow: hidden; border: 1px solid var(--pink); }
+    .image-wrapper { height: 320px; }
+    .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+    .card-content { padding: 20px; }
+    .price { font-weight: 700; font-size: 1.2rem; margin-top: 10px; }
+    .btn-cart { width: 100%; background: var(--deep-cocoa); color: white; border: none; padding: 12px; border-radius: 50px; cursor: pointer; margin-top: 15px; font-weight: 600; }
+    
+    [v-cloak] { display: none; }
+</style>
+</body>
+</html>

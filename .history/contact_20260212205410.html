@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | SKRNCH </title>
+    <!--Confetti for a successful message-->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <!--Updated the SDK-->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+   <script type="text/javascript">
+    (function() {
+        // The new version uses the modern SDK link above
+        emailjs.init({
+          publicKey: "7JiEqvGBnFOLAIb0L",
+        });
+    })();
+</script>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">SKRNCH </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="shop.html" class="dropbtn">Shop From Us <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem;"></i></a>
+                        <div class="dropdown-content">
+                            <a href="wigsorextensions.html">Wigs & Hair Extensions</a>
+                            <a href="hairaccessories.html">Hair Accessories</a>
+                            <a href="hairessentials.html">Hair Essentials</a>
+                            <a href="hairproducts.html">Hair Products</a>
+                        </div>
+                    </li>
+                    <li><a href="about.html" class="btn-small">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>CONTACT US</h1>
+                    <p class="subtitle">Reach out to us for any enquiries, comments, or compliments. We love hearing from our baddies!</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-section">
+            <div class="form-container">
+              <form id="contact-form" action="javascript:void(0);">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="first_name">First Name</label>
+                            <input type="text" id="first_name" name="first_name" placeholder="Your name..">
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name">Last Name</label>
+                            <input type="text" id="last_name" name="last_name" placeholder="Your last name..">
+                        </div>
+                    </div>
+
+                                        <div class="form-group">
+                        <label for="user_email">Email</label>
+                        <input type="text" id="user_email" name="user_email" placeholder="Your email address.." required>
+                    </div>
+
+                                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <select id="country" name="country">
+                            <option value="kenya" selected>Kenya</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="county">County</label>
+                        <select id="county" name="county" required>
+                            <option value="" disabled selected>Select your County</option>
+                            <option value="baringo">Baringo</option>
+                            <option value="bomet">Bomet</option>
+                            <option value="bungoma">Bungoma</option>
+                            <option value="busia">Busia</option>
+                            <option value="elgeyo-marakwet">Elgeyo Marakwet</option>
+                            <option value="embu">Embu</option>
+                            <option value="garissa">Garissa</option>
+                            <option value="homa-bay">Homa Bay</option>
+                            <option value="isiolo">Isiolo</option>
+                            <option value="kajiado">Kajiado</option>
+                            <option value="kakamega">Kakamega</option>
+                            <option value="kericho">Kericho</option>
+                            <option value="kiambu">Kiambu</option>
+                            <option value="kilifi">Kilifi</option>
+                            <option value="kirinyaga">Kirinyaga</option>
+                            <option value="kisii">Kisii</option>
+                            <option value="kisumu">Kisumu</option>
+                            <option value="kitui">Kitui</option>
+                            <option value="kwale">Kwale</option>
+                            <option value="laikipia">Laikipia</option>
+                            <option value="lamu">Lamu</option>
+                            <option value="machakos">Machakos</option>
+                            <option value="makueni">Makueni</option>
+                            <option value="mandera">Mandera</option>
+                            <option value="marsabit">Marsabit</option>
+                            <option value="meru">Meru</option>
+                            <option value="migori">Migori</option>
+                            <option value="mombasa">Mombasa</option>
+                            <option value="muranga">Murang'a</option>
+                            <option value="nairobi">Nairobi</option>
+                            <option value="nakuru">Nakuru</option>
+                            <option value="nandi">Nandi</option>
+                            <option value="narok">Narok</option>
+                            <option value="nyamira">Nyamira</option>
+                            <option value="nyandarua">Nyandarua</option>
+                            <option value="nyeri">Nyeri</option>
+                            <option value="samburu">Samburu</option>
+                            <option value="siaya">Siaya</option>
+                            <option value="taita-taveta">Taita Taveta</option>
+                            <option value="tana-river">Tana River</option>
+                            <option value="tharaka-nithi">Tharaka Nithi</option>
+                            <option value="trans-nzoia">Trans Nzoia</option>
+                            <option value="turkana">Turkana</option>
+                            <option value="uasin-gishu">Uasin Gishu</option>
+                            <option value="vihiga">Vihiga</option>
+                            <option value="wajir">Wajir</option>
+                            <option value="west-pokot">West Pokot</option>
+                        </select>
+                    </div>
+
+                        <div class="form-group">
+                            <label for="town">Town / Estate</label>
+                            <input type="text" id="town_estate" name="town" placeholder="e.g. Kilimani, Westlands, Milimani" required>
+                        </div>
+                    
+                        
+                    <label for="subject">Subject</label>
+                    <textarea id="subject"name="subject" placeholder="eg ENQUIRY" style="height: 50px; width: 100%; padding: 10px;"></textarea>
+                        
+
+                    <label for="message">Message</label>
+                    <textarea id="message"name="message" placeholder="How can we help you?" style="height:150px"></textarea>
+
+                 <button type="button" onclick="sendMail(event)" class="submit-btn">
+                    Send Message
+                </button>
+           </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="logo" style="color: white;">SKRNCH <span>.</span></div>
+                <p>Authentic hair imported directly from India. Quality you can feel, style you can see.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="buywigs.html">Shop All</a></li>
+                    <li><a href="haircaretips.html">Hair Care Tips</a></li>
+                    <li><a href="about.html">Our Location</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="faqs.html">FAQs</a></li>
+                    <li><a href="privacypolicy.html">Privacy Policy</a></li>
+                </ul>
+            </div>
+                        <div class="footer-contact">
+                    <h4>Join the Baddie List</h4>
+                    <p>Get exclusive discounts and restock alerts.</p>
+                    <form action="subscribe.php" method="POST">
+                        <div class="input-group">
+                            <input type="email" name="baddie_email" placeholder="Email address" required>
+                            <button type="submit">Join</button>
+                        </div>
+                    </form>
+                </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SKRNCH . All rights reserved.</p>
+        </div>
+    </footer>
+
+    </body>
+</html>
+
+<div id="status-nudge">
+        <span id="status-text">Processing...</span>
+        <div id="progress-line"></div>
+    </div>
+
+    <script type="text/javascript">
+        // Initialize EmailJS
+        (function() {
+            emailjs.init("7JiEqvGBnFOLAIb0L");
+        })();
+
+        function sendMail(event) {
+            // STOP the page from refreshing/redirecting
+            if (event) event.preventDefault();
+
+            const nudge = document.getElementById("status-nudge");
+            const statusText = document.getElementById("status-text");
+            const progressLine = document.getElementById("progress-line");
+
+            // Show Waiting State
+            nudge.style.display = "block";
+            nudge.className = "waiting";
+            statusText.innerText = "Baddie in progress... Sending your message! ✨";
+            progressLine.style.width = "50%";
+
+           const params = {
+                first_name: document.getElementById("first_name").value,
+                last_name: document.getElementById("last_name").value,
+                user_email: document.getElementById("user_email").value,
+                country: document.getElementById("country").value,
+                county: document.getElementById("county").value,
+                town: document.getElementById("town_estate").value,
+                subject: document.getElementById("subject").value, // Matches your textarea id
+                message: document.getElementById("message").value, 
+};
+            // !IMPORTANT: Check these IDs one last time in your dashboard!
+            const serviceID = "service_8v803jh"; 
+            const templateID = "template_6zaz3gu"; 
+
+            emailjs.send(serviceID, templateID, params)
+                .then(res => {
+                    // Success State
+                    nudge.className = "success";
+                    statusText.innerText = "Yass! Message sent successfully. 💖";
+                    progressLine.style.width = "100%";
+
+                    // Send to THEM (Auto-reply)
+                    emailjs.send(serviceID, "template_iicod1v", params)
+                        .then(() => {
+                            console.log("Auto-reply sent!");
+                                        
+                                        // Clear form
+                                        document.getElementById("contact-form").reset();
+                    
+                            autoHideNudge();
+
+                            // CONFETTI BURST!
+    confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#A67C52', '#C5B081', '#967969'] // SKRNCH brand colors
+    });
+                        })
+                        .catch(err => {
+                            // Failure State
+                            nudge.className = "failure";
+                            statusText.innerText = "Oops! Something went wrong. Please try later, sorry. ❌";
+                            progressLine.style.width = "100%";
+                            console.error("EmailJS Full Error:", err);
+                            
+                            autoHideNudge();
+                        });
+                });
+
+            function autoHideNudge() {
+                setTimeout(() => {
+                    nudge.style.display = "none";
+                    progressLine.style.width = "0%";
+                }, 5000); 
+                
+            }
+        }
+    </script>
+
+<style>
+ :root {
+            /* Updated Luxury Palette */
+            --cream: #F2E3C2;      
+            --sand: #E5DED2;        
+            --bronze: #A67C52;     
+            --gold-leaf: #C5B081;   
+            --deep-cocoa: #967969;  
+
+            --max-width: 1100px;
+            --heading-font: 'Playfair Display', serif;
+            --body-font: 'Montserrat', sans-serif;
+        }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--cream);
+    color: var(--deep-cocoa);
+    line-height: 1.6;
+    font-family: var(--body-font);
+}
+
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- HEADER --- */
+.main-header {
+    background: white;
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid var(--pink);
+    box-shadow: 0 2px 10px rgba(133, 14, 53, 0.05);
+}
+
+.main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: var(--heading-font);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--deep-cocoa);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    align-items: center;
+}
+
+nav ul li { margin-left: 25px; }
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--deep-cocoa);
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.btn-small {
+    background: var(--deep-cocoa);
+    color: white !important;
+    padding: 10px 22px;
+    border-radius: 50px; /* Modern pill shape */
+}
+
+ /* --- DROPDOWN --- */
+        .dropdown { position: relative; }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 220px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+            z-index: 1001;
+            border-radius: 4px;
+            top: 100%;
+            left: 0;
+            padding: 10px 0;
+            border: 1px solid var(--sand);
+        }
+        .dropdown-content a {
+            color: var(--deep-cocoa);
+            padding: 12px 16px;
+            display: block;
+            text-transform: none;
+        }
+        .dropdown-content a:hover { background-color: var(--cream); }
+        .dropdown:hover .dropdown-content { display: block; }
+
+/* --- HERO --- */
+.hero {
+    padding: 60px 0 40px;
+    text-align: center;
+}
+
+h1 {
+    font-family: var(--heading-font);
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+    font-style: italic;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: var(--sand);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* --- CONTACT FORM --- */
+.contact-section {
+    padding-bottom: 80px;
+}
+
+.form-container {
+    max-width: 700px;
+    margin: 0 auto;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(133, 14, 53, 0.08);
+    border: 1px solid var(--pink);
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-group {
+    flex: 1;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1.5px solid var(--pink);
+    border-radius: 8px;
+    background-color: var(--cream);
+    color: var(--deep-cocoa);
+    font-family: var(--body-font);
+    margin-bottom: 20px;
+    transition: 0.3s;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--sand);
+    background: white;
+}
+
+.submit-btn {
+    width: 100%;
+    background-color: var(--deep-cocoa);
+    color: white;
+    padding: 16px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.submit-btn:hover {
+    background-color: var(--sand);
+    transform: translateY(-2px);
+}
+
+/* --- FOOTER --- */
+.main-footer {
+    background: var(--deep-cocoa);
+    color: white;
+    padding: 60px 0 20px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 2fr;
+    gap: 40px;
+}
+
+.footer-brand p { color: var(--pink); margin-top: 15px; font-size: 0.9rem;}
+
+.footer-links h4, .footer-contact h4 { 
+    margin-bottom: 20px; 
+    font-family: var(--heading-font);
+    font-size: 1.2rem;
+}
+
+.footer-links ul { list-style: none; }
+
+.footer-links ul li a {
+    color: var(--pink);
+    text-decoration: none;
+    font-size: 0.9rem;
+    line-height: 2;
+}
+
+.input-group {
+    display: flex;
+    margin-top: 15px;
+}
+
+.input-group input {
+    padding: 12px;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    flex: 1;
+}
+
+.input-group button {
+    padding: 10px 20px;
+    background: var(--sand);
+    border: none;
+    color: white;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    color: var(--pink);
+    font-size: 0.8rem;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .form-row { flex-direction: column; gap: 0; }
+    .footer-grid { grid-template-columns: 1fr; }
+    h1 { font-size: 2.5rem; }
+}
+
+/*Notifications*/
+/* Progress Notification Styles */
+#status-nudge {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px;
+    text-align: center;
+    font-weight: 600;
+    z-index: 9999;
+    display: none; /* Hidden by default */
+    color: white;
+    font-family: var(--body-font);
+}
+
+#progress-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    background: white;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.waiting { background-color: rgb(234, 153, 1); }
+.success { background-color: rgb(14, 31, 14); }
+.failure { background-color: rgb(57, 4, 4); }
+
+</style>

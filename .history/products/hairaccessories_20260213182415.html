@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKRNCH | Hair Essentials & Accessories</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #F2E3C2; --sand: #E5DED2; --bronze: #A67C52; --deep-cocoa: #967969;
+            --max-width: 1100px; --heading-font: 'Playfair Display', serif; --body-font: 'Montserrat', sans-serif; --pink: #D4A5A5;
+        }
+        [v-cloak] { display: none; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--cream); color: var(--deep-cocoa); font-family: var(--body-font); line-height: 1.6; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+
+        /* --- HEADER --- */
+        .main-header { background: white; padding: 15px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--pink); }
+        .main-header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: var(--heading-font); font-size: 1.8rem; font-weight: 700; color: var(--deep-cocoa); }
+        nav ul { display: flex; list-style: none; align-items: center; }
+        nav ul li { margin-left: 25px; }
+        nav ul li a { text-decoration: none; color: var(--deep-cocoa); font-weight: 600; font-size: 0.85rem; }
+
+        .cart-icon-container { position: relative; font-size: 1.4rem; text-decoration: none; color: inherit; display: flex; align-items: center; }
+        .cart-badge { position: absolute; top: -5px; right: -10px; background: var(--bronze); color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; font-weight: bold; }
+
+        /* --- GRID --- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 25px; padding: 40px 0; }
+        .media-card { background: white; border-radius: 12px; overflow: hidden; border: 1px solid var(--sand); text-align: center; display: flex; flex-direction: column; transition: 0.3s; }
+        .media-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .image-wrapper { height: 220px; padding: 10px; background: #fff; }
+        .image-wrapper img { width: 100%; height: 100%; object-fit: contain; }
+        
+        .card-content { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-content h3 { font-size: 0.9rem; margin-bottom: 8px; min-height: 40px; color: var(--deep-cocoa); }
+        .price { font-weight: 700; color: var(--bronze); margin-bottom: 12px; }
+
+        .btn-cart { width: 100%; background: var(--deep-cocoa); color: white; border: none; padding: 10px; border-radius: 25px; cursor: pointer; font-weight: 600; font-size: 0.8rem; margin-top: auto; }
+        
+        .dropdown { position: relative; }
+        .dropdown-content { display: none; position: absolute; background: white; min-width: 180px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 8px; top: 100%; z-index: 10; border: 1px solid var(--pink); }
+        .dropdown:hover .dropdown-content { display: block; }
+        .dropdown-content a { color: var(--deep-cocoa); padding: 10px 15px; text-decoration: none; display: block; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+<div id="app" v-cloak>
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">SKRNCH</div>
+            <nav>
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#">Shop</a>
+                        <div class="dropdown-content">
+                            <a href="/products/hairaccessories.html">Accessories</a>
+                            <a href="/products/hairessentials.html">Essentials</a>
+                            <a href="/products/hairproducts.html">Hair Products</a>
+                        </div>
+                    </li>
+                    <li><a href="/cart.html" class="cart-icon-container">🛒<span v-if="cartCount > 0" class="cart-badge">{{ cartCount }}</span></a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section style="padding: 40px 0; text-align: center;">
+            <h1>ESSENTIALS & ACCESSORIES</h1>
+            <p>Complete your routine with our premium hair tools.</p>
+        </section>
+
+        <div class="grid">
+            <div class="media-card" v-for="item in wigs" :key="item.id">
+                <div class="image-wrapper">
+                    <img :src="item.image" :alt="item.name">
+                </div>
+                <div class="card-content">
+                    <h3>{{ item.name }}</h3>
+                    <div class="price">Ksh. {{ item.price.toLocaleString() }}</div>
+                    <button class="btn-cart" @click="addToCart(item)">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    const { createApp } = Vue;
+    createApp({
+        data() {
+            return {
+                cart: [],
+                wigs: [
+                   
+                    // --- Accessories Folder ---
+                    { id: 401, name: 'Acrylic Animal Print Barette', price: 450, image: '../assets/accessories/Acrylic Animal Print Barette.jpg' },
+                    { id: 402, name: 'Black Hair Bonnet', price: 800, image: '../assets/accessories/Black Hair Bonnet.jpg' },
+                    { id: 403, name: 'Stretchy Headband', price: 350, image: '../assets/accessories/Black or Leopard Print Strechy Headband.jpg' },
+                    { id: 404, name: 'Simple Ponytail Tie', price: 150, image: '../assets/accessories/Black Simple Ponytail Tie.jpg' },
+                    { id: 405, name: 'Blue Hair Bonnet', price: 800, image: '../assets/accessories/Blue Hair Bonnet.jpg' },
+                    { id: 406, name: 'Crystal Hair Bow', price: 650, image: '../assets/accessories/Crystal Hair Bow.jpg' },
+                    { id: 407, name: 'Dark Blue Hair Bow', price: 450, image: '../assets/accessories/Dark Blue Hair Bow.jpg' },
+                    { id: 408, name: 'Hair Bonnet and Scrunchy', price: 1200, image: '../assets/accessories/Hair Bonnet and Scrunchy.jpg' },
+                    { id: 409, name: 'Leopard Print Head Scarf', price: 700, image: '../assets/accessories/Leopard Print Head Scarf.jpg' },
+                    { id: 410, name: 'Long Hair Bonnet', price: 1000, image: '../assets/accessories/Long Hair Bonnet for Locks and Bulky Wigs.jpg' },
+                    { id: 411, name: 'Maroon Hair Bonnet', price: 800, image: '../assets/accessories/Maroon Hair Bonnet.jpg' },
+                    { id: 412, name: 'Multicolor Big Claw Clips', price: 500, image: '../assets/accessories/Multicolor Big Claw Clips.jpg' },
+                    { id: 413, name: 'Multicolor Big Hair Bands', price: 300, image: '../assets/accessories/Multicolor Big Hair Bands.jpg' },
+                    { id: 414, name: 'Multicolor Floral Clips', price: 400, image: '../assets/accessories/Multicolor Floral Clips.jpg' },
+                    { id: 415, name: 'Multicolor Satin Scarf', price: 600, image: '../assets/accessories/Multicolor Satin Scarf.jpg' },
+                    { id: 416, name: 'Neutral Pink Hair Bonnet', price: 800, image: '../assets/accessories/Neutral Pink Hair Bonnet.jpg' },
+                    { id: 417, name: 'Pearl Claw Clips', price: 600, image: '../assets/accessories/Pearl Claw Clips.jpg' },
+                    { id: 418, name: 'White Cap Wig Hat', price: 2800, image: '../assets/accessories/White Cap Wig Hat.jpg' },
+                    { id: 419, name: 'Wig Hat', price: 2500, image: '../assets/accessories/Wig Hat.jpg' }
+                ]
+            }
+        },
+        computed: {
+            cartCount() { return this.cart.reduce((total, item) => total + item.quantity, 0); }
+        },
+        mounted() {
+            this.syncCart();
+            window.addEventListener('storage', () => this.syncCart());
+        },
+        methods: {
+            syncCart() {
+                const saved = localStorage.getItem('eemani_cart');
+                this.cart = saved ? JSON.parse(saved) : [];
+            },
+            addToCart(product) {
+                this.syncCart();
+                const existing = this.cart.find(i => i.id === product.id);
+                if (existing) {
+                    existing.quantity++;
+                } else {
+                    this.cart.push({ ...product, quantity: 1 });
+                }
+                localStorage.setItem('eemani_cart', JSON.stringify(this.cart));
+                alert(`${product.name} added!`);
+            }
+        }
+    }).mount('#app');
+</script>
+</body>
+</html>

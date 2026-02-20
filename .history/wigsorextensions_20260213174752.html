@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKRNCH | Discover Your Style</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <a href="index.html" class="logo">SKRNCH</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                   <li class="dropdown">
+                        <a href="shop.html" class="dropbtn">Shop From Us</a>
+                        <div class="dropdown-content">
+                            <a href="wigsorextensions.html">Wigs & Hair Extensions</a>
+                            <a href="accessories.html">Hair Accessories</a>
+                            <a href="essentials.html">Hair Essentials</a>
+                            <a href="products.html">Hair Products</a>
+                        </div>
+                    </li>
+                    <li><a href="about.html" class="btn-small">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="selection-main">
+        <div class="selection-question">
+            <h1>Tell us, Baddie...</h1>
+            <p>Which vibe are you feeling today?</p>
+        </div>
+
+        <div class="selection-grid">
+            <a href="products/buywigs.html" class="product-choice">
+                <img src="assets/icons/wiggirly.jpg" alt="Wigs Girly">
+                <h2>A Wig Girly</h2>
+                <p>You love the installs, the big volume, the boldness of it all.</p>
+            </a>
+
+            <a href="products/hairextensions.html" class="product-choice alt">
+                <img src="assets/icons/braidsgirly.jpg" alt="Hair Extensions">
+                <h2>A Braids Girly</h2>
+                <p>You like simple and sleek looks with human hair extensions</p>
+            </a>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="logo" style="color: white;">SKRNCH <span>.</span></div>
+                <p>Authentic hair imported directly from India. Quality you can feel, style you can see.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="/shop.html">Shop All</a></li>
+                    <li><a href="/haircaretips.html">Hair Care Tips</a></li>
+                    <li><a href="/about.html">Our Location</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="/contact.html">Contact Us</a></li>
+                    <li><a href="/faqs.html">FAQs</a></li>
+                    <li><a href="/privacypolicy.html">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Join the Baddie List</h4>
+                <p>Get exclusive discounts and restock alerts.</p>
+                <div class="input-group">
+                    <input type="email" placeholder="Email address">
+                    <button>Join</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SKRNCH . All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
+
+
+<style>
+        :root {
+            --cream: #F2E3C2; --sand: #E5DED2; --bronze: #A67C52;
+            --gold-leaf: #C5B081; --deep-cocoa: #967969; --white: #ffffff;
+            --heading-font: 'Playfair Display', serif;
+            --body-font: 'Montserrat', sans-serif;
+            --max-width: 1200px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--cream);
+            color: var(--deep-cocoa);
+            line-height: 1.6;
+            font-family: var(--body-font);
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- HEADER --- */
+        .main-header {
+            background: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--sand);
+        }
+
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--heading-font);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--deep-cocoa);
+            text-decoration: none;
+        }
+
+        nav ul { display: flex; list-style: none; align-items: center; }
+        nav ul li { margin-left: 25px; }
+        nav ul li a {
+            text-decoration: none;
+            color: var(--deep-cocoa);
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+
+        .btn-small {
+            background: var(--deep-cocoa);
+            color: white !important;
+            padding: 10px 22px;
+            border-radius: 50px;
+        }
+
+                /* --- UPDATED DROPDOWN LOGIC --- */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none; /* Hide by default */
+            position: absolute;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+            z-index: 1001;
+            border-radius: 8px;
+            top: 100%;
+            left: 0;
+            padding: 10px 0;
+            border: 1px solid var(--pink);
+        }
+
+        .dropdown-content a {
+            color: var(--deep-cocoa);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: var(--cream);
+            color: var(--sand);
+        }
+
+        /* Show the dropdown when hovering over the 'li' */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+
+        /* --- SELECTION SECTION --- */
+        .selection-main {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .selection-question {
+            margin-bottom: 50px;
+        }
+
+        .selection-question h1 {
+            font-family: var(--heading-font);
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .selection-grid {
+            display: flex;
+            gap: 60px;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .product-choice {
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s ease;
+            width: 300px;
+        }
+
+        /* Bouncing Animation */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .product-choice img {
+            /*For the image to fit the whole circle*/
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 50%;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            animation: bounce 4s ease-in-out infinite;
+        }
+
+          
+
+        /* Offset the second bounce so they aren't in sync */
+        .product-choice.alt img {
+            animation-delay: 2s;
+        }
+
+        .product-choice h2 {
+            font-family: var(--heading-font);
+            font-size: 2rem;
+            margin-top: 20px;
+        }
+
+        .product-choice:hover {
+            transform: scale(1.05);
+        }
+
+        /* --- FOOTER --- */
+        .main-footer {
+            background: var(--deep-cocoa);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 2fr;
+            gap: 40px;
+        }
+
+        .footer-links h4, .footer-contact h4 { font-family: var(--heading-font); margin-bottom: 20px; }
+        .footer-links ul { list-style: none; }
+        .footer-links ul li a { color: var(--sand); text-decoration: none; font-size: 0.9rem; line-height: 2; }
+
+        .input-group { display: flex; margin-top: 15px; }
+        .input-group input { padding: 12px; border-radius: 4px 0 0 4px; border: none; flex: 1; }
+        .input-group button { padding: 10px 20px; background: bro; border: none; color: white; border-radius: 0 4px 4px 0; cursor: pointer; font-weight: 600; }
+
+        .footer-bottom { 
+            text-align: center; 
+            margin-top: 40px; 
+            font-size: 0.8rem; 
+            color: var(--sand); 
+            border-top: 1px solid rgba(255,255,255,0.1); 
+            padding-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .footer-grid { grid-template-columns: 1fr; }
+            .selection-question h1 { font-size: 2rem; }
+            .selection-grid { gap: 30px; }
+        }
+    </style>

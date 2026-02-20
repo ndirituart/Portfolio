@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | SKRNCH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">SKRNCH</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container checkout-section">
+        <div class="checkout-grid">
+            
+            <div class="checkout-form-container">
+                <form action="#">
+                    <div class="card">
+                        <h3>Delivery Details</h3>
+                        <div class="form-row">
+                            <div>
+                                <label for="fname">Full Name</label>
+                                <input type="text" id="fname" placeholder="Jane Doe" required>
+                            </div>
+                            <div>
+                                <label for="email">Email</label>
+                                <input type="email" id="email" placeholder="jane@example.com" required>
+                            </div>
+                        </div>
+
+                        <label for="county">County</label>
+                        <select id="county" name="county" required>
+                            <option value="" disabled selected>Select County</option>
+                            <option value="nairobi">Nairobi</option>
+                            <option value="mombasa">Mombasa</option>
+                            <option value="kiambu">Kiambu</option>
+                            <option value="nakuru">Nakuru</option>
+                            <option value="kisumu">Kisumu</option>
+                        </select>
+
+                        <label for="adr">Specific Pickup Point / Apartment</label>
+                        <input type="text" id="adr" placeholder="e.g. Imenti House, Room 4 / Green Estate Hse 12">
+                    </div>
+
+                    <!---->
+                   <div class="card payment-card">
+    <div class="payment-header">
+        <h3>M-Pesa Payment</h3>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/M-PESA_LOGO-01.svg/1200px-M-PESA_LOGO-01.svg.png" alt="M-Pesa" class="mpesa-logo">
+    </div>
+    
+    <p class="payment-instruction">Enter your Safaricom number below. You will receive a popup on your phone to enter your M-Pesa PIN.</p>
+
+    <div class="input-container-3d">
+        <label for="phnum">M-Pesa Phone Number</label>
+        <div class="phone-input-wrapper">
+            <span class="prefix">+254</span>
+            <input type="text" id="phnum" name="phonenumber" placeholder="712345678" required>
+        </div>
+    </div>
+    
+    <div class="input-container-3d">
+        <label for="cname">Account Name (Optional)</label>
+        <input type="text" id="cname" name="customername" placeholder="Name for confirmation">
+    </div>
+
+    <button type="button" class="btn-stk-push" id="stkPushBtn">
+        <span class="btn-text">Send STK Push Prompt</span>
+        <i class="fa-solid fa-paper-plane"></i>
+    </button>
+    
+    <p class="secure-notice">
+        <i class="fa-solid fa-shield-halved"></i> 
+        Secure Encrypted Transaction
+    </p>
+</div>
+                </form>
+            </div>
+
+            <div class="cart-summary">
+                <h4>Your Order <span>2</span></h4>
+                <div class="cart-item">
+                    <p>Black Straight 40"</p>
+                    <span>Ksh. 15,500</span>
+                </div>
+                <div class="cart-item">
+                    <p>Bone-straight Bob</p>
+                    <span>Ksh. 12,300</span>
+                </div>
+                <div class="cart-total">
+                    <p>Total</p>
+                    <span>Ksh. 27,800</span>
+                </div>
+                <p style="font-size: 0.7rem; margin-top: 15px; opacity: 0.7; text-align: center;">
+                    <i class="fa fa-lock"></i> Secure encrypted checkout
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="logo">SKRNCH</div>
+                <p>Authentic hair imported directly from India.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="shop.html">Shop All</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 SKRNCH. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
+
+<style>
+        :root {
+            --cream: #F2E3C2;      
+            --sand: #E5DED2;        
+            --bronze: #A67C52;     
+            --gold-leaf: #C5B081;   
+            --deep-cocoa: #967969;  
+            --max-width: 1100px;
+            --heading-font: 'Playfair Display', serif;
+            --body-font: 'Montserrat', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--sand); /* Darker background to make white containers pop */
+            color: var(--deep-cocoa);
+            line-height: 1.6;
+            font-family: var(--body-font);
+        }
+
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+
+        /* --- HEADER --- */
+        .main-header {
+            background: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--gold-leaf);
+            box-shadow: 0 2px 10px rgba(92, 75, 67, 0.1);
+        }
+
+        .main-header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: var(--heading-font); font-size: 1.8rem; font-weight: 700; color: var(--deep-cocoa); }
+        nav ul { display: flex; list-style: none; align-items: center; }
+        nav ul li { margin-left: 25px; }
+        nav ul li a { text-decoration: none; color: var(--deep-cocoa); font-weight: 600; font-size: 0.9rem; }
+
+        /* --- CHECKOUT LAYOUT --- */
+        .checkout-section { padding: 60px 20px; }
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1.8fr 1.2fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        /* CONTAINERIZED CARDS */
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid var(--gold-leaf);
+            box-shadow: 8px 8px 0px var(--cream); /* This gives the 3D 'elevated' feel */
+            margin-bottom: 30px;
+        }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        h3 { font-family: var(--heading-font); margin-bottom: 25px; font-size: 1.6rem; border-bottom: 2px solid var(--cream); display: inline-block; }
+
+        label { display: block; margin-bottom: 8px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--bronze); }
+
+        input[type="text"], input[type="email"], select {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 20px;
+            border: 1px solid var(--sand);
+            border-radius: 6px;
+            background: #fff;
+            font-family: var(--body-font);
+            transition: 0.3s;
+        }
+
+        input:focus, select:focus { outline: none; border-color: var(--bronze); box-shadow: 0 0 0 3px rgba(166, 124, 82, 0.1); }
+
+        .payment-icons { font-size: 1.5rem; margin-bottom: 20px; display: flex; gap: 15px; align-items: center; }
+        .payment-icons small { font-size: 0.7rem; font-weight: bold; }
+
+        .btn-checkout {
+            background: var(--deep-cocoa);
+            color: white;
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-checkout:hover { background: var(--bronze); transform: translateY(-2px); }
+
+        /* --- SUMMARY SIDEBAR --- */
+        .cart-summary {
+            background: var(--deep-cocoa);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            position: sticky;
+            top: 120px;
+            box-shadow: 12px 12px 0px var(--gold-leaf);
+        }
+
+        .cart-summary h4 { font-family: var(--heading-font); font-size: 1.4rem; margin-bottom: 20px; display: flex; justify-content: space-between; }
+        .cart-item { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.95rem; opacity: 0.9; }
+        .cart-total { border-top: 1px solid rgba(255,255,255,0.2); margin-top: 20px; padding-top: 20px; display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: 700; }
+
+        /* --- FOOTER --- */
+        .main-footer { background: var(--deep-cocoa); color: white; padding: 60px 0 20px; margin-top: 100px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 2fr; gap: 40px; }
+        .footer-links ul { list-style: none; }
+        .footer-links ul li a { color: var(--cream); text-decoration: none; line-height: 2.5; font-size: 0.9rem; }
+        .footer-bottom { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.8rem; }
+
+        @media (max-width: 850px) {
+            .checkout-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .cart-summary { order: -1; position: static; }
+        }
+    </style>

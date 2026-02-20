@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKRNCH | Privacy Policy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --cream: #F2E3C2; 
+            --sand: #E5DED2; 
+            --bronze: #A67C52;
+            --gold-leaf: #C5B081; 
+            --deep-cocoa: #967969; 
+            --white: #ffffff;
+            --heading-font: 'Playfair Display', serif;
+            --body-font: 'Montserrat', sans-serif;
+            --max-width: 1200px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--cream);
+            color: var(--deep-cocoa);
+            line-height: 1.6;
+            font-family: var(--body-font);
+        }
+
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+
+        /* --- HEADER --- */
+        .main-header {
+            background: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--gold-leaf);
+        }
+
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--heading-font);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--deep-cocoa);
+        }
+
+        nav ul { display: flex; list-style: none; align-items: center; }
+        nav ul li { margin-left: 25px; }
+        nav ul li a {
+            text-decoration: none;
+            color: var(--deep-cocoa);
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .btn-small {
+            background: var(--deep-cocoa);
+            color: white !important;
+            padding: 10px 22px;
+            border-radius: 50px;
+        }
+
+        /* --- PRIVACY HERO --- */
+        .privacy-hero {
+            text-align: center;
+            padding: 80px 0 40px;
+        }
+
+        .privacy-hero h1 {
+            font-family: var(--heading-font);
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle { color: var(--bronze); font-style: italic; }
+
+        /* --- CIRCLE POPUPS --- */
+        .circle-summary { padding: 40px 0; }
+        .circle-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .privacy-circle {
+            width: 200px;
+            height: 200px;
+            perspective: 1000px;
+        }
+
+        .circle-inner {
+            width: 100%; height: 100%;
+            background: white;
+            border: 1px solid var(--gold-leaf);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            transition: 0.4s;
+            box-shadow: 8px 8px 0px var(--sand);
+        }
+
+        .circle-inner i { font-size: 2rem; color: var(--bronze); margin-bottom: 10px; }
+        .circle-inner h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        .circle-popup {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--deep-cocoa);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.75rem;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: 0.4s;
+        }
+
+        .privacy-circle:hover .circle-popup { opacity: 1; transform: translateY(0); }
+        .privacy-circle:hover .circle-inner { transform: translateY(-5px); }
+
+        /* --- ACCORDION LEGAL TEXT --- */
+        .policy-accordion-section { max-width: 800px; margin: 40px auto 100px; }
+        
+        .policy-item {
+            background: white;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--sand);
+            overflow: hidden;
+        }
+
+        .policy-trigger {
+            width: 100%; padding: 20px;
+            background: none; border: none;
+            display: flex; justify-content: space-between;
+            font-family: var(--heading-font);
+            font-size: 1.1rem; color: var(--deep-cocoa);
+            cursor: pointer; font-weight: 700;
+        }
+
+        .policy-panel {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding: 0 20px;
+        }
+
+        .policy-item.active .policy-panel { max-height: 1000px; padding-bottom: 20px; }
+        .policy-item.active { border-color: var(--gold-leaf); }
+
+        .policy-panel h4 { margin: 15px 0 5px; color: var(--bronze); }
+        .policy-panel ul { margin-left: 20px; }
+
+        /* --- FOOTER --- */
+        .main-footer { background: var(--deep-cocoa); color: white; padding: 60px 0 20px; margin-top: 50px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 2fr; gap: 40px; }
+        .footer-links h4 { font-family: var(--heading-font); margin-bottom: 20px; }
+        .footer-links ul { list-style: none; }
+        .footer-links ul li a { color: var(--sand); text-decoration: none; font-size: 0.9rem; line-height: 2; }
+        .footer-bottom { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.8rem; }
+
+        @media (max-width: 768px) {
+            .footer-grid { grid-template-columns: 1fr; }
+            .privacy-hero h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">SKRNCH</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html" class="btn-small">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="privacy-hero">
+            <h1>Privacy Policy</h1>
+            <p class="subtitle">Luxury hair deserves luxury protection. Here is how we handle your data according
+                to the Data Protection Act, 2019
+            </p>
+        </section>
+
+        <section class="circle-summary">
+            <div class="circle-container">
+                <div class="privacy-circle">
+                    <div class="circle-inner">
+                        <i class="fa-solid fa-user-check"></i>
+                        <h3>Identity</h3>
+                        <div class="circle-popup"><p>First name, Last name, Email, and Phone number for orders.</p></div>
+                    </div>
+                </div>
+                <div class="privacy-circle">
+                    <div class="circle-inner">
+                        <i class="fa-solid fa-map-pin"></i>
+                        <h3>Location</h3>
+                        <div class="circle-popup"><p>Address, State, ZIP, and City for seamless delivery.</p></div>
+                    </div>
+                </div>
+                <div class="privacy-circle">
+                    <div class="circle-inner">
+                        <i class="fa-solid fa-laptop-code"></i>
+                        <h3>Usage</h3>
+                        <div class="circle-popup"><p>IP Address, Browser type, and Mobile network diagnostic data.</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="policy-accordion-section">
+            <div class="policy-item">
+                <button class="policy-trigger">We Value Your Privacy <i class="fa-solid fa-plus"></i></button>
+                <div class="policy-panel">
+                    <p>This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information. We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy.</p>
+                </div>
+            </div>
+
+            <div class="policy-item">
+                <button class="policy-trigger">Collecting Your Data <i class="fa-solid fa-plus"></i></button>
+                <div class="policy-panel">
+                    <h4>Personal Data</h4>
+                    <p>While using Our Service, We may ask You to provide Us with certain personally identifiable information including Email, Name, Phone number, and Address details.</p>
+                    <h4>Usage Data</h4>
+                    <p>Collected automatically. Includes Your Device's IP address, browser version, time spent on pages, and mobile device identifiers like time zone and operating system.</p>
+                </div>
+            </div>
+
+            <div class="policy-item">
+                <button class="policy-trigger">How We Use Your Data <i class="fa-solid fa-plus"></i></button>
+                <div class="policy-panel">
+                    <p>The Company may use Personal Data for:</p>
+                    <ul>
+                        <li>Maintaining our Service and monitoring usage.</li>
+                        <li>Managing Your Account and registration.</li>
+                        <li>Fulfilling purchase contracts for products.</li>
+                        <li>Contacting You via email or SMS for security/updates.</li>
+                        <li>Providing news and special offers (The Baddie List).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="policy-item">
+                <button class="policy-trigger">Sharing & Retention <i class="fa-solid fa-plus"></i></button>
+                <div class="policy-panel">
+                    <p>We may share info with Service Providers to analyze usage or during business transfers (mergers). We retain data only as long as necessary for legal obligations, dispute resolution, and enforcing agreements.</p>
+                </div>
+            </div>
+
+            <div class="policy-item">
+                <button class="policy-trigger">Your Rights & Deletion <i class="fa-solid fa-plus"></i></button>
+                <div class="policy-panel">
+                    <p>You have the right to delete or request assistance in deleting collected data. You can update or delete info anytime in your Account settings or by contacting us. Note: We may retain info when legally required.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="logo" style="color: white;">SKRNCH</div>
+                <p>Authentic hair imported directly from India.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 SKRNCH. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.policy-trigger').forEach(button => {
+            button.addEventListener('click', () => {
+                const item = button.parentElement;
+                item.classList.toggle('active');
+                const icon = button.querySelector('i');
+                icon.classList.toggle('fa-plus');
+                icon.classList.toggle('fa-minus');
+            });
+        });
+    </script>
+</body>
+</html>

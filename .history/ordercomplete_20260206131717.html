@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Status | SKRNCH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+</head>
+<body>
+
+    <div class="container">
+        <div class="order-stepper">
+            <div class="step completed">
+                <div class="step-icon"><i class="fa-solid fa-receipt"></i></div>
+                <div class="step-label">Order Sent</div>
+            </div>
+            <div class="step active">
+                <div class="step-icon"><i class="fa-solid fa-box-open"></i></div>
+                <div class="step-label">Package Dispatched</div>
+            </div>
+            <div class="step">
+                <div class="step-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                <div class="step-label">On Delivery</div>
+            </div>
+            <div class="step">
+                <div class="step-icon"><i class="fa-solid fa-location-dot"></i></div>
+                <div class="step-label">At Pickup</div>
+            </div>
+            <div class="step">
+                <div class="step-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+                <div class="step-label">Picked</div>
+            </div>
+        </div>
+
+        <div class="success-card">
+            <h1>Thank you, Baddie!</h1>
+            <span class="order-id">ORDER ID: #SKR-9921</span>
+            <p>Your luxury hair is being prepared. We've sent a confirmation to your email. You can track your package progress above.</p>
+            
+            <a href="index.html" class="btn-outline">Back to Gallery</a>
+        </div>
+    </div>
+
+</body>
+</html>
+
+<style>
+        :root {
+            --cream: #F2E3C2; --sand: #E5DED2; --bronze: #A67C52;
+            --gold-leaf: #C5B081; --deep-cocoa: #967969; --white: #ffffff;
+        }
+
+        body { background-color: var(--sand); font-family: 'Montserrat', sans-serif; color: var(--deep-cocoa); margin: 0; }
+        .container { max-width: 1000px; margin: 50px auto; padding: 20px; }
+
+        /* --- THE STEPPER (STAIRS) --- */
+        .order-stepper {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 50px;
+            position: relative;
+            padding: 0 10px;
+        }
+
+        /* The horizontal line connecting steps */
+        .order-stepper::before {
+            content: '';
+            position: absolute;
+            top: 25px; left: 50px; right: 50px;
+            height: 3px; background: var(--cream);
+            z-index: 1;
+        }
+
+        .step {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            text-align: center;
+        }
+
+        .step-icon {
+            width: 50px; height: 50px;
+            background: var(--white);
+            border: 3px solid var(--cream);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--gold-leaf);
+            transition: 0.4s ease;
+            margin-bottom: 10px;
+        }
+
+        .step-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--bronze); }
+
+        /* STATUS CLASSES (Admin changes these) */
+        .step.completed .step-icon { background: var(--deep-cocoa); border-color: var(--deep-cocoa); color: var(--cream); }
+        .step.active .step-icon { border-color: var(--gold-leaf); box-shadow: 0 0 15px rgba(197, 176, 129, 0.5); transform: scale(1.1); }
+        .step.active .step-label { color: var(--deep-cocoa); }
+        
+        /* Canceled state style */
+        .step.canceled .step-icon { border-color: #ff4d4d; color: #ff4d4d; }
+
+        /* --- SUCCESS CARD --- */
+        .success-card {
+            background: var(--white);
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid var(--gold-leaf);
+            box-shadow: 10px 10px 0px var(--cream);
+        }
+
+        .success-card h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 10px; }
+        .order-id { font-weight: bold; color: var(--bronze); margin-bottom: 30px; display: block; }
+        
+        .btn-outline {
+            display: inline-block;
+            padding: 15px 30px;
+            border: 2px solid var(--deep-cocoa);
+            text-decoration: none;
+            color: var(--deep-cocoa);
+            font-weight: 700;
+            border-radius: 50px;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+        .btn-outline:hover { background: var(--deep-cocoa); color: var(--cream); }
+    </style>
+    

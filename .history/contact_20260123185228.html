@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKRNCH  | Premium Indian Hair</title>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">SKRNCH </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="buywigs.html">Wigs</a></li>
+                    <li><a href="about.html" class="btn-small">About Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Contact Us</h1>
+                    <p>Reach out to us for any enquiries, comments or compliments when you bought a wig from us</p>
+                </div>
+            </div>
+        </section>
+
+
+<!--Contact Form that will be sent to the business email-->
+        <div class="container">
+  <form action="/action_page.php">
+    <label for="fname">First Name</label>
+    <input type="text" id="fname" name="firstname" placeholder="Your name..">
+
+    <label for="lname">Last Name</label>
+    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+
+    <label for="country">Country</label>
+    <select id="country" name="country">
+      <option value="australia">Australia</option>
+      <option value="canada">Canada</option>
+      <option value="usa">USA</option>
+    </select>
+
+    <label for="subject">Subject</label>
+    <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+
+    <input type="submit" value="Submit">
+  </form>
+</div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="logo" style="color: white;">SKRNCH <span>.</span></div>
+                <p>Authentic hair imported directly from India. Quality you can feel, style you can see.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="#">Shop All</a></li>
+                    <li><a href="#">Hair Care Tips</a></li>
+                    <li><a href="#">Shipping Info</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Join the Baddie List</h4>
+                <p>Get exclusive discounts and restock alerts.</p>
+                <div class="input-group">
+                    <input type="email" placeholder="Email address">
+                    <button>Join</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SKRNCH . All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
+
+<style>
+    /* Color Palette: https://colorhunt.co/palette/fcf5eeffc4c4ee6983850e35 */
+:root {
+    --cream: #FCF5EE;
+    --pink: #FFC4C4;
+    --rose: #EE6983;
+    --burgundy: #850E35;
+    --max-width: 1100px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Princess Siena', sans-serif;
+}
+
+body {
+    background-color: var(--cream);
+    color: var(--burgundy);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- HEADER STYLING (Restored & Enhanced) --- */
+.main-header {
+    background: white;
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 2px solid var(--pink);
+}
+
+.main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--burgundy);
+    letter-spacing: -1px;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    align-items: center;
+}
+
+nav ul li { margin-left: 25px; }
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--burgundy);
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-small {
+    background: var(--burgundy);
+    color: white !important;
+    padding: 8px 18px;
+    border-radius: 6px;
+}
+
+/* --- HERO & VIDEO --- */
+.hero {
+    padding: 80px 0;
+    text-align: center;
+}
+
+/* --- FORM STYLING --- */
+body {font-family: Arial, Helvetica, sans-serif;}
+<!-- * {box-sizing: border-box;} -->
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+/* --- FOOTER STYLING (Restored) --- */
+.main-footer {
+    background: var(--burgundy);
+    color: white;
+    padding: 60px 0 20px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 2fr;
+    gap: 40px;
+}
+
+.footer-brand p { color: var(--pink); margin-top: 15px; }
+
+.footer-links h4, .footer-contact h4 { margin-bottom: 20px; color: white; }
+
+.footer-links ul { list-style: none; }
+
+.footer-links ul li a {
+    color: var(--pink);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.input-group {
+    display: flex;
+    margin-top: 15px;
+}
+
+.input-group input {
+    padding: 10px;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    flex: 1;
+}
+
+.input-group button {
+    padding: 10px 15px;
+    background: var(--rose);
+    border: none;
+    color: white;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    color: var(--pink);
+}
+</style>

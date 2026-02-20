@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKRNCH | Hair Essentials</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #F2E3C2; --sand: #E5DED2; --bronze: #A67C52; --deep-cocoa: #967969;
+            --max-width: 1100px; --heading-font: 'Playfair Display', serif; --body-font: 'Montserrat', sans-serif; --pink: #D4A5A5;
+        }
+
+        [v-cloak] { display: none; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--cream); color: var(--deep-cocoa); font-family: var(--body-font); }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+
+        /* --- HEADER --- */
+        .main-header { background: white; padding: 15px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--pink); }
+        .main-header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: var(--heading-font); font-size: 1.8rem; font-weight: 700; color: var(--deep-cocoa); }
+        nav ul { display: flex; list-style: none; align-items: center; }
+        nav ul li { margin-left: 25px; }
+        nav ul li a { text-decoration: none; color: var(--deep-cocoa); font-weight: 600; font-size: 0.85rem; }
+
+        /* --- CART ICON --- */
+        .cart-icon-container { position: relative; font-size: 1.4rem; text-decoration: none; color: inherit; display: flex; align-items: center; }
+        .cart-badge { 
+            position: absolute; top: -5px; right: -10px; background: var(--bronze); 
+            color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; font-weight: bold;
+        }
+
+        /* --- OPTIONS PICKER --- */
+        .option-label { font-size: 0.75rem; font-weight: 600; margin-top: 10px; display: block; text-transform: uppercase; }
+        .options-flex { display: flex; justify-content: center; gap: 8px; margin: 10px 0; flex-wrap: wrap; }
+        .opt-btn { 
+            padding: 5px 12px; border: 1px solid var(--sand); background: white; 
+            border-radius: 15px; cursor: pointer; font-size: 0.7rem; transition: 0.3s;
+        }
+        .opt-btn.active { background: var(--deep-cocoa); color: white; border-color: var(--deep-cocoa); }
+
+        /* --- GRID & CARDS --- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px; padding: 40px 0; }
+        .media-card { background: white; border-radius: 15px; overflow: hidden; border: 1px solid var(--sand); text-align: center; display: flex; flex-direction: column; }
+        .image-wrapper { height: 250px; background: #fdfdfd; }
+        .image-wrapper img { width: 100%; height: 100%; object-fit: contain; padding: 10px; }
+        .card-content { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .card-content h3 { font-size: 0.95rem; min-height: 45px; }
+        .price { font-weight: 700; margin: 10px 0; color: var(--bronze); }
+        .btn-cart { width: 100%; background: var(--deep-cocoa); color: white; border: none; padding: 12px; border-radius: 50px; cursor: pointer; font-weight: 600; }
+
+        .dropdown { position: relative; }
+        .dropdown-content { display: none; position: absolute; background: white; min-width: 200px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 8px; top: 100%; z-index: 10; }
+        .dropdown:hover .dropdown-content { display: block; }
+        .dropdown-content a { color: var(--deep-cocoa); padding: 12px 16px; text-decoration: none; display: block; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+
+<div id="app" v-cloak>
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">SKRNCH</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="shop.html">Shop From Us</a>
+                        <div class="dropdown-content">
+                            <a href="../wigsorextensions.html">Wigs & Hair Extensions</a>
+                            <a href="hairaccessories.html">Hair Accessories</a>
+                            <a href="hairessentials.html">Hair Essentials</a>
+                            <a href="hairproducts.html">Hair Products</a>
+                        </div>
+                    </li>
+                    <li><a href="about.html">About</a></li>
+                    <li>
+                        <a href="../cart.html" class="cart-icon-container">
+                            🛒 <span v-if="cartCount > 0" class="cart-badge">{{ cartCount }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section style="padding: 40px 0; text-align: center;">
+            <h1>HAIR ESSENTIALS & ACCESSORIES</h1>
+            <p>Everything you need to style and maintain your look.</p>
+        </section>
+
+        <div class="grid">
+            <div class="media-card" v-for="item in wigs" :key="item.id">
+                <div class="image-wrapper">
+                    <img :src="item.image" :alt="item.name">
+                </div>
+                <div class="card-content">
+                    <h3>{{ item.name }}</h3>
+                    
+                    <span class="option-label">Selection:</span>
+                    <div class="options-flex">
+                        <button v-for="opt in item.availableOptions" 
+                                :key="opt" 
+                                :class="['opt-btn', { active: item.selectedOption === opt }]"
+                                @click="item.selectedOption = opt">
+                            {{ opt }}
+                        </button>
+                    </div>
+
+                    <div class="price">Ksh. {{ item.price.toLocaleString() }}</div>
+                    <button class="btn-cart" @click="addToCart(item)">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    const { createApp } = Vue;
+    createApp({
+        data() {
+            return {
+                cart: [],
+                wigs: [
+                    // --- ESSENTIALS FROM IMAGE ---
+                    { id: 301, name: 'Black Round Boar Bristle Brush', price: 1200, image: '../assets/essentials/Black Round Boar Bristle Brush.jpg', availableOptions: ['Standard'], selectedOption: 'Standard' },
+                    { id: 302, name: 'Black Wide Wig Brush', price: 850, image: '../assets/essentials/Black Wide Wig Brush.jpg', availableOptions: ['Standard'], selectedOption: 'Standard' },
+                    { id: 303, name: 'Black Wig Band', price: 450, image: '../assets/essentials/Black Wig Band.jpg', availableOptions: ['One Size'], selectedOption: 'One Size' },
+                    { id: 304, name: 'Black Wig Cap', price: 200, image: '../assets/essentials/Black Wig Cap.jpg', availableOptions: ['2-Pack'], selectedOption: '2-Pack' },
+                    { id: 305, name: 'Meshed Net Cap', price: 300, image: '../assets/essentials/Meshed Net Cap.jpg', availableOptions: ['Black'], selectedOption: 'Black' },
+                    { id: 306, name: 'Multicolor Edge Brush', price: 250, image: '../assets/essentials/Multicolor Edge Brush.jpg', availableOptions: ['Pink', 'Purple', 'Black'], selectedOption: 'Pink' },
+                    { id: 307, name: 'Multicolor Simple Wig Brush', price: 600, image: '../assets/essentials/Multicolor Simple Wig Brush.jpg', availableOptions: ['Pink', 'Blue'], selectedOption: 'Pink' },
+                    { id: 308, name: 'Neutral Wig Band', price: 450, image: '../assets/essentials/Neutral Wig Band.jpg', availableOptions: ['Beige', 'Tan'], selectedOption: 'Beige' },
+                    { id: 309, name: 'Nude Wig Cap', price: 200, image: '../assets/essentials/Nude Wig Cap.jpg', availableOptions: ['2-Pack'], selectedOption: '2-Pack' },
+                    { id: 310, name: 'Rattail Comb', price: 150, image: '../assets/essentials/Rattail Comb.png', availableOptions: ['Black', 'Pink'], selectedOption: 'Black' },
+                    { id: 311, name: 'Simple Black Wig Comb', price: 200, image: '../assets/essentials/Simple Black Wig Comb.jpg', availableOptions: ['Standard'], selectedOption: 'Standard' },
+                    { id: 312, name: 'Wide Toothes Wig Comb', price: 350, image: '../assets/essentials/Wide Toothes Wig Comb.jpg', availableOptions: ['Black'], selectedOption: 'Black' },
+                    
+                    // --- ACCESSORIES FROM IMAGE ---
+                    { id: 401, name: 'Acrylic Animal Print Barette', price: 400, image: '../assets/accessories/Acrylic Animal Print Barette.jpg', availableOptions: ['Set of 3'], selectedOption: 'Set of 3' },
+                    { id: 402, name: 'Satin Hair Bonnet', price: 800, image: '../assets/accessories/Black Hair Bonnet.jpg', availableOptions: ['Black', 'Blue', 'Maroon', 'Pink'], selectedOption: 'Black' },
+                    { id: 403, name: 'Stretchy Headband', price: 350, image: '../assets/accessories/Black or Leopard Print Strechy Headband.jpg', availableOptions: ['Black', 'Leopard'], selectedOption: 'Black' },
+                    { id: 404, name: 'Simple Ponytail Ties', price: 250, image: '../assets/accessories/Black Simple Ponytail Tie.jpg', availableOptions: ['Set of 10'], selectedOption: 'Set of 10' },
+                    { id: 405, name: 'Crystal Hair Bow', price: 550, image: '../assets/accessories/Crystal Hair Bow.jpg', availableOptions: ['Silver'], selectedOption: 'Silver' },
+                    { id: 406, name: 'Leopard Print Head Scarf', price: 700, image: '../assets/accessories/Leopard Print Head Scarf.jpg', availableOptions: ['Standard'], selectedOption: 'Standard' },
+                    { id: 407, name: 'Multicolor Big Claw Clips', price: 450, image: '../assets/accessories/Multicolor Big Claw Clips.jpg', availableOptions: ['Matte'], selectedOption: 'Matte' },
+                    { id: 408, name: 'Pearl Claw Clips', price: 500, image: '../assets/accessories/Pearl Claw Clips.jpg', availableOptions: ['White'], selectedOption: 'White' },
+                    { id: 409, name: 'White Cap Wig Hat', price: 2500, image: '../assets/accessories/White Cap Wig Hat.jpg', availableOptions: ['Curly'], selectedOption: 'Curly' }
+                ]
+            }
+        },
+        computed: {
+            cartCount() {
+                return this.cart.reduce((total, item) => total + item.quantity, 0);
+            }
+        },
+        mounted() {
+            this.syncCart();
+            // Listen for changes from other pages
+            window.addEventListener('storage', () => this.syncCart());
+        },
+        methods: {
+            syncCart() {
+                const saved = localStorage.getItem('eemani_cart');
+                this.cart = saved ? JSON.parse(saved) : [];
+            },
+            addToCart(product) {
+                // Ensure cart is fresh before adding
+                this.syncCart();
+                
+                const cartId = `${product.id}-${product.selectedOption}`;
+                const existing = this.cart.find(i => i.cartId === cartId);
+
+                if (existing) {
+                    existing.quantity++;
+                } else {
+                    this.cart.push({ 
+                        cartId: cartId,
+                        name: product.name,
+                        price: product.price,
+                        option: product.selectedOption,
+                        image: product.image,
+                        quantity: 1 
+                    });
+                }
+                
+                localStorage.setItem('eemani_cart', JSON.stringify(this.cart));
+                alert(`${product.name} added to bag!`);
+            }
+        }
+    }).mount('#app');
+</script>
+</body>
+</html>

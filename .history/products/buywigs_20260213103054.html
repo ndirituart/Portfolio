@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hair | SKRNCH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+   
+</head>
+<body>
+
+<div id="app" v-cloak>
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">SKRNCH</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="shop.html" class="dropbtn">Shop</a>
+                        <div class="dropdown-content">
+                            <a href="wigsorextensions.html">Wigs & Extensions</a>
+                            <a href="hairaccessories.html">Accessories</a>
+                        </div>
+                    </li>
+                    <li><a href="about.html">About</a></li>
+                    <li>
+                        <a href="cart.html" class="cart-icon-container">
+                            🛒 <span v-if="cartCount > 0" class="cart-badge">{{ cartCount }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero-small">
+            <h1>Premium Hair Collection</h1>
+            <p>100% authentic Indian human hair for baddies</p>
+        </section>
+
+        <div class="header-controls">
+            <button class="filter-toggle-btn" @click="isSearchOpen = !isSearchOpen">
+                {{ isSearchOpen ? '✖ Close' : '🔍 Filter & Search' }}
+            </button>
+
+            <div v-if="isSearchOpen" class="filter-dropdown-menu">
+                <input type="text" v-model="searchQuery" placeholder="Search hair...">
+                
+                <div style="margin-bottom:10px;">
+                    <label style="font-size:0.7rem; font-weight:bold;">PRICE</label>
+                    <div class="btn-group">
+                        <button v-for="range in priceRanges" :class="{active: activePrice === range}" @click="activePrice = (activePrice === range ? null : range)">
+                            {{ range.label }}
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <label style="font-size:0.7rem; font-weight:bold;">TYPE</label>
+                    <div class="btn-group">
+                        <button v-for="type in wigTypes" :class="{active: activeType === type}" @click="activeType = type">
+                            {{ type }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="media-card" v-for="wig in filteredWigs" :key="wig.id">
+                <div class="image-wrapper">
+                    <img :src="wig.image" :alt="wig.name">
+                </div>
+                <div class="card-content">
+                    <h3>{{ wig.name }}</h3>
+                    <p>{{ wig.description }}</p>
+                    
+                    <label style="font-size:0.65rem; font-weight:bold;">LENGTH:</label>
+                    <div class="btn-group">
+                        <button v-for="v in wig.variants" 
+                                :key="v.size"
+                                :class="{ active: wig.selectedSize === v.size }"
+                                @click="wig.selectedSize = v.size">
+                            {{ v.size }}
+                        </button>
+                    </div>
+
+                    <div class="price">Ksh. {{ getPrice(wig).toLocaleString() }}</div>
+                    <button class="btn-cart" @click="addToCart(wig)">Add to Bag</button>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="filteredWigs.length === 0" style="text-align:center; padding: 40px;">
+            No items match your selection.
+        </div>
+    </main>
+</div>
+</body>
+</html>
+
+
+<script>
+    const { createApp } = Vue;
+
+    createApp({
+        data() {
+            return {
+                isSearchOpen: false,
+                searchQuery: '',
+                activePrice: null,
+                activeType: 'All',
+                cart: JSON.parse(localStorage.getItem('eemani_cart')) || [],
+                priceRanges: [
+                    { label: '< 5k', min: 0, max: 5000 },
+                    { label: '5k-10k', min: 5001, max: 10000 },
+                    { label: '10k-20k', min: 10001, max: 20000 },
+                    { label: '> 20k', min: 20001, max: 1000000 }
+                ],
+                wigTypes: ['All', 'Glueless', 'Frontal', 'Full Lace', 'Extension'],
+                wigs: [
+                    { 
+                        id: 1, name: 'Black Straight', type: 'Frontal', color: 'black',
+                        description: 'Thick black straight hair, 100% human.',
+                        image: '../assets/Black Straight Human Hair 40-Inch Wig.jpeg',
+                        selectedSize: '15"',
+                        variants: [
+                            { size: '15"', price: 12500 },
+                            { size: '30"', price: 15500 },
+                            { size: '40"', price: 18500 }
+                        ]
+                    },
+                    { 
+                        id: 2, name: 'Black Bone-straight Bob', type: 'Glueless', color: 'black',
+                        description: 'Sleek corporate look, easy wear.',
+                        image: '../assets/Bone-straight Black Bob Glueless Wig.jpeg',
+                        selectedSize: '15"',
+                        variants: [
+                            { size: '15"', price: 12300 },
+                            { size: '20"', price: 14000 }
+                        ]
+                    },
+                    { 
+                        id: 3, name: 'Brown Pixie Cut', type: 'Frontal', color: 'colored',
+                        description: 'Chic short look, low maintenance.',
+                        image: '../assets/Brown Pixie Cut Human Hair Frontal Lace.jpeg',
+                        selectedSize: '3"',
+                        variants: [{ size: '3"', price: 3300 }]
+                    }
+                    // Continue adding your other wigs here...
+                ]
+            }
+        },
+        computed: {
+            filteredWigs() {
+                return this.wigs.filter(wig => {
+                    const price = this.getPrice(wig);
+                    const matchesSearch = wig.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+                    const matchesPrice = !this.activePrice || (price >= this.activePrice.min && price <= this.activePrice.max);
+                    const matchesType = this.activeType === 'All' || wig.type === this.activeType;
+                    return matchesSearch && matchesPrice && matchesType;
+                });
+            },
+            cartCount() {
+                return this.cart.reduce((total, item) => total + item.quantity, 0);
+            }
+        },
+        methods: {
+            getPrice(wig) {
+                const variant = wig.variants.find(v => v.size === wig.selectedSize);
+                return variant ? variant.price : 0;
+            },
+            addToCart(wig) {
+                const price = this.getPrice(wig);
+                const cartId = `${wig.id}-${wig.selectedSize}`;
+                
+                const existingItem = this.cart.find(item => item.cartId === cartId);
+                
+                if (existingItem) {
+                    existingItem.quantity++;
+                } else {
+                    this.cart.push({
+                        cartId: cartId,
+                        name: wig.name,
+                        size: wig.selectedSize,
+                        price: price,
+                        image: wig.image,
+                        quantity: 1
+                    });
+                }
+                
+                localStorage.setItem('eemani_cart', JSON.stringify(this.cart));
+                alert(`${wig.name} (${wig.selectedSize}) added to bag!`);
+            }
+        }
+    }).mount('#app');
+</script>
+
+ <style>
+        :root {
+            --cream: #F2E3C2;
+            --sand: #E5DED2;
+            --bronze: #A67C52;
+            --gold-leaf: #C5B081;
+            --deep-cocoa: #967969;
+            --max-width: 1200px;
+            --heading-font: 'Playfair Display', serif;
+            --body-font: 'Montserrat', sans-serif;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--cream); font-family: var(--body-font); line-height: 1.6; color: #333; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+
+        /* --- HEADER & NAV --- */
+        .main-header { background: var(--white); padding: 15px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--sand); }
+        .main-header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: var(--heading-font); font-size: 1.8rem; font-weight: 700; color: var(--bronze); }
+        
+        nav ul { display: flex; list-style: none; align-items: center; gap: 25px; }
+        nav ul li a { text-decoration: none; color: var(--deep-cocoa); font-weight: 600; font-size: 0.85rem; transition: 0.3s; }
+        nav ul li a:hover { color: var(--bronze); }
+
+        /* DROPDOWN */
+        .dropdown { position: relative; }
+        .dropdown-content { 
+            display: none; position: absolute; background: white; min-width: 200px; 
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 8px; top: 100%; left: 0; padding: 10px 0; 
+        }
+        .dropdown:hover .dropdown-content { display: block; }
+        .dropdown-content a { display: block; padding: 10px 20px; }
+
+        /* CART BADGE */
+        .cart-icon-container { position: relative; display: inline-block; padding: 5px; }
+        .cart-badge {
+            position: absolute; top: -5px; right: -8px; background: var(--bronze);
+            color: white; font-size: 0.65rem; width: 18px; height: 18px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            border: 2px solid white;
+        }
+
+        /* --- UI CONTROLS --- */
+        .header-controls { display: flex; justify-content: flex-end; margin: 20px 0; position: relative; }
+        .filter-toggle-btn {
+            background: var(--deep-cocoa); color: white; border: none; padding: 10px 20px;
+            border-radius: 50px; cursor: pointer; font-weight: 600;
+        }
+        .filter-dropdown-menu {
+            position: absolute; top: 50px; right: 0; background: white; width: 300px;
+            padding: 20px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 99;
+        }
+
+        /* --- PRODUCT GRID --- */
+        .hero-small { text-align: center; padding: 40px 0; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-top: 20px; }
+        .media-card { background: white; border-radius: 15px; overflow: hidden; transition: 0.3s; border: 1px solid var(--sand); }
+        .media-card:hover { transform: translateY(-5px); }
+        .image-wrapper { height: 300px; overflow: hidden; }
+        .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .card-content { padding: 15px; }
+        .card-content h3 { font-family: var(--heading-font); margin-bottom: 5px; }
+        .card-content p { font-size: 0.8rem; color: #666; margin-bottom: 10px; height: 40px; overflow: hidden; }
+
+        /* VARIANTS & BUTTONS */
+        .btn-group { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
+        .btn-group button { 
+            padding: 4px 10px; border: 1px solid #ddd; background: white; 
+            border-radius: 4px; font-size: 0.75rem; cursor: pointer; 
+        }
+        .btn-group button.active { background: var(--bronze); color: white; border-color: var(--bronze); }
+        .price { font-size: 1.1rem; font-weight: 700; color: var(--deep-cocoa); margin-bottom: 10px; }
+        .btn-cart { 
+            width: 100%; background: var(--deep-cocoa); color: white; border: none; 
+            padding: 10px; border-radius: 5px; font-weight: 600; cursor: pointer; 
+        }
+
+        [v-cloak] { display: none; }
+    </style>

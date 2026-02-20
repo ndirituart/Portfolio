@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | SKRNCH </title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">SKRNCH </div>
+            <nav>
+                <ul>
+                    <li><a href="Homepage.html">Home</a></li>
+                    <li><a href="buywigs.html">Wigs</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="ordernow.html"class="btn-small">Order Now</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container checkout-section">
+        <div class="checkout-grid">
+            
+            <div class="checkout-form-container">
+                <form action="/submit_payment">
+                    <div class="form-row">
+                        <div class="form-col">
+                            <h3>Pick-up Point</h3>
+                            <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+                            <input type="text" id="fname" name="firstname" placeholder="Jane Doe">
+                            
+                            <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                            <input type="text" id="email" name="email" placeholder="jane@example.com">
+                            
+                            <label for="adr"><i class="fa fa-address-card-o"></i> Pick-up Point</label>
+                            <input type="text" id="adr" name="address" placeholder="CBD, Nairobi">
+                            
+                            <div class="inner-row">
+                                <div class="form-col">
+                                    <label for="city">City</label>
+                                    <input type="text" id="city" name="city" placeholder="Nairobi">
+                                </div>
+                                <div class="form-col">
+                                    <label for="zip">Zip/Postal</label>
+                                    <input type="text" id="zip" name="zip" placeholder="00100">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-col">
+                            <h3>Payment</h3>
+                            <label>Accepted Modes of Payment</label>
+                            <div class="icon-container">
+                                 <i class="fa fa-money" style="color:green;"></i> <small>M-Pesa</small>
+                                <i class="fa fa-money" style="color:red;"></i><small>Airtel</small>
+                                 <i class="fa fa-money" style="color:navy;"></i><small>Telkom</small>
+                            </div>
+                            
+                            <label for="cname">Name on Payment</label>
+                            <input type="text" id="cname" name="customername" placeholder="Jane Doe">
+                            
+                            <label for="ccnum">Phone Number</label>
+                            <input type="text" id="phnum" name="phonenumber" placeholder="+254 700 000000">
+                        </div>
+                    </div>
+
+                    <label class="checkbox-container">
+                        <input type="checkbox" checked="checked" name="sameadr"> Pick-up Point same as billing
+                    </label>
+                    <button type="submit" class="btn-checkout">Complete Secure Payment</button>
+                </form>
+            </div>
+
+            <div class="cart-summary">
+                <h4>Order Summary <span class="cart-count">2 Items</span></h4>
+                <div class="cart-item">
+                    <p>Black Straight 40"</p>
+                    <span class="item-price">Ksh. 15,500</span>
+                </div>
+                <div class="cart-item">
+                    <p>Bone-straight Bob</p>
+                    <span class="item-price">Ksh. 12,300</span>
+                </div>
+                <hr>
+                <div class="cart-total">
+                    <p>Total</p>
+                    <span>Ksh. 27,800</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    </body>
+</html>
+
+    <style>
+          :root {
+    /* Primary Background & UI */
+    --cream: #F2E3C2;      
+    --sand: #E5DED2;       
+    
+    /* Brand & Accent Colors */
+    --bronze: #A67C52;     
+    --gold-leaf: #C5B081;   
+    --deep-cocoa: #967969; 
+
+    /* Layout & Typography */
+    --max-width: 1200px;
+    --heading-font: 'Playfair Display', serif; 
+    --body-font: 'Montserrat', sans-serif;
+}
+   
+        body {
+            background-color: var(--cream);
+            font-family: var(--body-font);
+            color: var(--deep-cocoa);
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- HEADER --- */
+        .main-header {
+            background: cream;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--pink);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--heading-font);
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--deep-cocoa);
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .btn-small {
+            background: var(--deep-cocoa);
+            color: cream !important;
+            padding: 8px 20px;
+            border-radius: 50px;
+            
+        }
+
+        /* --- CHECKOUT GRID --- */
+        .checkout-section { padding: 50px 20px; }
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .checkout-form-container {
+            background: var(--cream);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid var(--sand);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .inner-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        h3 {
+            font-family: var(--heading-font);
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid var(--pink);
+            border-radius: 8px;
+            font-family: var(--body-font);
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--rose);
+            background-color: #fffafb;
+        }
+
+        .icon-container {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .checkbox-container {
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+
+        .btn-checkout {
+            background: var(--deep-cocoa);
+            color: cream;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-checkout:hover {
+            background: var(--rose);
+        }
+
+        /* --- SUMMARY SIDEBAR --- */
+        .cart-summary {
+            background: cream;
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid var(--pink);
+            position: sticky;
+            top: 100px;
+        }
+
+        .cart-summary h4 {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-family: var(--heading-font);
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .item-price { font-weight: 600; }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-top: 15px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 850px) {
+            .checkout-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; gap: 20px; }
+            .cart-summary { order: -1; position: static; }
+        }
+    </style>

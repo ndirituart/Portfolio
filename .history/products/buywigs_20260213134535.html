@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hair | SKRNCH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+   
+</head>
+<body>
+
+<div id="app" v-cloak>
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">SKRNCH</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                     <li class="dropdown">
+                        <a href="shop.html" class="dropbtn">Shop From Us</a>
+                        <div class="dropdown-content">
+                            <a href="../wigsorextensions.html">Wigs & Hair Extensions</a>
+                            <a href="/products/hairaccessories.html">Hair Accessories</a>
+                            <a href="/products/hairessentials.html">Hair Essentials</a>
+                            <a href="/products/hairproducts.html">Hair Products</a>
+                        </div>
+                    </li>
+                    <li><a href="about.html">About</a></li>
+                    <li>
+                        <a href="../cart.html" class="cart-icon-container">
+                            🛒 <span v-if="cartCount > 0" class="cart-badge">{{ cartCount }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero-small">
+            <h1>Premium Hair Collection</h1>
+            <p>100% authentic Indian human hair for baddies</p>
+        </section>
+
+        <div class="header-controls">
+            <button class="filter-toggle-btn" @click="isSearchOpen = !isSearchOpen">
+                {{ isSearchOpen ? '✖ Close' : '🔍 Filter & Search' }}
+            </button>
+
+            <div v-if="isSearchOpen" class="filter-dropdown-menu">
+                <input type="text" v-model="searchQuery" placeholder="Search hair...">
+                
+                <div>
+                    <label >PRICE</label>
+                    <div class="btn-group">
+                        <button v-for="range in priceRanges" :class="{active: activePrice === range}" @click="activePrice = (activePrice === range ? null : range)">
+                            {{ range.label }}
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <label>TYPE</label>
+                    <div class="btn-group">
+                        <button v-for="type in wigTypes" :class="{active: activeType === type}" @click="activeType = type">
+                            {{ type }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="media-card" v-for="wig in filteredWigs" :key="wig.id">
+                <div class="image-wrapper">
+                    <img :src="wig.image" :alt="wig.name">
+                </div>
+                <div class="card-content">
+                    <h3>{{ wig.name }}</h3>
+                    <p>{{ wig.description }}</p>
+                    
+                    <label>LENGTH:</label>
+                    <div class="btn-group">
+                        <button v-for="v in wig.variants" 
+                                :key="v.size"
+                                :class="{ active: wig.selectedSize === v.size }"
+                                @click="wig.selectedSize = v.size">
+                            {{ v.size }}
+                        </button>
+                    </div>
+
+                    <div class="price">Ksh. {{ getPrice(wig).toLocaleString() }}</div>
+                    <button class="btn-cart" @click="addToCart(wig)">Add to Bag</button>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="filteredWigs.length === 0" style="text-align:center; padding: 40px;">
+            No items match your selection.
+        </div>
+    </main>
+</div>
+</body>
+</html>
+
+
+<script>
+    const { createApp } = Vue;
+
+    createApp({
+        data() {
+            return {
+                isSearchOpen: false,
+                searchQuery: '',
+                activePrice: null,
+                activeType: 'All',
+                cart: JSON.parse(localStorage.getItem('eemani_cart')) || [],
+                priceRanges: [
+                    { label: '< 5k', min: 0, max: 5000 },
+                    { label: '5k-10k', min: 5001, max: 10000 },
+                    { label: '10k-20k', min: 10001, max: 20000 },
+                    { label: '> 20k', min: 20001, max: 1000000 }
+                ],
+                wigTypes: ['All', 'Glueless', 'Frontal', 'Full Lace', 'Extension'],
+               wigs: [
+    { 
+        id: 1, name: 'Black Straight', type: 'Frontal', color: 'black', 
+        description: 'Thick black straight hair.', 
+        image: '../assets/wigs/wigs/Black Straight Human Hair 40-Inch Wig.jpeg', 
+        selectedSize: '15"', 
+        variants: [
+            { size: '15"', price: 12500 },
+            { size: '30"', price: 15500 },
+            { size: '40"', price: 18500 }
+        ]
+    },
+    { 
+        id: 2, name: 'Black Bone-straight Bob', type: 'Glueless', color: 'black', 
+        description: 'Corporate look.', 
+        image: '../assets/wigs/Bone-straight Black Bob Glueless Wig.jpeg', 
+        selectedSize: '15"', 
+        variants: [
+            { size: '15"', price: 12300 },
+            { size: '20"', price: 14000 }
+        ]
+    },
+    { 
+        id: 3, name: 'Brown Pixie Cut', type: 'Frontal', color: 'colored', 
+        description: 'Chic short look.', 
+        image: '../assets/wigs/Brown Pixie Cut Human Hair Frontal Lace.jpeg', 
+        selectedSize: '3"', 
+        variants: [{ size: '3"', price: 3300 }, { size: '5"', price: 4200 }]
+    },
+    { 
+        id: 4, name: 'Black Watercurl', type: 'Full Lace', color: 'black', 
+        description: 'Low maintenance curls.', 
+        image: '../assets/wigs/Black Watercurl 40-Inch Wig.jpeg', 
+        selectedSize: '40"', 
+        variants: [{ size: '30"', price: 3500 }, { size: '40"', price: 4500 }]
+    },
+    { 
+        id: 5, name: 'Black Wavy Human Hair', type: 'Frontal', color: 'black', 
+        description: 'Long wavy wig, easy to install. Volume remains after blowout.', 
+        image: '../assets/wigs/Black Wavy Human Hair 40-Inch Wig.jpeg', 
+        selectedSize: '40"', 
+        variants: [{ size: '30"', price: 15500 }, { size: '40"', price: 17500 }]
+    },
+    { 
+        id: 6, name: 'Burgundy Straight', type: 'Full Lace', color: 'colored', 
+        description: 'Bold color. Easy to install, 100% Human hair.', 
+        image: '../assets/wigs/Burgundy Straight Human Hair 40-Inch Wig.jpeg', 
+        selectedSize: '40"', 
+        variants: [{ size: '40"', price: 12500 }]
+    },
+    { 
+        id: 7, name: 'Brazilian Pre-Plucked', type: 'Frontal', color: 'black', 
+        description: '100% Human hair, natural hairline.', 
+        image: '../assets/wigs/Brazilian 30-Pre-Plucked Frontal Lace Wig.webp', 
+        selectedSize: '30"', 
+        variants: [{ size: '30"', price: 17800 }]
+    },
+    { 
+        id: 8, name: 'Curly Black', type: 'Full Lace', color: 'black', 
+        description: 'Easy to install, easy to detangle and 100% Human hair.', 
+        image: '../assets/wigs/Curly Black 40-Inch Human Hair Full-lace wig.jpeg', 
+        selectedSize: '40"', 
+        variants: [{ size: '40"', price: 12500 }]
+    },
+    { 
+        id: 9, name: 'Headband Curly', type: 'Glueless', color: 'black', 
+        description: 'Low maintenance curls. Wear-and-go.', 
+        image: '../assets/wigs/Headband Curly Wig 30-Inches.jpeg', 
+        selectedSize: '30"', 
+        variants: [{ size: '30"', price: 4500 }]
+    },
+    { 
+        id: 10, name: 'Headband Kinky', type: 'Glueless', color: 'black', 
+        description: 'Low maintenance curls. Wear-and-go.', 
+        image: '../assets/wigs/Headband Kinky Wig 20-Inches.jpeg', 
+        selectedSize: '20"', 
+        variants: [{ size: '20"', price: 3600 }]
+    },
+    { 
+        id: 11, name: 'Curly Blonde', type: 'Full Lace', color: 'colored', 
+        description: 'Long wavy wig, easy to install.', 
+        image: '../assets/wigs/Curly Blonde 20-Inch Human Hair Full-lace wig.jpeg', 
+        selectedSize: '20"', 
+        variants: [{ size: '20"', price: 7500 }]
+    },
+    { 
+        id: 12, name: 'Black Glueless (Bangs)', type: 'Glueless', color: 'black', 
+        description: 'Wear and go wig, sleek look, 100% Human hair.', 
+        image: '../assets/wigs/Human Hair 20-Inch Glueless Wig With Pre-cut Bangs.webp', 
+        selectedSize: '20"', 
+        variants: [{ size: '20"', price: 8900 }]
+    },
+    { 
+        id: 13, name: 'Black Straight Frontal', type: 'Frontal', color: 'black', 
+        description: 'Easy to install, sleek look, 100% Human hair.', 
+        image: '../assets/wigs/Human Hair 20-Inch Glueless Wig.webp', 
+        selectedSize: '20"', 
+        variants: [{ size: '20"', price: 9000 }]
+    },
+    { 
+        id: 14, name: 'Black Straight Glueless', type: 'Glueless', color: 'black', 
+        description: 'Amazing waves and volume, 100% Human hair.', 
+        image: '../assets/wigs/Human Hair 40-Inch Glueless Wig.webp', 
+        selectedSize: '40"', 
+        variants: [{ size: '40"', price: 8500 }]
+    },
+    { 
+        id: 15, name: 'Black Bone-straight', type: 'Full Lace', color: 'black', 
+        description: 'Perfect shine, amazing length, long lasting.', 
+        image: '../assets/wigs/Human Hair Bonestraight 40-Inch-Frontal.webp', 
+        selectedSize: '45"', 
+        variants: [{ size: '40"', price: 22000 }, { size: '45"', price: 25000 }]
+    },
+    { 
+        id: 16, name: 'Black Wavy Volume', type: 'Full Lace', color: 'black', 
+        description: 'Amazing volume, easy to maintain, 100% Human hair.', 
+        image: '../assets/wigs/Human Hair Curvy Volume Wig.webp', 
+        selectedSize: '25"', 
+        variants: [{ size: '25"', price: 19200 }]
+    },
+    { 
+        id: 17, name: 'Black Long Curly', type: 'Frontal', color: 'black', 
+        description: 'Voluminous curls, 100% Human hair.', 
+        image: '../assets/wigs/Human Hair Kinky Wig 40-Inch.webp', 
+        selectedSize: '25"', 
+        variants: [{ size: '25"', price: 13500 }, { size: '40"', price: 16500 }]
+    },
+    { 
+        id: 18, name: 'Orange Pixie Cut', type: 'Glueless', color: 'colored', 
+        description: 'Vibrant color, chic short look.', 
+        image: '../assets/wigs/Orange Pixie Cut Semi-Human Hair.jpeg', 
+        selectedSize: '5"', 
+        variants: [{ size: '5"', price: 4200 }]
+    },
+    { 
+        id: 19, name: 'Black Pixie Cut', type: 'Frontal', color: 'black', 
+        description: 'Chic short look.', 
+        image: '../assets/wigs/Pixie Cut Human Hair Frontal Lace.jpeg', 
+        selectedSize: '3"', 
+        variants: [{ size: '3"', price: 3800 }]
+    },
+    { 
+        id: 20, name: 'Red Bone-Straight', type: 'Full Lace', color: 'colored', 
+        description: 'Vibrant color, no tangles.', 
+        image: '../assets/wigs/Red Straight Human Hair 40-Inch Wig.jpeg', 
+        selectedSize: '40"', 
+        variants: [{ size: '40"', price: 12500 }]
+    },
+    { 
+        id: 21, name: 'Black Curly (W001)', type: 'Full Lace', color: 'black', 
+        description: 'Easy to install, 100% Human hair.', 
+        image: '../assets/wigs/Wig 001.jpeg', 
+        selectedSize: '30"', 
+        variants: [{ size: '30"', price: 14500 }]
+    },
+    { 
+        id: 22, name: 'Brown Curly (W002)', type: 'Full Lace', color: 'colored', 
+        description: 'Maintains curls after blowout.', 
+        image: '../assets/wigs/Wig 002.jpeg', 
+        selectedSize: '30"', 
+        variants: [{ size: '30"', price: 15000 }]
+    },
+    { 
+        id: 23, name: 'Dirty Blond Straight', type: 'Frontal', color: 'colored', 
+        description: 'Light-colored, curled ends.', 
+        image: '../assets/wigs/Wig 003.jpeg', 
+        selectedSize: '25"', 
+        variants: [{ size: '25"', price: 12500 }]
+    },
+    { 
+        id: 24, name: 'Black Watercurl (W004)', type: 'Frontal', color: 'black', 
+        description: 'Water to activate curls, 100% Human hair.', 
+        image: '../assets/wigs/Wig 004.jpeg', 
+        selectedSize: '40"', 
+        variants: [{ size: '40"', price: 22000 }]
+    },
+    { 
+        id: 25, name: 'Black Layered Curls', type: 'Full Lace', color: 'black', 
+        description: 'Corporate look, voluminous waves.', 
+        image: '../assets/wigs/Wig 005.jpeg', 
+        selectedSize: '20"', 
+        variants: [{ size: '20"', price: 16500 }]
+    },
+    { 
+        id: 26, name: 'Black Short Curly', type: 'Frontal', color: 'black', 
+        description: 'Amazing curls and volume.', 
+        image: '../assets/wigs/Wig 006.jpeg', 
+        selectedSize: '15"', 
+        variants: [{ size: '15"', price: 11500 }]
+    },
+    { 
+        id: 27, name: 'Brown Long Wavy', type: 'Full Lace', color: 'colored', 
+        description: 'Amazing brown color, high volume.', 
+        image: '../assets/wigs/Wig 007.jpeg', 
+        selectedSize: '30"', 
+        variants: [{ size: '30"', price: 21500 }]
+    }
+]
+            }
+        },
+        computed: {
+            filteredWigs() {
+                return this.wigs.filter(wig => {
+                    const price = this.getPrice(wig);
+                    const matchesSearch = wig.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+                    const matchesPrice = !this.activePrice || (price >= this.activePrice.min && price <= this.activePrice.max);
+                    const matchesType = this.activeType === 'All' || wig.type === this.activeType;
+                    return matchesSearch && matchesPrice && matchesType;
+                });
+            },
+            cartCount() {
+                return this.cart.reduce((total, item) => total + item.quantity, 0);
+            }
+        },
+        methods: {
+            getPrice(wig) {
+                const variant = wig.variants.find(v => v.size === wig.selectedSize);
+                return variant ? variant.price : 0;
+            },
+            addToCart(wig) {
+                const price = this.getPrice(wig);
+                const cartId = `${wig.id}-${wig.selectedSize}`;
+                
+                const existingItem = this.cart.find(item => item.cartId === cartId);
+                
+                if (existingItem) {
+                    existingItem.quantity++;
+                } else {
+                    this.cart.push({
+                        cartId: cartId,
+                        name: wig.name,
+                        size: wig.selectedSize,
+                        price: price,
+                        image: wig.image,
+                        quantity: 1
+                    });
+                }
+                
+                localStorage.setItem('eemani_cart', JSON.stringify(this.cart));
+                alert(`${wig.name} (${wig.selectedSize}) added to bag!`);
+            }
+        }
+    }).mount('#app');
+</script>
+
+ <style>
+        :root {
+            --cream: #F2E3C2;
+            --sand: #E5DED2;
+            --bronze: #A67C52;
+            --gold-leaf: #C5B081;
+            --deep-cocoa: #967969;
+            --max-width: 1200px;
+            --heading-font: 'Playfair Display', serif;
+            --body-font: 'Montserrat', sans-serif;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--cream); font-family: var(--body-font); line-height: 1.6; color: #333; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+
+        /* --- HEADER & NAV --- */
+        .main-header { background: var(--white); padding: 15px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--sand); }
+        .main-header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: var(--heading-font); font-size: 1.8rem; font-weight: 700; color: var(--bronze); }
+        
+        nav ul { display: flex; list-style: none; align-items: center; gap: 25px; }
+        nav ul li a { text-decoration: none; color: var(--deep-cocoa); font-weight: 600; font-size: 0.85rem; transition: 0.3s; }
+        nav ul li a:hover { color: var(--bronze); }
+
+        /* DROPDOWN */
+        .dropdown { position: relative; }
+        .dropdown-content { 
+            display: none; position: absolute; background: white; min-width: 200px; 
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 8px; top: 100%; left: 0; padding: 10px 0; 
+        }
+        .dropdown:hover .dropdown-content { display: block; }
+        .dropdown-content a { display: block; padding: 10px 20px; }
+
+        /* CART BADGE */
+        .cart-icon-container { position: relative; display: inline-block; padding: 5px; }
+        .cart-badge {
+            position: absolute; top: -5px; right: -8px; background: var(--bronze);
+            color: white; font-size: 0.65rem; width: 18px; height: 18px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            border: 2px solid white;
+        }
+
+        /* --- UI CONTROLS --- */
+        .header-controls { display: flex; justify-content: flex-end; margin: 20px 0; position: relative; }
+        .filter-toggle-btn {
+            background: var(--deep-cocoa); color: white; border: none; padding: 10px 20px;
+            border-radius: 50px; cursor: pointer; font-weight: 600;
+        }
+        .filter-dropdown-menu {
+            position: absolute; top: 50px; right: 0; background: white; width: 300px;
+            padding: 20px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 99;
+            width:100%; padding:8px; margin-bottom:10px;
+        }
+
+        .label {
+            margin-bottom:10px;
+            font-size:0.7rem; font-weight:bold;
+        }
+
+        /* --- PRODUCT GRID --- */
+        .hero-small { text-align: center; padding: 40px 0; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-top: 20px; }
+        .media-card { background: white; border-radius: 15px; overflow: hidden; transition: 0.3s; border: 1px solid var(--sand); }
+        .media-card:hover { transform: translateY(-5px); }
+        .image-wrapper { height: 300px; overflow: hidden; }
+        .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .card-content { padding: 15px; }
+        .card-content h3 { font-family: var(--heading-font); margin-bottom: 5px; }
+        .card-content p { font-size: 0.8rem; color: #666; margin-bottom: 10px; height: 40px; overflow: hidden; }
+
+        /* VARIANTS & BUTTONS */
+        .btn-group { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
+        .btn-group button { 
+            padding: 4px 10px; border: 1px solid #ddd; background: white; 
+            border-radius: 4px; font-size: 0.75rem; cursor: pointer; 
+            font-size:0.65rem; font-weight:bold;
+        }
+        .btn-group button.active { background: var(--bronze); color: white; border-color: var(--bronze); }
+        .price { font-size: 1.1rem; font-weight: 700; color: var(--deep-cocoa); margin-bottom: 10px; }
+        .btn-cart { 
+            width: 100%; background: var(--deep-cocoa); color: white; border: none; 
+            padding: 10px; border-radius: 5px; font-weight: 600; cursor: pointer; 
+        }
+
+        [v-cloak] { display: none; }
+    </style>

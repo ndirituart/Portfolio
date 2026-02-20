@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | [Your Name]</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #FEF9E7; color: #154360; }
+        h2 { font-family: 'Playfair Display', serif; }
+        .card:hover { transform: scale(1.02); transition: 0.3s; }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <nav class="p-6 flex justify-center space-x-8 font-bold">
+        <a href="index.html">Home</a>
+        <a href="resume.html">Resume</a>
+        <a href="projects.html" class="text-blue-800 border-b-2 border-blue-800">Projects</a>
+        <a href="labs.html">Labs</a>
+    </nav>
+
+    <main class="flex-grow container mx-auto py-12 px-6">
+        <h2 class="text-4xl text-center mb-12">Academic & Personal Projects</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="card bg-white rounded-xl shadow-lg overflow-hidden">
+                <img src="https://via.placeholder.com/400x250" class="w-full">
+                <div class="p-6">
+                    <h3 class="font-bold text-xl mb-2">Project Alpha</h3>
+                    <p class="text-sm text-gray-600 mb-4">A university project focused on database encryption using AES-256 standards.</p>
+                    <a href="#" class="text-blue-900 font-bold text-sm underline">View Details</a>
+                </div>
+            </div>
+            <div class="card bg-white rounded-xl shadow-lg overflow-hidden">
+                <img src="https://via.placeholder.com/400x250" class="w-full">
+                <div class="p-6">
+                    <h3 class="font-bold text-xl mb-2">Network Monitor</h3>
+                    <p class="text-sm text-gray-600 mb-4">A dashboard for tracking local network traffic spikes using Python and Dash.</p>
+                    <a href="#" class="text-blue-900 font-bold text-sm underline">View Details</a>
+                </div>
+            </div>
+            <div class="card bg-white rounded-xl shadow-lg overflow-hidden">
+                <img src="https://via.placeholder.com/400x250" class="w-full">
+                <div class="p-6">
+                    <h3 class="font-bold text-xl mb-2">Vulnerability Scanner</h3>
+                    <p class="text-sm text-gray-600 mb-4">Custom automation script for Nmap scanning and report generation.</p>
+                    <a href="#" class="text-blue-900 font-bold text-sm underline">View Details</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white py-10 mt-12">
+        <div class="container mx-auto text-center">
+            <div class="flex justify-center space-x-6 text-2xl mb-4">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:test@test.com"><i class="fas fa-envelope"></i></a>
+                <a href="tel:123"><i class="fas fa-phone"></i></a>
+                <a href="https://wa.me/123"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

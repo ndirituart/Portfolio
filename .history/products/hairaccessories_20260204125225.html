@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>accessorys | SKRNCH </title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+
+<div id="app" v-cloak>
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">SKRNCH </div>
+            <nav>
+                <ul>
+                    <li><a href="Homepage.html">Home</a></li>
+                    <li><a href="buywigs.html" style="color: var(--rose)">Wigs</a></li>
+                    <li><a href="ordernow.html" class="btn-small-nav">Order Now</a></li>
+                    <li><a href="UserCart.html">Bag ({{ cartCount }})</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero-small">
+            <h1>All Hair Accessories</h1>
+            <p class="subtitle">Hair ties, bands, and scrunchies for women include versatile options ranging from 
+                gentle satin/silk scrunchies that prevent hair breakage to high-elastic,
+                 damage-free, and seamless rubber bands for secure, all-day holds on thick or thin hair.</p>
+        </section>
+
+        <div class="header-controls">
+            <button class="filter-toggle-btn" @click="isSearchOpen = !isSearchOpen">
+                <span v-if="!isSearchOpen">🔍 Filter & Search</span>
+                <span v-else>✖ Close</span>
+            </button>
+
+            <div v-if="isSearchOpen" class="filter-dropdown-menu">
+                <input type="text" v-model="searchQuery" class="search-input" placeholder="Search by name...">
+                
+                <div class="filter-section">
+                    <label>Price Range</label>
+                    <div class="btn-group">
+                        <button v-for="range in priceRanges" 
+                            :class="{active: activePrice === range}" 
+                            @click="activePrice = (activePrice === range ? null : range)">
+                            {{ range.label }}
+                        </button>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <label>Hair Accessory</label>
+                    <div class="btn-group">
+                        <button v-for="type in hairAccessories" 
+                            :class="{active: activeType === type}" 
+                            @click="activeType = type">
+                            {{ type }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="media-card" v-for="accessory in filteredAccessories" :key="accessory.id">
+                <div class="image-wrapper">
+                    <img :src="accessory.image" :alt="accessory.name">
+                </div>
+                <div class="card-content">
+                    <h3>{{ accessory.name }}</h3>
+                    <p style="font-size: 0.8rem; color: #777; margin: 10px 0;">{{ accessory.description }}</p>
+                    <div class="price">Ksh. {{ accessory.price.toLocaleString() }}</div>
+                    <!--Adding each accessory to cart-->
+                    <button class="btn-cart" onclick="addToCart(accessory)"> Add to Cart </button>
+                </div>
+            </div>
+        </div>
+        <div v-if="filteredAccessories.length === 0" style="text-align:center; padding: 50px;">
+            No accessories match your filters.
+        </div>
+    </main>
+</div>
+
+<script>
+    const { createApp } = Vue;
+
+    createApp({
+        data() {
+            return {
+                isSearchOpen: false,
+                searchQuery: '',
+                activePrice: null,
+                activeType: 'All',
+                cart: JSON.parse(localStorage.getItem('eemani_cart')) || [],
+                priceRanges: [
+                    { label: '<250', min: 0, max: 250 },
+                    { label: '251-500', min: 251, max: 500 },
+                    { label: '501-1k', min: 501, max: 1000 },
+                    { label: '> 1k', min: 1001, max: 5000 }
+                ],
+                hairAccessories: ['All', 'Hair Ties', 'Hair Covers', 'Hair Decorations'],
+                accessories: [
+                    { id: 1, name: 'Acrylic Animal Print Barette', price: 1500, type: 'Hair Decorations', color: 'multi-color', description: 'Simple and stylish barette with animal print design.', image: '../assets/accessories/Acrylic Animal Print Barette.jpg', availableStock: 12, totalStock: 15 },
+                    { id: 2, name: 'Black Hair Bonnet', price: 650, type: 'Hair Covers', color: 'black', description: 'Simple satin black bonnet to sleep with', image: '../assets/accessories/Black Hair Bonnet.jpg', availableStock: 5, totalStock: 15 },
+                    { id: 3, name: 'Black or Leopard Print Strechy Headband', price: 500, type: 'Hair Decorations', color: 'black-mixed', description: 'Chic short look headbands for your wigs', image: '../assets/accessories/Black or Leopard Print Strechy Headband.jpg', availableStock: 8, totalStock: 20 },
+                    { id: 4, name: 'Black Simple Ponytail Tie', price: 100, type: 'Hair Ties', color: 'black', description: 'Simple hairbands to hold your hair.', image: '../assets/accessories/Black Simple Ponytail Tie.jpg', availableStock: 80, totalStock: 250 },
+                    { id: 5, name: 'Blue Hair Bonnet', price: 650, type: 'Hair Covers', color: 'colored', description: 'Simple  satin bonnet to sleep with.', image: '../assets/accessories/Blue Hair Bonnet.jpg', availableStock: 7, totalStock: 25 },
+                    { id: 6, name: 'Crystal Hair Bow', price: 700, type: 'Hair Decorations', color: 'colored', description: 'Pretty crystal hair bow', image:'../assets/accessories/Crystal Hair Bow.jpg' , availableStock :12 , totalStock :30},
+                    { id: 7, name :'Dark Blue Hair Bow' , price :550 , type :'Hair Decorations' , color :'colored' , description :'Simple neutral color hair bow to hold your hair in style.' , image :'../assets/accessories/Dark Blue Hair Bow.jpg', availableStock :12 , totalStock :30},
+                    { id: 8, name :'Hair Bonnet and Scrunchy' , price : 850, type :'Hair Ties' , color :'multi-color' , description :'Simple satin bonnent to sleep with, comes with a matching scrunchy.' , image :'../assets/accessories/Hair Bonnet and Scrunchy.jpg' , availableStock :5 , totalStock :20},
+                    { id: 9, name :'Leopard Print Head Scarf' , price : 700 , type :'Hair Covers' , color :'colored' , description :'Beautiful Leopard print scarf to wear as an accessory or to sleep with.' , image :'../assets/accessories/Leopard Print Head Scarf.jpg' , availableStock :1 , totalStock :5},
+                    { id: 10, name: 'Long Hair Bonnet for Locks and Bulky Wigs', price: 900, type: 'Hair Covers', color: 'multi-color', description: 'Simple long satin bonnet to sleep with.Big to accomodate long hairstyles and wigs.', image: '../assets/accessories/Long Hair Bonnet for Locks and Bulky Wigs.jpg', availableStock: 3, totalStock: 10},
+                    { id: 11, name :'Maroon Hair Bonnet', price :750, type :'Hair Covers', color :'colored', description :'Simple satin bonnet to sleep with.', image :'../assets/accessories/Maroon Hair Bonnet.jpg', availableStock :7, totalStock :25},
+                    { id: 12, name: 'Multicolor Big Claw Clips', price: 850, type: 'Hair Decorations', color: 'multi-color', description: 'Pretty claw clips to elevate your look.', image: '../assets/accessories/Multicolor Big Claw Clips.jpg', availableStock: 9, totalStock: 15},
+                    { id: 13, name: 'Multicolor Big Hair Bands', price: 250, type: 'Hair Ties', color: 'multi-color', description: 'Pretty big hairbands to tie hair and elevate your look.', image: '../assets/accessories/Multicolor Big Hair Bands.jpg', availableStock: 15, totalStock: 30 },
+                    { id: 14, name: 'Multicolor Floral Clips', price: 350, type: 'Hair Decorations', color: 'multi-color', description: 'Pretty hair clips, colorful to elevate your look.', image: '../assets/accessories/Multicolor Floral Clips.jpg', availableStock: 15, totalStock: 40  },
+                    { id: 15, name: 'Multicolor Hair Bands', price: 250, type: 'Hair Ties', color: 'multi-color', description: 'Pretty big hairbands to tie hair and elevate your look.', image: '../assets/accessories/Multicolor Hair Bands.jpg', availableStock: 1, totalStock: 15 },
+                    { id: 16, name: 'Multicolor Hair Bonnet', price: 650, type: 'Hair Covers', color: 'multi-color', description: 'Simple satin multicolor bonnet to sleep with.', image: '../assets/accessories/Multicolor Hair Bonnet.jpg', availableStock: 8, totalStock: 15  },
+                    { id: 17, name: 'Multicolor Satin Scarf', price: 1350, type: 'Hair Decoration', color: 'multi-color', description: 'Beautiful vibrant scarf to wear as an accessory or to sleep with.', image: '../assets/accessories/Multicolor Satin Scarf.jpg', availableStock: 10, totalStock: 20  },
+                    { id: 18, name: 'Neural Pink Hair Bonnet', price: 550, type: 'Hair Covers', color: 'colored', description: 'Vibrant color Simple satin multicolor bonnet to sleep with.', image: '../assets/accessories/Neural Pink Hair Bonnet.jpg', availableStock: 4, totalStock: 10  },
+                    { id: 19, name: 'Neutral Color Claw Clips With Decoration', price: 700, type: 'Hair Decoration', color: 'colored', description: 'Pretty hair clips to add color to your hairstyle.', image: '../assets/accessories/Neutral Color Claw Clips With Decoration.jpg', availableStock: 6, totalStock: 20  },
+                    { id: 20, name: 'Neutral Color Claw Clips', price: 650, type: 'Hair Decorations', color: 'colored', description: 'Simple and pretty hair clips to add color to your hairstyle.', image: '../assets/accessories/Neutral Color Claw Clips.jpg', availableStock: 3, totalStock: 10  },
+                    { id: 21, name: 'Neutral Color Satin Scarf', price: 1450, type: 'Hair Decorations', color: 'colored', description: 'Simple satin neutral color bonnet to sleep with.', image: '../assets/accessories/Neutral Color Satin Scarf.jpg', availableStock: 1, totalStock: 5  },
+                    { id: 22, name: 'Neutral Color Simple Clips', price: 650, type: 'Hair Decorations', color: 'colored', description: 'Pretty hair clips to add color to your hairstyle.Neutral color great for corporate look.', image: '../assets/accessories/Neutral Color Simple Clips.jpg', availableStock: 3, totalStock: 15  },
+                    { id: 23, name: 'Neutral Color Simple Ponytail Tie', price: 250, type: 'Hair Ties', color: 'colored', description: 'Pretty big hairbands to tie hair and elevate your look. Neutral color great for a corporate look', image: '../assets/accessories/Neutral Color Simple Ponytail Tie.jpg', availableStock: 3, totalStock: 15  },
+                    { id: 24, name: 'Pearl Claw Clips', price: 900, type: 'Hair Decoration', color: 'colored', description: 'Easy to wear, pretty and shiny pearly clips to hold up hair.', image: '../assets/accessories/Pearl Claw Clips.jpg', availableStock: 2, totalStock: 8 },
+                    { id: 25, name: 'Pearly Hair Barette', price: 850, type: 'Hair Decorations', color: 'black', description: 'Corporate look, easy to install, volumous, wavy and 100% Human hair.', image: 'assets/accessory 005.jpeg', availableStock: 4, totalStock: 25 },
+                    { id: 26, name: 'Black Short Curly accessory 15" ', price: 11500, type: 'Hair Covers', color: 'black', description: 'Easy to install, amazing curls and volume.100% Human hair.', image: 'assets/accessory 006.jpeg', availableStock: 1, totalStock: 12  },
+                    { id: 27, name: 'Brown Long Wavy accessory 30" ', price: 21500, type: 'Hair Decorations', color: 'colored', description: 'Amazing brown color, easy to install, amazing curls and volume.100% Human hair..', image: 'assets/accessory 007.jpeg', availableStock: 1, totalStock: 25  },
+                    ]
+            }
+        },
+        computed: {
+            filteredAccessories() {
+                return this.accessories.filter(accessory => {
+                    const matchesSearch = accessory.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+                    const matchesPrice = !this.activePrice || (accessory.price >= this.activePrice.min && accessory.price <= this.activePrice.max);
+                    const matchesType = this.activeType === 'All' || accessory.type === this.activeType;
+                    return matchesSearch && matchesPrice && matchesType;
+                });
+            },
+            cartCount() { return this.cart.length; }
+        },
+        methods: {
+            addToCart(accessory) {
+                this.cart.push(accessory);
+                localStorage.setItem('eemani_cart', JSON.stringify(this.cart));
+                alert(`${accessory.name} added to bag!`);
+            }
+        }
+    }).mount('#app');
+</script>
+</body>
+</html>>
+
+<script>
+    export default{
+data() {
+  return {
+    searchQuery: '',
+    activePrice: null,
+    activeType: 'All',
+    activeColor: 'All',
+    priceRanges: [
+      { label: '< 2,000', min: 0, max: 2000 },
+      { label: '2,001-5,000', min: 2001, max: 5000 },
+      { label: '5,001-10,000', min: 5001, max: 10000 },
+      { label: '> 10,000', min: 10001, max: 1000000 }
+    ],
+    hairAccessories: ['All', 'Hair Ties', 'Hair Covers', 'Hair Decorations'],
+    accessories: [] // Your main array of accessory objects
+  }
+},
+computed: {
+  filteredAccessories() {
+    return this.accessories.filter(accessory => {
+      // 1. Filter by Search Name
+      const matchesSearch = accessory.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+      
+      // 2. Filter by Price
+      const matchesPrice = this.activePrice 
+        ? (accessory.price >= this.activePrice.min && accessory.price <= this.activePrice.max)
+        : true;
+      
+      // 3. Filter by Type
+      const matchesType = (this.activeType === 'All' || accessory.type === this.activeType);
+      
+      // 4. Filter by Color
+      const matchesColor = (this.activeColor === 'All' || accessory.color === this.activeColor);
+
+      return matchesSearch && matchesPrice && matchesType && matchesColor;
+    });
+  }
+},
+methods: {
+  setPriceFilter(range) {
+    // Toggle filter off if clicked again
+    this.activePrice = this.activePrice === range ? null : range;
+  },
+  toggleSearch() {
+    // Your existing toggle logic
+  }
+}
+    }
+</script>
+
+<style>
+         :root {
+    /* Primary Background & UI */
+    --cream: #F2E3C2;      
+    --sand: #E5DED2;       
+    
+    /* Brand & Accent Colors */
+    --bronze: #A67C52;     
+    --gold-leaf: #C5B081;   
+    --deep-cocoa: #967969; 
+
+    /* Layout & Typography */
+    --max-width: 1200px;
+    --heading-font: 'Playfair Display', serif; 
+    --body-font: 'Montserrat', sans-serif;
+}
+   
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--cream); color: var(--burgundy); font-family: var(--body-font); line-height: 1.6; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; position: relative; }
+
+        /* --- HEADER & NAV --- */
+        .main-header { background: white; padding: 15px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--pink); }
+        .main-header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: var(--heading-font); font-size: 1.8rem; font-weight: 700; }
+        nav ul { display: flex; list-style: none; align-items: center; gap: 25px; }
+        nav ul li a { text-decoration: none; color: var(--burgundy); font-weight: 600; font-size: 0.85rem; }
+        .btn-small-nav { background: var(--burgundy); color: white !important; padding: 10px 22px; border-radius: 50px; }
+
+        /* --- IMPROVED SEARCH & FILTER --- */
+        .header-controls { position: relative; margin: 20px 0; display: flex; justify-content: flex-end; }
+        .filter-toggle-btn {
+            background: var(--burgundy); color: white; border: none; padding: 12px 25px;
+            border-radius: 50px; cursor: pointer; display: flex; align-items: center; gap: 10px;
+            font-weight: 600; transition: 0.3s;
+        }
+        .filter-dropdown-menu {
+            position: absolute; top: 55px; right: 0; background: white; width: 320px;
+            padding: 25px; border-radius: 15px; border: 1px solid var(--pink);
+            box-shadow: 0 10px 30px rgba(133, 14, 53, 0.15); z-index: 100;
+        }
+        .filter-section { margin-bottom: 15px; }
+        .filter-section label { display: block; font-size: 0.75rem; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; color: var(--rose); }
+        .btn-group { display: flex; flex-wrap: wrap; gap: 5px; }
+        .btn-group button { 
+            background: white; border: 1px solid var(--pink); padding: 5px 12px; 
+            border-radius: 15px; cursor: pointer; font-size: 0.75rem; transition: 0.2s;
+        }
+        .btn-group button.active { background: var(--burgundy); color: white; border-color: var(--burgundy); }
+        .search-input { width: 100%; padding: 10px; border: 1px solid var(--pink); border-radius: 8px; margin-bottom: 15px; }
+
+        /* --- HERO & GRID --- */
+        .hero-small { padding: 40px 0; text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; padding-bottom: 60px; }
+        .media-card { background: white; border-radius: 20px; overflow: hidden; border: 1px solid var(--pink); transition: 0.3s; }
+        .media-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .image-wrapper { height: 320px; width: 100%; }
+        .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .card-content { padding: 20px; }
+        .price { font-weight: 700; font-size: 1.2rem; color: var(--burgundy); }
+        .btn-cart { width: 100%; background: var(--burgundy); color: white; border: none; padding: 12px; border-radius: 50px; cursor: pointer; margin-top: 15px; font-weight: 600; }
+        
+        [v-cloak] { display: none; }
+    </style>

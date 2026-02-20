@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | SKRNCH </title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">SKRNCH </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="buywigs.html">Wigs</a></li>
+                    <li><a href="about.html" class="btn-small">About Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Contact Us</h1>
+                    <p class="subtitle">Reach out to us for any enquiries, comments, or compliments. We love hearing from our baddies!</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-section">
+            <div class="form-container">
+                <form action="/action_page.php">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fname">First Name</label>
+                            <input type="text" id="fname" name="firstname" placeholder="Your name..">
+                        </div>
+                        <div class="form-group">
+                            <label for="lname">Last Name</label>
+                            <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+                        </div>
+                    </div>
+
+                    <label for="country">Country</label>
+                    <select id="country" name="country">
+                        <option value="usa">USA</option>
+                        <option value="canada">Canada</option>
+                        <option value="australia">Australia</option>
+                        <option value="uk">United Kingdom</option>
+                    </select>
+
+                    <label for="subject">Message</label>
+                    <textarea id="subject" name="subject" placeholder="How can we help you?" style="height:150px"></textarea>
+
+                    <input type="submit" value="Send Message" class="submit-btn">
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="logo" style="color: white;">SKRNCH <span>.</span></div>
+                <p>Authentic hair imported directly from India. Quality you can feel, style you can see.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="#">Shop All</a></li>
+                    <li><a href="#">Hair Care Tips</a></li>
+                    <li><a href="#">Shipping Info</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="faqs.html">FAQs</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Join the Baddie List</h4>
+                <p>Get exclusive discounts and restock alerts.</p>
+                <div class="input-group">
+                    <input type="email" placeholder="Email address">
+                    <button>Join</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SKRNCH . All rights reserved.</p>
+        </div>
+    </footer>
+
+    </body>
+</html>
+
+<style>
+:root {
+    --cream: #FCF5EE;
+    --pink: #FFC4C4;
+    --rose: #EE6983;
+    --burgundy: #850E35;
+    --max-width: 1100px;
+    --heading-font: 'Playfair Display', serif;
+    --body-font: 'Montserrat', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--cream);
+    color: var(--burgundy);
+    line-height: 1.6;
+    font-family: var(--body-font);
+}
+
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- HEADER --- */
+.main-header {
+    background: white;
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid var(--pink);
+    box-shadow: 0 2px 10px rgba(133, 14, 53, 0.05);
+}
+
+.main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: var(--heading-font);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--burgundy);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    align-items: center;
+}
+
+nav ul li { margin-left: 25px; }
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--burgundy);
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.btn-small {
+    background: var(--burgundy);
+    color: white !important;
+    padding: 10px 22px;
+    border-radius: 50px; /* Modern pill shape */
+}
+
+/* --- HERO --- */
+.hero {
+    padding: 60px 0 40px;
+    text-align: center;
+}
+
+h1 {
+    font-family: var(--heading-font);
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+    font-style: italic;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: var(--rose);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* --- CONTACT FORM --- */
+.contact-section {
+    padding-bottom: 80px;
+}
+
+.form-container {
+    max-width: 700px;
+    margin: 0 auto;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(133, 14, 53, 0.08);
+    border: 1px solid var(--pink);
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-group {
+    flex: 1;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1.5px solid var(--pink);
+    border-radius: 8px;
+    background-color: var(--cream);
+    color: var(--burgundy);
+    font-family: var(--body-font);
+    margin-bottom: 20px;
+    transition: 0.3s;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--rose);
+    background: white;
+}
+
+.submit-btn {
+    width: 100%;
+    background-color: var(--burgundy);
+    color: white;
+    padding: 16px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.submit-btn:hover {
+    background-color: var(--rose);
+    transform: translateY(-2px);
+}
+
+/* --- FOOTER --- */
+.main-footer {
+    background: var(--burgundy);
+    color: white;
+    padding: 60px 0 20px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 2fr;
+    gap: 40px;
+}
+
+.footer-brand p { color: var(--pink); margin-top: 15px; font-size: 0.9rem;}
+
+.footer-links h4, .footer-contact h4 { 
+    margin-bottom: 20px; 
+    font-family: var(--heading-font);
+    font-size: 1.2rem;
+}
+
+.footer-links ul { list-style: none; }
+
+.footer-links ul li a {
+    color: var(--pink);
+    text-decoration: none;
+    font-size: 0.9rem;
+    line-height: 2;
+}
+
+.input-group {
+    display: flex;
+    margin-top: 15px;
+}
+
+.input-group input {
+    padding: 12px;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    flex: 1;
+}
+
+.input-group button {
+    padding: 10px 20px;
+    background: var(--rose);
+    border: none;
+    color: white;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    color: var(--pink);
+    font-size: 0.8rem;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .form-row { flex-direction: column; gap: 0; }
+    .footer-grid { grid-template-columns: 1fr; }
+    h1 { font-size: 2.5rem; }
+}
+</style>

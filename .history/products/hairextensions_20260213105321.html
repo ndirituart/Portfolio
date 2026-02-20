@@ -1,0 +1,142 @@
+<div class="grid">
+    <div class="media-card" v-for="hair in filteredHairs" :key="hair.id">
+        <div class="image-wrapper">
+            <img :src="hair.image" :alt="hair.name">
+        </div>
+        <div class="card-content">
+            <h3>{{ hair.name }}</h3>
+            <p style="font-size: 0.8rem; color: #777; margin: 10px 0;">{{ hair.description }}</p>
+            
+            <label style="font-size: 0.7rem; font-weight: bold;">LENGTH:</label>
+            <div class="btn-group" style="margin-top: 5px;">
+                <button v-for="v in hair.variants" 
+                        :key="v.size"
+                        :class="{ active: hair.selectedSize === v.size }"
+                        @click="hair.selectedSize = v.size">
+                    {{ v.size }}
+                </button>
+            </div>
+
+            <div class="price">Ksh. {{ getPrice(hair).toLocaleString() }}</div>
+            <button class="btn-cart" @click="addToCart(hair)"> Add to Bag </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const { createApp } = Vue;
+
+    createApp({
+        data() {
+            return {
+                isSearchOpen: false,
+                searchQuery: '',
+                activePrice: null,
+                activeType: 'All',
+                cart: JSON.parse(localStorage.getItem('eemani_cart')) || [],
+                priceRanges: [
+                    { label: '< 1k', min: 0, max: 1000 },
+                    { label: '1k-5k', min: 1001, max: 5000 },
+                    { label: '> 5k', min: 5001, max: 100000 }
+                ],
+                hairTypes: ['All', 'Braid Bundles', 'Wig Bundles', 'Ready Extensions'],
+                hairs: [
+                    { 
+                        id: 101, name: 'Black Brazillian Curly Bundles', type: 'Wig Bundles', 
+                        description: 'Thick black straight hair.', 
+                        image: '../assets/accessories/Black Brazillian Curly Human Hair Bundles 15-Inch.webp', 
+                        selectedSize: 'Shoulder', 
+                        variants: [
+                            { size: 'Shoulder', price: 835 },
+                            { size: 'Mid Back', price: 1200 },
+                            { size: 'Full Back', price: 1600 }
+                        ]
+                    },
+                    { 
+                        id: 102, name: 'Black Indian Curly Bundles', type: 'Wig Bundles', 
+                        description: 'Corporate look.', 
+                        image: '../assets/accessories/Black Indian  Curly Human Hair Bundles 15-Inch.webp', 
+                        selectedSize: 'Shoulder', 
+                        variants: [
+                            { size: 'Shoulder', price: 4000 },
+                            { size: 'Mid Back', price: 5500 },
+                            { size: 'Full Back', price: 7000 }
+                        ]
+                    },
+                    { 
+                        id: 103, name: 'Black Ready to Pin Bundles', type: 'Ready Extensions', 
+                        description: 'Chic short look.', 
+                        image: '../assets/accessories/Brown Pixie Cut Human Hair Ready Extensions Lace.jpeg', 
+                        selectedSize: 'Shoulder', 
+                        variants: [
+                            { size: 'Shoulder', price: 800 },
+                            { size: 'Mid Back', price: 1100 },
+                            { size: 'Full Back', price: 1500 }
+                        ]
+                    },
+                    { 
+                        id: 104, name: 'Black French Curl Braids', type: 'Braid Bundles', 
+                        description: 'Low maintenance curls and sleek look.', 
+                        image: '../assets/accessories/Black French Curl Braids 35-Inch.webp', 
+                        selectedSize: 'Shoulder', 
+                        variants: [
+                            { size: 'Shoulder', price: 800 },
+                            { size: 'Mid Back', price: 1000 },
+                            { size: 'Full Back', price: 1200 }
+                        ]
+                    },
+                    { 
+                        id: 105, name: 'Maroon French Curl Braids', type: 'Braid Bundles', 
+                        description: 'Vibrant color, 100% Human hair.', 
+                        image: '../assets/accessories/Maroon French Curl Braids.webp', 
+                        selectedSize: 'Shoulder', 
+                        variants: [
+                            { size: 'Shoulder', price: 900 },
+                            { size: 'Mid Back', price: 1100 },
+                            { size: 'Full Back', price: 1400 }
+                        ]
+                    }
+                ]
+            }
+        },
+        computed: {
+            filteredHairs() {
+                return this.hairs.filter(hair => {
+                    const price = this.getPrice(hair);
+                    const matchesSearch = hair.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+                    const matchesPrice = !this.activePrice || (price >= this.activePrice.min && price <= this.activePrice.max);
+                    const matchesType = this.activeType === 'All' || hair.type === this.activeType;
+                    return matchesSearch && matchesPrice && matchesType;
+                });
+            }
+        },
+        methods: {
+            getPrice(hair) {
+                const variant = hair.variants.find(v => v.size === hair.selectedSize);
+                return variant ? variant.price : 0;
+            },
+            addToCart(hair) {
+                const price = this.getPrice(hair);
+                const cartId = `hair-${hair.id}-${hair.selectedSize}`;
+                
+                const existingItem = this.cart.find(item => item.cartId === cartId);
+                
+                if (existingItem) {
+                    existingItem.quantity++;
+                } else {
+                    this.cart.push({
+                        cartId: cartId,
+                        name: hair.name,
+                        size: hair.selectedSize,
+                        price: price,
+                        image: hair.image,
+                        quantity: 1
+                    });
+                }
+                
+                localStorage.setItem('eemani_cart', JSON.stringify(this.cart));
+                alert(`${hair.name} (${hair.selectedSize}) added to bag!`);
+            }
+        }
+    }).mount('#app');
+</script>

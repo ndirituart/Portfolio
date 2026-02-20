@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hair | SKRNCH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
+</head>
+<body>
+
+<div id="app" v-cloak>
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">SKRNCH</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html" class="btn-small">About Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero-small" style="text-align: center; padding: 40px 0;">
+            <h1>Shop Hair</h1>
+            <p>100% authentic human hair</p>
+        </section>
+
+        <div class="header-controls">
+            <a href="../cart.html" class="cart-icon-container">
+                🛒 <span v-if="cartCount > 0" class="cart-badge">{{ cartCount }}</span>
+            </a>
+            
+            <button class="filter-toggle-btn" @click="isSearchOpen = !isSearchOpen">
+                {{ isSearchOpen ? '✖ Close' : '🔍 Filter' }}
+            </button>
+        </div>
+
+        <div v-if="isSearchOpen" class="filter-dropdown-menu">
+            <input type="text" v-model="searchQuery" style="width:100%; margin-bottom:10px;" placeholder="Search...">
+            <div class="filter-section">
+                <label style="font-size: 0.7rem; font-weight: bold;">TYPE</label>
+                <div class="btn-group">
+                    <button v-for="type in hairTypes" :class="{active: activeType === type}" @click="activeType = type">{{type}}</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="media-card" v-for="hair in filteredHairs" :key="hair.id">
+                <div class="image-wrapper">
+                    <img :src="hair.image" :alt="hair.name">
+                </div>
+                <div class="card-content">
+                    <h3>{{ hair.name }}</h3>
+                    <p>{{ hair.description }}</p>
+
+                    <label class="label" style="font-size: 0.7rem;">LENGTH:</label>
+                    <div class="btn-group">
+                        <button :class="{ active: hair.selectedLength === 'Shoulder' }" @click="hair.selectedLength = 'Shoulder'">Shoulder</button>
+                        <button :class="{ active: hair.selectedLength === 'Mid Back' }" @click="hair.selectedLength = 'Mid Back'">Mid Back</button>
+                    </div>
+
+                    <div class="price">Ksh. {{ hair.bundlePrice.toLocaleString() }}</div>
+                    <button class="btn-cart" @click="addToCart(hair)">Add to Bag</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+</body>
+</html>
+
+<script>
+    const { createApp } = Vue;
+    createApp({
+        data() {
+            return {
+                isSearchOpen: false,
+                searchQuery: '',
+                activeType: 'All',
+                cart: JSON.parse(localStorage.getItem('eemani_cart')) || [],
+                hairTypes: ['All', 'Braid Bundles', 'Wig Bundles'],
+                hairs: [
+                    { id: 1, name: 'Black Brazillian', bundlePrice: 835, type: 'Wig Bundles', selectedLength: 'Shoulder', description: 'Thick black hair.', image: 'https://via.placeholder.com/300' },
+                    { id: 2, name: 'Indian Curly', bundlePrice: 4000, type: 'Wig Bundles', selectedLength: 'Shoulder', description: 'Curls.', image: 'https://via.placeholder.com/300' }
+                ]
+            }
+        },
+        computed: {
+            filteredHairs() {
+                return this.hairs.filter(hair => {
+                    const matchesSearch = hair.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+                    const matchesType = this.activeType === 'All' || hair.type === this.activeType;
+                    return matchesSearch && matchesType;
+                });
+            },
+            cartCount() { return this.cart.length; }
+        },
+        methods: {
+            addToCart(hair) {
+                this.cart.push({...hair});
+                localStorage.setItem('eemani_cart', JSON.stringify(this.cart));
+                alert("Added!");
+            }
+        }
+    }).mount('#app');
+</script>

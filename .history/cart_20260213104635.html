@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Bag | SKRNCH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+
+<div id="app" v-cloak>
+    <div class="cart-container">
+        <h1>Your Shopping Bag</h1>
+
+        <div v-if="cart.length > 0">
+            <div v-for="(item, index) in cart" :key="item.cartId" class="cart-item">
+                <img :src="item.image" :alt="item.name">
+                <div class="item-info">
+                    <h3>{{ item.name }}</h3>
+                    <p>Length: {{ item.size }}</p>
+                    <p>Price: Ksh. {{ item.price.toLocaleString() }}</p>
+                </div>
+                <div class="quantity-controls">
+                    <button class="qty-btn" @click="updateQty(index, -1)">-</button>
+                    <span>{{ item.quantity }}</span>
+                    <button class="qty-btn" @click="updateQty(index, 1)">+</button>
+                </div>
+                <button @click="removeItem(index)" style="background:none; border:none; color:red; cursor:pointer; margin-left:15px;">Remove</button>
+            </div>
+
+            <div class="cart-summary">
+                <div class="total-price">Total: Ksh. {{ totalPrice.toLocaleString() }}</div>
+                <button class="checkout-btn" @click="checkout">Proceed to Checkout</button>
+            </div>
+        </div>
+
+        <div v-else class="empty-msg">
+            <p>Your bag is empty.</p>
+            <a href="./shop.html" style="color: var(--bronze); text-decoration: none; font-weight: 600;">Go back to Shop</a>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>
+
+<script>
+    const { createApp } = Vue;
+
+    createApp({
+        data() {
+            return {
+                cart: JSON.parse(localStorage.getItem('eemani_cart')) || []
+            }
+        },
+        computed: {
+            totalPrice() {
+                return this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            }
+        },
+        methods: {
+            updateQty(index, change) {
+                this.cart[index].quantity += change;
+                if (this.cart[index].quantity < 1) this.cart[index].quantity = 1;
+                this.saveCart();
+            },
+            removeItem(index) {
+                this.cart.splice(index, 1);
+                this.saveCart();
+            },
+            saveCart() {
+                localStorage.setItem('eemani_cart', JSON.stringify(this.cart));
+            },
+            checkout() {
+                alert("Order Sent! Total: Ksh. " + this.totalPrice);
+                // In a real app, you'd redirect to a payment page here
+            }
+        }
+    }).mount('#app');
+</script>
+
+ <style>
+        :root {
+            --cream: #F2E3C2; --sand: #E5DED2; --bronze: #A67C52;
+            --deep-cocoa: #967969; --white: #ffffff;
+        }
+        body { background-color: var(--cream); font-family: 'Montserrat', sans-serif; padding: 20px; }
+        .cart-container { max-width: 800px; margin: 50px auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        h1 { font-family: 'Playfair Display'; color: var(--bronze); margin-bottom: 30px; }
+        
+        .cart-item { display: flex; align-items: center; gap: 20px; padding: 15px 0; border-bottom: 1px solid var(--sand); }
+        .cart-item img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; }
+        .item-info { flex: 1; }
+        .item-info h3 { font-size: 1rem; margin-bottom: 5px; }
+        .item-info p { font-size: 0.8rem; color: #666; }
+        
+        .quantity-controls { display: flex; align-items: center; gap: 10px; }
+        .qty-btn { background: var(--sand); border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px; }
+        
+        .cart-summary { margin-top: 30px; text-align: right; border-top: 2px solid var(--cream); padding-top: 20px; }
+        .total-price { font-size: 1.5rem; font-weight: 700; color: var(--deep-cocoa); }
+        .checkout-btn { background: var(--bronze); color: white; border: none; padding: 15px 30px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 20px; width: 100%; }
+        
+        .empty-msg { text-align: center; padding: 50px; }
+        [v-cloak] { display: none; }
+    </style>

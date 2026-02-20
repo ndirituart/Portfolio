@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | SKRNCH </title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">SKRNCH </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="shop.html" class="dropbtn">Shop From Us <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem;"></i></a>
+                        <div class="dropdown-content">
+                            <a href="wigsorextensions.html">Wigs & Hair Extensions</a>
+                            <a href="hairaccessories.html">Hair Accessories</a>
+                            <a href="hairessentials.html">Hair Essentials</a>
+                            <a href="hairproducts.html">Hair Products</a>
+                        </div>
+                    </li>
+                    <li><a href="about.html" class="btn-small">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+    <div class="container">
+        <h1>Your Shopping Bag</h1>
+
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="product-info">
+                            <img src="assets/Black Straight Human Hair 40-Inch Wig.jpeg" alt='40-Inch Black Straight' class="product-img">
+                            <span>Black Straight 40" Wig</span>
+                        </div>
+                    </td>
+                    <td>Ksh. 15,500</td>
+                    <td>1</td>
+                    <td>Ksh. 15,500</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="product-info">
+                            <img src="assets/Bone-straight Black Bob Glueless Wig.jpeg" alt='Bone-straight Black Bob' class="product-img">
+                            <span>Bone-straight Bob</span>
+                        </div>
+                    </td>
+                    <td>Ksh. 12,300</td>
+                    <td>1</td>
+                    <td>Ksh. 12,300</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="cart-summary">
+            <div class="total-price">Total: Ksh. 27,800</div>
+            <a href="paymentpage.html" class="btn-proceed">PROCEED TO PAY</a>
+            <a href="buywigs.html" class="back-to-shop">← Continue Shopping</a>
+        </div>
+    </div>
+    </main>
+
+    <div></div>
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="logo" style="color: white;">SKRNCH <span>.</span></div>
+                <p>Authentic hair imported directly from India. Quality you can feel, style you can see.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="buywigs.html">Shop All</a></li>
+                    <li><a href="haircaretips.html">Hair Care Tips</a></li>
+                    <li><a href="about.html">Our Location</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="faqs.html">FAQs</a></li>
+                    <li><a href="privacypolicy.html">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Join the Baddie List</h4>
+                <p>Get exclusive discounts and restock alerts.</p>
+                <div class="input-group">
+                    <input type="email" placeholder="Email address">
+                    <button>Join</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SKRNCH . All rights reserved.</p>
+        </div>
+    </footer>
+
+    </body>
+</html>
+
+<style>
+ :root {
+            /* Updated Luxury Palette */
+            --cream: #F2E3C2;      
+            --sand: #E5DED2;        
+            --bronze: #A67C52;     
+            --gold-leaf: #C5B081;   
+            --deep-cocoa: #967969;  
+
+            --max-width: 1100px;
+            --heading-font: 'Playfair Display', serif;
+            --body-font: 'Montserrat', sans-serif;
+        }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--cream);
+    color: var(--deep-cocoa);
+    line-height: 1.6;
+    font-family: var(--body-font);
+}
+
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- HEADER --- */
+.main-header {
+    background: white;
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid var(--pink);
+    box-shadow: 0 2px 10px rgba(133, 14, 53, 0.05);
+}
+
+.main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: var(--heading-font);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--deep-cocoa);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    align-items: center;
+}
+
+nav ul li { margin-left: 25px; }
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--deep-cocoa);
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.btn-small {
+    background: var(--deep-cocoa);
+    color: white !important;
+    padding: 10px 22px;
+    border-radius: 50px; /* Modern pill shape */
+}
+
+ /* --- DROPDOWN --- */
+        .dropdown { position: relative; }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 220px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+            z-index: 1001;
+            border-radius: 4px;
+            top: 100%;
+            left: 0;
+            padding: 10px 0;
+            border: 1px solid var(--sand);
+        }
+        .dropdown-content a {
+            color: var(--deep-cocoa);
+            padding: 12px 16px;
+            display: block;
+            text-transform: none;
+        }
+        .dropdown-content a:hover { background-color: var(--cream); }
+        .dropdown:hover .dropdown-content { display: block; }
+
+/* --- HERO --- */
+.hero {
+    padding: 60px 0 40px;
+    text-align: center;
+}
+
+h1 {
+    font-family: var(--heading-font);
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+    font-style: italic;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: var(--sand);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* --- CART & PRODUCT TABLE --- */
+ .cart-table {
+            width: 100%;
+            background: white;
+            border-collapse: collapse;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(133, 14, 53, 0.05);
+        }
+
+        .cart-table th {
+            background: var(--deep-cocoa);
+            color: white;
+            padding: 20px;
+            text-align: left;
+            font-family: var(--heading-font);
+        }
+
+        .cart-table td {
+            padding: 20px;
+            border-bottom: 1px solid var(--pink);
+        }
+
+        .product-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .product-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .cart-summary {
+            margin-top: 30px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: right;
+            border: 1px solid var(--pink);
+        }
+
+        .total-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .btn-proceed {
+            background: var(--deep-cocoa);
+            color: white;
+            text-decoration: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        .btn-proceed:hover {
+            background: var(--sand);
+            transform: scale(1.05);
+        }
+
+        .back-to-shop {
+            display: block;
+            margin-top: 15px;
+            color: var(--sand);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+/* --- FOOTER --- */
+.main-footer {
+    background: var(--deep-cocoa);
+    color: white;
+    padding: 60px 0 20px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 2fr;
+    gap: 40px;
+}
+
+.footer-brand p { color: var(--pink); margin-top: 15px; font-size: 0.9rem;}
+
+.footer-links h4, .footer-contact h4 { 
+    margin-bottom: 20px; 
+    font-family: var(--heading-font);
+    font-size: 1.2rem;
+}
+
+.footer-links ul { list-style: none; }
+
+.footer-links ul li a {
+    color: var(--pink);
+    text-decoration: none;
+    font-size: 0.9rem;
+    line-height: 2;
+}
+
+.input-group {
+    display: flex;
+    margin-top: 15px;
+}
+
+.input-group input {
+    padding: 12px;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    flex: 1;
+}
+
+.input-group button {
+    padding: 10px 20px;
+    background: var(--sand);
+    border: none;
+    color: white;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    color: var(--pink);
+    font-size: 0.8rem;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .form-row { flex-direction: column; gap: 0; }
+    .footer-grid { grid-template-columns: 1fr; }
+    h1 { font-size: 2.5rem; }
+}
+</style>

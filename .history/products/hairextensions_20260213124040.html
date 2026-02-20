@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hair | SKRNCH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
+</head>
+<body>
+
+<div id="app" v-cloak>
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">SKRNCH</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html" class="btn-small">About Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero-small" style="text-align: center; padding: 40px 0;">
+            <h1>Shop Hair</h1>
+            <p>100% authentic human hair</p>
+        </section>
+
+        <div class="header-controls">
+            <a href="../cart.html" class="cart-icon-container">
+                🛒 <span v-if="cartCount > 0" class="cart-badge">{{ cartCount }}</span>
+            </a>
+            
+            <button class="filter-toggle-btn" @click="isSearchOpen = !isSearchOpen">
+                {{ isSearchOpen ? '✖ Close' : '🔍 Filter' }}
+            </button>
+        </div>
+
+        <div v-if="isSearchOpen" class="filter-dropdown-menu">
+            <input type="text" v-model="searchQuery" style="width:100%; margin-bottom:10px;" placeholder="Search...">
+            <div class="filter-section">
+                <label style="font-size: 0.7rem; font-weight: bold;">TYPE</label>
+                <div class="btn-group">
+                    <button v-for="type in hairTypes" :class="{active: activeType === type}" @click="activeType = type">{{type}}</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="media-card" v-for="hair in filteredHairs" :key="hair.id">
+                <div class="image-wrapper">
+                    <img :src="hair.image" :alt="hair.name">
+                </div>
+                <div class="card-content">
+                    <h3>{{ hair.name }}</h3>
+                    <p>{{ hair.description }}</p>
+
+                    <label class="label" style="">LENGTH:</label>
+                    <div class="btn-group">
+                        <button :class="{ active: hair.selectedLength === 'Shoulder' }" @click="hair.selectedLength = 'Shoulder'">Shoulder</button>
+                        <button :class="{ active: hair.selectedLength === 'Mid Back' }" @click="hair.selectedLength = 'Mid Back'">Mid Back</button>
+                    </div>
+
+                    <div class="price">Ksh. {{ hair.bundlePrice.toLocaleString() }}</div>
+                    <button class="btn-cart" @click="addToCart(hair)">Add to Bag</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+</body>
+</html>
+
+<script>
+    const { createApp } = Vue;
+    createApp({
+        data() {
+            return {
+                isSearchOpen: false,
+                searchQuery: '',
+                activeType: 'All',
+                cart: JSON.parse(localStorage.getItem('eemani_cart')) || [],
+                hairTypes: ['All', 'Braid Bundles', 'Wig Bundles'],
+                hairs: [
+                    { id: 1, name: 'Black Brazillian', bundlePrice: 835, type: 'Wig Bundles', selectedLength: 'Shoulder', description: 'Thick black hair.', image: 'https://via.placeholder.com/300' },
+                    { id: 2, name: 'Indian Curly', bundlePrice: 4000, type: 'Wig Bundles', selectedLength: 'Shoulder', description: 'Curls.', image: 'https://via.placeholder.com/300' }
+                ]
+            }
+        },
+        computed: {
+            filteredHairs() {
+                return this.hairs.filter(hair => {
+                    const matchesSearch = hair.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+                    const matchesType = this.activeType === 'All' || hair.type === this.activeType;
+                    return matchesSearch && matchesType;
+                });
+            },
+            cartCount() { return this.cart.length; }
+        },
+        methods: {
+            addToCart(hair) {
+                this.cart.push({...hair});
+                localStorage.setItem('eemani_cart', JSON.stringify(this.cart));
+                alert("Added!");
+            }
+        }
+    }).mount('#app');
+</script>
+
+
+<style>
+        :root {
+            --cream: #F2E3C2;
+            --sand: #E5DED2;
+            --bronze: #A67C52;
+            --gold-leaf: #C5B081;
+            --deep-cocoa: #967969;
+            --white: #ffffff;
+            --pink-accent: #D4A5A5; /* Added this missing variable */
+            --max-width: 1200px;
+            --heading-font: 'Playfair Display', serif;
+            --body-font: 'Montserrat', sans-serif;
+        }
+
+        /* Essential Fix: Hide until Vue is ready, but Vue MUST load */
+        [v-cloak] { display: none; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--cream); color: var(--deep-cocoa); font-family: var(--body-font); line-height: 1.6; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+
+        /* --- HEADER --- */
+        .main-header { background: white; padding: 15px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--pink-accent); }
+        .main-header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: var(--heading-font); font-size: 1.8rem; font-weight: 700; color: var(--deep-cocoa); }
+        
+        nav ul { display: flex; list-style: none; align-items: center; }
+        nav ul li { margin-left: 25px; }
+        nav ul li a { text-decoration: none; color: var(--deep-cocoa); font-weight: 600; font-size: 0.85rem; }
+
+        /* --- CONTROLS --- */
+        .header-controls { margin: 20px 0; display: flex; justify-content: space-between; align-items: center; }
+        .cart-icon-container { text-decoration: none; font-size: 1.2rem; position: relative; }
+        .cart-badge { position: absolute; top: -10px; right: -10px; background: var(--bronze); color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; }
+
+        .filter-toggle-btn { background: var(--deep-cocoa); color: white; border: none; padding: 10px 20px; border-radius: 50px; cursor: pointer; }
+        .filter-dropdown-menu { 
+            position: absolute; background: white; padding: 20px; border-radius: 10px; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1); z-index: 500; right: 20px; width: 250px;
+        }
+
+        /* --- GRID --- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; padding: 40px 0; }
+        .media-card { background: white; border-radius: 20px; overflow: hidden; border: 1px solid var(--pink-accent); transition: 0.3s; }
+        .image-wrapper { height: 320px; width: 100%; }
+        .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .card-content { padding: 20px; }
+        
+        .btn-group { display: flex; gap: 5px; margin: 10px 0; }
+        .btn-group button { 
+            padding: 5px 10px; border-radius: 10px; border: 1px solid var(--sand); 
+            cursor: pointer; background: white; font-size: 0.7rem;
+        }
+        .btn-group button.active { background: var(--deep-cocoa); color: white; }
+        
+        .btn-cart { width: 100%; background: var(--deep-cocoa); color: white; border: none; padding: 12px; border-radius: 50px; cursor: pointer; font-weight: 600; margin-top: 10px; }
+        .price { font-weight: 700; margin: 10px 0; }
+    </style>

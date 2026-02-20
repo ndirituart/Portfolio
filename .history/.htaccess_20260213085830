@@ -1,0 +1,17 @@
+# Disable JavaScript requirement for PHP files
+<FilesMatch "\.php$">
+    # Remove any JavaScript enforcement
+    Satisfy Any
+    Allow from all
+    
+    # If using mod_security, disable for contact form
+    <IfModule mod_security2.c>
+        SecRuleEngine Off
+    </IfModule>
+</FilesMatch>   
+
+# Or specifically for contact.php
+<Files "contact.php">
+    Satisfy Any
+    Allow from all
+</Files>

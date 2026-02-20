@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKRNCH | Premium Indian Hair</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #F2E3C2; --sand: #E5DED2; --bronze: #A67C52; --deep-cocoa: #967969;
+            --max-width: 1100px; --heading-font: 'Playfair Display', serif; --body-font: 'Montserrat', sans-serif; --pink: #D4A5A5;
+        }
+
+        [v-cloak] { display: none; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--cream); color: var(--deep-cocoa); font-family: var(--body-font); }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+
+        /* --- HEADER --- */
+        .main-header { background: white; padding: 15px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--pink); }
+        .main-header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: var(--heading-font); font-size: 1.8rem; font-weight: 700; color: var(--deep-cocoa); }
+        nav ul { display: flex; list-style: none; align-items: center; }
+        nav ul li { margin-left: 25px; }
+        nav ul li a { text-decoration: none; color: var(--deep-cocoa); font-weight: 600; font-size: 0.85rem; }
+
+        /* --- CART ICON --- */
+        .cart-icon-container { position: relative; font-size: 1.4rem; text-decoration: none; display: flex; align-items: center; cursor: pointer; }
+        .cart-badge { 
+            position: absolute; top: -5px; right: -10px; background: var(--bronze); 
+            color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; font-weight: bold;
+        }
+
+        /* --- GRID & PRODUCT CARDS --- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; padding: 40px 0; }
+        .media-card { background: white; border-radius: 15px; overflow: hidden; border: 1px solid var(--sand); text-align: center; padding-bottom: 20px;}
+        .image-wrapper { height: 250px; background: #eee; }
+        .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* --- COLOR SELECTION --- */
+        .variant-box { padding: 10px; }
+        .variant-title { font-size: 0.7rem; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; display: block; }
+        .color-btns { display: flex; justify-content: center; gap: 5px; flex-wrap: wrap; margin-bottom: 15px; }
+        .c-btn { 
+            padding: 4px 10px; border: 1px solid var(--sand); background: white; 
+            border-radius: 4px; cursor: pointer; font-size: 0.75rem; 
+        }
+        .c-btn.selected { background: var(--deep-cocoa); color: white; border-color: var(--deep-cocoa); }
+
+        .price { font-weight: 700; margin: 10px 0; }
+        .btn-cart { width: 80%; background: var(--deep-cocoa); color: white; border: none; padding: 10px; border-radius: 50px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div id="app" v-cloak>
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">SKRNCH</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li>
+                        <a href="cart.html" class="cart-icon-container">
+                            🛒 <span class="cart-badge" v-if="cartCount > 0">{{ cartCount }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="grid">
+            <div class="media-card" v-for="item in products" :key="item.id">
+                <div class="image-wrapper">
+                    <img :src="item.image" alt="product image">
+                </div>
+                <div class="card-content">
+                    <h3>{{ item.name }}</h3>
+                    <p class="price">Ksh. {{ item.price }}</p>
+
+                    <div class="variant-box">
+                        <span class="variant-title">Available Colors</span>
+                        <div class="color-btns">
+                            <button 
+                                v-for="color in item.colors" 
+                                :key="color"
+                                :class="['c-btn', { selected: item.userChoice === color }]"
+                                @click="item.userChoice = color">
+                                {{ color }}
+                            </button>
+                        </div>
+                    </div>
+
+                    <button class="btn-cart" @click="addToCart(item)">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    const { createApp } = Vue;
+
+    createApp({
+        data() {
+            return {
+                cart: JSON.parse(localStorage.getItem('eemani_cart')) || [],
+                products: [
+    { 
+        id: 1, 
+        name: 'Black Round Boar Bristle Brush', 
+        price: 1500, 
+        image: '../assets/essentials/Black Round Boar Bristle Brush.jpg', 
+        colors: ['Black'], 
+        userChoice: 'Black' 
+    },
+    { 
+        id: 2, 
+        name: 'Black Wide Wig Brush', 
+        price: 1200, 
+        image: '../assets/essentials/Black Wide Wig Brush.jpg', 
+        colors: ['Black'], 
+        userChoice: 'Black' 
+    },
+    { 
+        id: 3, 
+        name: 'Wig Band', 
+        price: 450, 
+        image: '../assets/essentials/Black Wig Band.jpg', 
+        colors: ['Black', 'Neutral'], 
+        userChoice: 'Black' 
+    },
+    { 
+        id: 4, 
+        name: 'Wig Cap', 
+        price: 200, 
+        image: '../assets/essentials/Black Wig Cap.jpg', 
+        colors: ['Black'], 
+        userChoice: 'Black' 
+    },
+    { 
+        id: 5, 
+        name: 'Meshed Net Cap', 
+        price: 150, 
+        image: '../assets/essentials/Meshed Net Cap.jpg', 
+        colors: ['Black'], 
+        userChoice: 'Black' 
+    },
+    { 
+        id: 6, 
+        name: 'Multicolor Edge Brush', 
+        price: 250, 
+        image: '../assets/essentials/Multicolor Edge Brush.jpg', 
+        colors: ['Multicolor'], 
+        userChoice: 'Multicolor' 
+    },
+    { 
+        id: 7, 
+        name: 'Simple Wig Brush', 
+        price: 800, 
+        image: '../assets/essentials/Multicolor Simple Wig Brush.jpg', 
+        colors: ['Multicolor'], 
+        userChoice: 'Multicolor' 
+    },
+    { 
+        id: 8, 
+        name: 'Rattail Comb', 
+        price: 350, 
+        image: '../assets/essentials/Rattail Comb.png', 
+        colors: ['Black'], 
+        userChoice: 'Black' 
+    },
+    { 
+        id: 9, 
+        name: 'Simple Black Wig Comb', 
+        price: 400, 
+        image: '../assets/essentials/Simple Black Wig Comb.jpg', 
+        colors: ['Black'], 
+        userChoice: 'Black' 
+    },
+    { 
+        id: 10, 
+        name: 'Wide Toothes Wig Comb', 
+        price: 890, 
+        image: '../assets/essentials/Wide Toothes Wig Comb.jpg', 
+        colors: ['Black'], 
+        userChoice: 'Black' 
+    },
+    { 
+        id: 11, 
+        name: 'Wig Brushes Set', 
+        price: 2500, 
+        image: '../assets/essentials/Wig Brushes.jpg', 
+        colors: ['Black'], 
+        userChoice: 'Black' 
+    }
+    
+]
+            }
+        },
+        computed: {
+            cartCount() {
+                return this.cart.reduce((sum, item) => sum + item.qty, 0);
+            }
+        },
+        methods: {
+            addToCart(item) {
+                // Create a unique key based on ID + Color
+                const cartKey = item.id + '-' + item.userChoice;
+                const found = this.cart.find(p => p.cartKey === cartKey);
+
+                if (found) {
+                    found.qty++;
+                } else {
+                    this.cart.push({
+                        cartKey: cartKey,
+                        name: item.name,
+                        price: item.price,
+                        color: item.userChoice,
+                        qty: 1
+                    });
+                }
+
+                localStorage.setItem('eemani_cart', JSON.stringify(this.cart));
+                alert('Added ' + item.name + ' in ' + item.userChoice + ' to your cart!');
+            }
+        }
+    }).mount('#app');
+</script>
+
+</body>
+</html>

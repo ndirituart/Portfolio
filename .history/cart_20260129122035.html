@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart | SKRNCH </title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FCF5EE;
+            --pink: #FFC4C4;
+            --rose: #EE6983;
+            --burgundy: #850E35;
+            --max-width: 1100px;
+            --heading-font: 'Playfair Display', serif;
+            --body-font: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: var(--cream);
+            font-family: var(--body-font);
+            color: var(--burgundy);
+            margin: 0;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            font-family: var(--heading-font);
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .cart-table {
+            width: 100%;
+            background: white;
+            border-collapse: collapse;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(133, 14, 53, 0.05);
+        }
+
+        .cart-table th {
+            background: var(--burgundy);
+            color: white;
+            padding: 20px;
+            text-align: left;
+            font-family: var(--heading-font);
+        }
+
+        .cart-table td {
+            padding: 20px;
+            border-bottom: 1px solid var(--pink);
+        }
+
+        .product-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .product-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .cart-summary {
+            margin-top: 30px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: right;
+            border: 1px solid var(--pink);
+        }
+
+        .total-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .btn-proceed {
+            background: var(--burgundy);
+            color: white;
+            text-decoration: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        .btn-proceed:hover {
+            background: var(--rose);
+            transform: scale(1.05);
+        }
+
+        .back-to-shop {
+            display: block;
+            margin-top: 15px;
+            color: var(--rose);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Your Shopping Bag</h1>
+
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="product-info">
+                            <img src="assets/Black Straight Human Hair 40-Inch Wig.jpeg" alt='40-Inch Black Straight' class="product-img">
+                            <span>Black Straight 40" Wig</span>
+                        </div>
+                    </td>
+                    <td>Ksh. 15,500</td>
+                    <td>1</td>
+                    <td>Ksh. 15,500</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="product-info">
+                            <img src="assets/Bone-straight Black Bob Glueless Wig.jpeg" alt='Bone-straight Black Bob' class="product-img">
+                            <span>Bone-straight Bob</span>
+                        </div>
+                    </td>
+                    <td>Ksh. 12,300</td>
+                    <td>1</td>
+                    <td>Ksh. 12,300</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="cart-summary">
+            <div class="total-price">Total: Ksh. 27,800</div>
+            <a href="paymentpage.html" class="btn-proceed">PROCEED TO PAY</a>
+            <a href="buywigs.html" class="back-to-shop">← Continue Shopping</a>
+        </div>
+    </div>
+
+</body>
+</html>

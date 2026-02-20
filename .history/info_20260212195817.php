@@ -1,0 +1,1 @@
+skrnchstudio.com/info.php
